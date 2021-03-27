@@ -1,0 +1,98 @@
+.navbar-component {
+  background: #fff;
+  color: var(--textgrey);
+  position: sticky;
+  top: 0;
+  right: 0;
+  left: 0;
+  box-shadow: 0 8px 6px -6px var(--light-grey1);
+  z-index: 1;
+  margin-bottom: 1rem;
+}
+
+.navbar-component .navbar__list {
+  transition: all 0.5s ease-in-out backwards;
+}
+
+.hamburger-menu__line {
+  background: var(--textgrey);
+}
+
+.sm {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.navbar__list .fa {
+  color: var(--midgrey);
+  font-size: 1.75rem;
+}
+
+.left {
+  display: none;
+}
+
+.navbar__list {
+  margin-right: 1.5rem;
+}
+
+.nav__category {
+  display: none;
+}
+
+.nav__category button {
+  padding: 0.5rem 0.75rem;
+  margin-right: 1.75rem;
+}
+.notification-badge-wrapper {
+  position: absolute;
+}
+
+.sidebar__item {
+  text-transform: uppercase;
+}
+
+.sidebar__item:hover {
+  background: var(--light-grey1);
+}
+
+.avatar-badge,
+.notification-badge {
+  outline: none;
+  bottom: 60%;
+  right: -20%;
+}
+
+.avatar-badge-container .fa,
+.notification-badge-container .fa {
+  color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--textgrey);
+}
+
+.menu__mobile-none button,
+.nav__category button {
+  background: transparent;
+  border: none;
+}
+
+.nav__category .current-category {
+  border-bottom: 3px solid var(--purple);
+  color: var(--purple);
+  font-weight: 1000;
+}
+
+.menu-mobile-none .mobile__current-category {
+  color: var(--purple);
+  font-weight: 1000;
+}
+
+@media only screen and (min-width: 500px) {
+  .hamburger-menu {
+    display: none;
+  }
+
+  .nav__category {
+    display: flex;
+  }
+}

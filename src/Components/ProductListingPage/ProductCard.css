@@ -1,0 +1,27 @@
+.card {
+  width: 12.75rem;
+  justify-self: center;
+}
+
+@media only screen and (min-width: 500px) {
+  .card {
+    width: 15rem;
+  }
+}
+
+.primary {
+  min-height: 8rem;
+}
+
+.primary .price small {
+  display: inline;
+  padding-right: 0.45rem;
+}
+
+.brand-name {
+  width: 95%;
+}
+
+.orange-txt {
+  display: block;
+}
