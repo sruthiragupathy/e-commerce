@@ -1,0 +1,21 @@
+.badge {
+  margin-right: 0.5rem;
+  border: 0;
+}
+
+.badge:hover {
+  background: var(--darkpurple1);
+}
+
+.remove:hover {
+  background: var(--light-grey1);
+}
+
+.move-to-wishlist:hover {
+  background: var(--lightpurple2);
+}
+
+.mb {
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}

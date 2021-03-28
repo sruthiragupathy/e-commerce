@@ -19,7 +19,6 @@ export const RightNavbar = () => {
       <li className="navbar__list pointer">
         <div
           className="notification-badge-container"
-          // onClick={(e) => routeHandler(e, "wishlist")}
         >
           
             <Link to = "/wishlist"><i className="fa fa-heart"></i></Link>
@@ -34,9 +33,8 @@ export const RightNavbar = () => {
       <li className="navbar__list pointer">
         <div
           className="notification-badge-container"
-          // onClick={(e) => routeHandler(e, "cart")}
         >
-            <Link to = "/cart"><i className="fa fa-shopping-bag"></i></Link>
+            <Link to = "/checkout/cart"><i className="fa fa-shopping-bag"></i></Link>
           
           <div className="notification-badge flex-center">
             <span>{cart.length}</span>

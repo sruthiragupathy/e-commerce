@@ -65,7 +65,7 @@ function App() {
         <Route path = "/products/men" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "men"/>)}/>
         <Route path = "/products/sneakers" component = {(props) => (<ProductListingPage props = {props} productCategory = "sneakers"/>)}/>
         <Route path = "/" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "men"/>)}/>
-        <Route path = "/cart" component = {(props) => (<CartListing props = {props}/>)}/>
+        <Route path = "/checkout/cart" component = {(props) => (<CartListing props = {props}/>)}/>
         <Route path = "/wishlist" component = {(props) => (<WishlistListing props = {props}/>)}/>
       </Switch>} 
     
