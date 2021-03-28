@@ -1,5 +1,4 @@
-import { createContext, useContext, useReducer,useEffect } from "react";
-import { RestApiCalls } from "../CallRestApi";
+import { createContext, useContext, useReducer} from "react";
 import { reducerFunction } from "./reducerFunction";
 
 
@@ -12,6 +11,7 @@ export const ProductProvider = ({ children }) => {
     cart: [],
     wishlist: []
   });
+
 
   return (
     <ProductContext.Provider value={{ state, dispatch }}>

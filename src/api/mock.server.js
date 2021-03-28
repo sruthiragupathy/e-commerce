@@ -33,13 +33,13 @@ export default function setupMockServer() {
 
       [femaleProducts[0]].forEach((item) => {
         server.create("wishlist", {
-          ...item
+          ...item,isWishlisted:true
         });
       });
 
       [femaleProducts[0]].forEach((item) => {
         server.create("cart", {
-          ...item
+          ...item,isInCart:true
         });
       });
     }

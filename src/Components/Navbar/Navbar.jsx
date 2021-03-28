@@ -1,23 +1,18 @@
 import React from "react";
 import { RightNavbar } from "./RightNavbar";
 import "./Navbar.css";
-import { useProduct } from "../../Context/ProductContext";
 
-const category = ["men", "women", "sneakers"];
-const mobileCurrentCategory = {
-  color: "var(--purple)",
-  fontWeight: 1000
-};
+import {
+  Link,useHistory, withRouter
+} from "react-router-dom";
+import { isInCurrentPage } from "./isInCurrentPage";
 
-export const Navbar = ({ openHamburger, setOpenHamburger }) => {
-  const { state, dispatch } = useProduct();
+const category = ["home","men", "women", "sneakers"];
+
+const Navbar = ({ openHamburger, setOpenHamburger}) => {
+  const history = useHistory();
   const toggleHamburgerMenu = () => {
     setOpenHamburger((prev) => !prev);
-  };
-
-  const routeHandler = (e) => {
-    dispatch({ type: "ROUTE", payload: e.target.innerText.toLowerCase() });
-    setOpenHamburger(false);
   };
 
   return (
@@ -36,36 +31,23 @@ export const Navbar = ({ openHamburger, setOpenHamburger }) => {
         }`}
       >
         {category.map((item, index) => {
-          return (
-            <button
-              href="/"
-              className="sidebar__item"
-              key={index}
-              style={state.route === item ? mobileCurrentCategory : {}}
-              onClick={routeHandler}
-            >
-              {item}
-            </button>
-          );
+          return item === "home" ? 
+          <Link to = "/" key = {index} className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/`)?"mobile__current-category":""}`}>{item}</Link>:
+          <Link to = {`/products/${item}`} key = {index} className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/products/${item}`)?"mobile__current-category":""}`}>{item}</Link>
+          
         })}
       </ul>
       <ul className="nav__category rm-ul-padding flex">
         {category.map((item, index) => {
-          return (
-            <button
-              href="/"
-              className={`sidebar__item ${
-                state.route === item ? "current-category" : ""
-              }`}
-              key={index}
-              onClick={routeHandler}
-            >
-              {item}
-            </button>
-          );
+          return item === "home" ? 
+          <Link to = "/" key = {index} className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/`)?"current-category":""}`}>{item}</Link>:
+          <Link to = {`/products/${item}`} key = {index} className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/products/${item}`)?"current-category":""}`}>{item}</Link>
+          
         })}
       </ul>
       <RightNavbar />
     </nav>
   );
 };
+
+export default withRouter(Navbar)

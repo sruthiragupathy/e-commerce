@@ -1,13 +1,21 @@
 import './App.css';
 import React,{useEffect, useState} from "react";
-import {Navbar} from "./Components/Navbar/Navbar"
+import Navbar from "./Components/Navbar/Navbar"
 import { useProduct } from './Context/ProductContext';
 import { RestApiCalls } from './CallRestApi';
 import { ProductListingPage } from './Components/ProductListingPage/ProductListingPage';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import { CartListing } from './Components/Cart/CartListing';
+import { WishlistListing } from './Components/Wishlist/WishlistListing';
+
 
 function App() {
   const [openHamburger, setOpenHamburger] = useState(false);
-  const {state,dispatch} = useProduct();
+  const {dispatch} = useProduct();
   const [status,setStatus] = useState({
     loading:true,
     error:false
@@ -20,7 +28,6 @@ function App() {
     (async function () {
       const { response, error } = await RestApiCalls("GET", "api/products");
       if (!error) {
-        // console.log(response);
         dispatch({ type: "SET_PRODUCTS", payload: response });
       }
     })();
@@ -28,7 +35,6 @@ function App() {
     //fetching cart
     (async function () {
       const { response, error } = await RestApiCalls("GET", "api/carts");
-      // console.log("wishlist", response);
       if (!error) {
         dispatch({ type: "SET_CART", payload: response });
         setStatus({...status,loading:false});
@@ -39,7 +45,6 @@ function App() {
     //fetching wishlist
     (async function () {
       const { response, error } = await RestApiCalls("GET", "api/wishlists");
-      // console.log("wishlist", response);
       if (!error) {
         dispatch({ type: "SET_WISHLIST", payload: response });
       }
@@ -48,13 +53,24 @@ function App() {
   console.log("loading",status.loading);
   return (
     <div className ="App" style = {{display:"flex",flexDirection:"column"}}>
+      <Router>
       <Navbar
       openHamburger={openHamburger}
       setOpenHamburger={setOpenHamburger}
       />
-      {console.log(status)}
-      {status.loading && <p>Loading.....</p>} 
-      <ProductListingPage/>
+      
+      {status.loading ? <p>Loading.....</p> : 
+      <Switch>
+        <Route path = "/products/women" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "women"/>)}/>
+        <Route path = "/products/men" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "men"/>)}/>
+        <Route path = "/products/sneakers" component = {(props) => (<ProductListingPage props = {props} productCategory = "sneakers"/>)}/>
+        <Route path = "/" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "men"/>)}/>
+        <Route path = "/cart" component = {(props) => (<CartListing props = {props}/>)}/>
+        <Route path = "/wishlist" component = {(props) => (<WishlistListing props = {props}/>)}/>
+      </Switch>} 
+    
+    
+    </Router>
     </div>
   );
 }
