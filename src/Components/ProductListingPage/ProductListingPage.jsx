@@ -10,9 +10,11 @@ export const ProductListingPage = ({props,productCategory}) => {
 
     const transformProducts = (products) => {
         let products_to_filter = products;
+        //sort based on instock
+        products_to_filter.sort((a,b) => (b.outOfStock === false ? 1 : -1))
+        //filter by brands and in stock
         const keysOfFilterObject = Object.keys(state.brandFilter);
         const checkedBrands = keysOfFilterObject.filter(item => state.brandFilter[item] === true)
-        console.log(checkedBrands);
         if(state.otherFilter.in_stock){
             products_to_filter = products_to_filter.filter(product => {
                 return product.outOfStock === false
@@ -21,8 +23,9 @@ export const ProductListingPage = ({props,productCategory}) => {
         if(checkedBrands.length !== 0){
             products_to_filter = products_to_filter.filter(product => checkedBrands.includes(product.brandName))
         }
-        
-        console.log(checkedBrands.includes("in_stock"))
+        //list products based on price range
+        console.log(state.otherFilter.ranger_value);
+        products_to_filter = products_to_filter.filter(product => Number(product.price) <= state.otherFilter.ranger_value)
         console.log(products_to_filter);
         return products_to_filter;
     }

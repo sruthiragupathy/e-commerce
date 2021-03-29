@@ -6,7 +6,7 @@ const ProductContext = createContext();
 
 const filterObject  = {}
 
-const createObject  = (brandNameArray) => {
+export const createObject  = (brandNameArray,filterObject) => {
   for(let i =0;i<brandNameArray.length;i++){
     filterObject[brandNameArray[i]] = false
   }
@@ -18,7 +18,7 @@ export const ProductProvider = ({ children }) => {
     product: [],
     cart: [],
     wishlist: [],
-    brandFilter : createObject(brandNameArray),
+    brandFilter : createObject(brandNameArray,filterObject),
     otherFilter : {
       ranger_value : 1000,
       in_stock : false

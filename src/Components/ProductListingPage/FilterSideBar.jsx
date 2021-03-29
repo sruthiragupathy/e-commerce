@@ -9,8 +9,12 @@ export const FilterSideBar = () => {
     }
     return (
         <div className = "sidebar-wrapper">
-            <div className = "sidebar__filters">
+            <div className = "flex">
             <h4 className = "rm">FILTERS</h4>
+            <button 
+            className="clear-all"
+            onClick = {() => (dispatch({type:"CLEAR_ALL_FILTERS"}))}>CLEAR ALL</button>
+            </div>
                 <div>
                     <input
                     type="checkbox"
@@ -22,7 +26,7 @@ export const FilterSideBar = () => {
                     <label htmlFor="in_stock_only">In Stock Only</label>
                 </div>
                 <div>
-                <label htmlFor="price">Price Range : 0 to 1000</label>
+                <label htmlFor="price">Price Range : 0 to {state.otherFilter.ranger_value}</label>
                 <br/>
                 <input
                     type="range"
@@ -31,7 +35,7 @@ export const FilterSideBar = () => {
                     step="100"
                     value = {state.otherFilter.ranger_value}
                     className = "filter-margin"
-                    onChange = {() => {}}
+                    onChange = {(e) => (dispatch({type:"OTHER_FILTER",payload:"ranger_value",value:e.target.value}))}
                 />
                 <h4 className = "rm">BRANDS</h4>
                 {
@@ -50,7 +54,7 @@ export const FilterSideBar = () => {
                 }
                 
                 </div>
-            </div>
+            
         </div>
     )
 }

@@ -1,4 +1,6 @@
 import { addNewItemToExistingArray, removeItemFromExistingArray } from "../array-manipulation";
+import { brandNameArray } from "../Database";
+import { createObject } from "./ProductContext";
 
 export const reducerFunction = (state, { type, payload,value }) => {
     switch (type) {
@@ -40,7 +42,13 @@ export const reducerFunction = (state, { type, payload,value }) => {
             return {...state,otherFilter:{...state.otherFilter,ranger_value:value}}
           case "in_stock":
             return {...state,otherFilter:{...state.otherFilter,in_stock:!state.otherFilter.in_stock}}
+          default:
+            return state
         }
+      case "CLEAR_ALL_FILTERS":
+        return {...state,
+          brandFilter:createObject(brandNameArray,{}),
+          otherFilter:{in_stock:false,ranger_value:1000}}
       default:
         return state;
     }
