@@ -1,6 +1,7 @@
 import { useProduct } from "../../Context/ProductContext";
 import "./CartListing.css";
 import {CartCard} from "./CartCard";
+import { OrderSummary } from "./OrderSummary";
 export const CartListing = () => {
     const {state,dispatch} = useProduct();
     console.log("state from cart page",state);
@@ -26,7 +27,7 @@ export const CartListing = () => {
                     }
                     
                     </div>
-                    <div>Hi</div>
+                    <OrderSummary/>
                 </div>
                 </div>}
         </div>

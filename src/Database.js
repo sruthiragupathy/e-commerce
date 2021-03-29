@@ -21,7 +21,7 @@ const femaleImageArray = [
   "https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/13451944/2021/2/3/794b2319-cb53-4cce-a04f-068d9b955fcb1612334113817-mokshi-Women-Charcoal--Pink-Printed-Kurta-with-Palazzos--Dup-1.jpg"
 ];
 
-const brandNameArray = [
+export const brandNameArray = [
   "Anouk",
   "Biba",
   "Indo Era",

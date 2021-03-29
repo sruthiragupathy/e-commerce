@@ -16,3 +16,15 @@ export const isInWishlist = (wishlist,id) => {
 }
 
 export const getProductFromWishlistDb = (wishlist,id) => wishlist.find(product => product.id === id)
+
+export const getTotalOrderPrice = (cart) => {
+    return cart.reduce((acc,currentCartItem) => {
+        return acc+Number(currentCartItem.price)
+    },0)
+}
+
+export const totalMRP = (cart) => {
+    return cart.reduce((acc,currentCartItem) => {
+        return acc + calculateOriginalPrice(currentCartItem.price,currentCartItem.discountByPercentage)
+    },0)
+}

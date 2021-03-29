@@ -28,7 +28,7 @@ export const ProductCard = ({product}) => {
                     </div>}
                     {isInCart(state.cart,id) ?
                     <button className = "btn btn-primary"  disabled = {outOfStock}>
-                        <Link to = "/cart">
+                        <Link to = "/checkout/cart">
                             <span style = {{marginRight:"1rem"}}>Go to Cart</span> 
                             <i className = "fa fa-arrow-right" style = {{fontSize:"1rem"}}></i>
                         </Link>

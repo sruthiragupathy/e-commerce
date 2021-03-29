@@ -1,0 +1,22 @@
+.sidebar-wrapper {
+  position: fixed;
+  left: 0;
+  top: 6.5rem;
+  width: 18vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  padding: 0 1rem;
+}
+
+.sidebar__sort {
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.filter-margin {
+  margin: 0.75rem 0.75rem 0.75rem 0;
+}
