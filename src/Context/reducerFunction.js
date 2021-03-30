@@ -45,10 +45,26 @@ export const reducerFunction = (state, { type, payload,value }) => {
           default:
             return state
         }
+      case "SORT":
+        return {...state,sort:{latest:false,
+          discount:false,
+          "price : low to high":false,
+          "price : high to low":false,
+          [payload.toLowerCase()]:true}}
+      case "OPEN_FILTER":
+        return {...state,openFilter:!state.openFilter}
+          
       case "CLEAR_ALL_FILTERS":
         return {...state,
           brandFilter:createObject(brandNameArray,{}),
-          otherFilter:{in_stock:false,ranger_value:1000}}
+          otherFilter:{in_stock:false,ranger_value:1000},
+          sort:{
+            latest:false,
+            discount:false,
+            "price : low to high":false,
+            "price : high to low":false
+          }
+        }
       default:
         return state;
     }

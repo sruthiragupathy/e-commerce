@@ -31,7 +31,7 @@ export default function setupMockServer() {
         });
       });
 
-      [femaleProducts[0]].forEach((item) => {
+      [femaleProducts[2]].forEach((item) => {
         server.create("wishlist", {
           ...item,isWishlisted:true
         });

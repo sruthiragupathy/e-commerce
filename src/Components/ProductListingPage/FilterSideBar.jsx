@@ -1,5 +1,7 @@
 import { useProduct } from "../../Context/ProductContext"
 import "./FilterSideBar.css";
+import { MobileSortAndFilter } from "./MobileSortAndFilter";
+const sortByNames = ["Latest","Discount","Price : High to Low","Price : Low to High"]
 
 export const FilterSideBar = () => {
     const {state,dispatch} = useProduct()
@@ -8,9 +10,10 @@ export const FilterSideBar = () => {
         return allBrandNamesWithDuplicates.filter((brandname,index) => (allBrandNamesWithDuplicates.indexOf(brandname) === index)).sort()
     }
     return (
+        <>
         <div className = "sidebar-wrapper">
             <div className = "flex">
-            <h4 className = "rm">FILTERS</h4>
+            <div className = "filter-sidebar__heading">FILTERS</div>
             <button 
             className="clear-all"
             onClick = {() => (dispatch({type:"CLEAR_ALL_FILTERS"}))}>CLEAR ALL</button>
@@ -25,7 +28,7 @@ export const FilterSideBar = () => {
                     />
                     <label htmlFor="in_stock_only">In Stock Only</label>
                 </div>
-                <div>
+                <div className = "filter-border-bottom margin-top">
                 <label htmlFor="price">Price Range : 0 to {state.otherFilter.ranger_value}</label>
                 <br/>
                 <input
@@ -37,7 +40,9 @@ export const FilterSideBar = () => {
                     className = "filter-margin"
                     onChange = {(e) => (dispatch({type:"OTHER_FILTER",payload:"ranger_value",value:e.target.value}))}
                 />
-                <h4 className = "rm">BRANDS</h4>
+                </div>
+                <div className = "filter-border-bottom">
+                <div className = "filter-sidebar__heading">BRANDS</div>
                 {
                     getBrands(state.products).map((item,index) => {
                         return <div key ={index}>
@@ -52,9 +57,26 @@ export const FilterSideBar = () => {
                     </div>
                     })
                 }
-                
                 </div>
+                <div className = "filter-sidebar__heading">SORT BY</div>
+                {
+                            sortByNames.map((name,index) => {
+                                return <div key = {index}>
+                        
+                                    <input 
+                                    name = "sort_by" 
+                                    type = "radio" 
+                                    className = "filter-margin"
+                                    checked = {state.sort[name.toLowerCase()]} 
+                                    onChange = {() => (dispatch({type:"SORT", payload:name}))}/>
+                                    <label htmlFor = {name}>{name}</label>
+                                    </div>
+                            })
+                        }
+                
             
         </div>
+        <MobileSortAndFilter/>
+        </>
     )
 }

@@ -22,7 +22,14 @@ export const ProductProvider = ({ children }) => {
     otherFilter : {
       ranger_value : 1000,
       in_stock : false
-    }
+    },
+    sort : {
+      latest:false,
+      discount:false,
+      "price : low to high":false,
+      "price : high to low":false
+    },
+    openFilter : false
   });
 
   console.log(state.filter);

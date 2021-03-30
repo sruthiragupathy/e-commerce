@@ -68,6 +68,6 @@ export const femaleProducts = [...Array(25)].map((item) => ({
   count:faker.random.arrayElement(countArray),
   isWishlisted:false,
   isInCart:false,
-  seller:faker.random.arrayElement([sellerArray]),
+  seller:faker.random.arrayElement(sellerArray),
   type: "female"
 }));

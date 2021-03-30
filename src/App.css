@@ -1,3 +1,22 @@
 .App {
   box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--light-grey);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--light-grey1);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--lightgrey2);
+}

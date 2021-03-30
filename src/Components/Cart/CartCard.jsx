@@ -13,7 +13,7 @@ export const CartCard = ({product}) => {
                                 <div class="cart-item__details">
                                     <div class="details__primary">
                                         <p class =  "rm"><strong>{brandName}</strong></p>
-                                        <p class="light rm">{description}</p>
+                                        <div class="light rm">{description}</div>
                                         <small>Sold by: {seller}</small>
                                     </div>
                                     <div class = "details__btns">
