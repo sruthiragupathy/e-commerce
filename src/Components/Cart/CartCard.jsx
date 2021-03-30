@@ -1,9 +1,23 @@
+import { useState } from "react";
+import { useProduct } from "../../Context/ProductContext";
+import { isInWishlist } from "../CardCommonFunctions";
+import { Modal } from "../Modal/Modal";
+import {Link} from "react-router-dom";
 import "./CartCard.css"
 
 export const CartCard = ({product}) => {
     const {id,image,brandName,description,price,isnew,sale,outOfStock,discountByPercentage,count,seller} = product;
-
-    return (    
+    const {state,dispatch} = useProduct();
+    const addToWishlist = () => {
+        if(isInWishlist(state.wishlist,product.id)){
+            dispatch({type:"REMOVE_FROM_CART",payload:product})
+        }
+        else{
+        dispatch({type:"WISHLIST_ADD_OR_REMOVE",payload:product})
+        dispatch({type:"REMOVE_FROM_CART",payload:product})
+        }
+    }
+    return (    <>
                     <div class="horizontal-card mb">
                         <div class="horizontal-card__cart-item">
                             <div class="cart-item__img">
@@ -13,7 +27,7 @@ export const CartCard = ({product}) => {
                                 <div class="cart-item__details">
                                     <div class="details__primary">
                                         <p class =  "rm"><strong>{brandName}</strong></p>
-                                        <div class="light rm">{description}</div>
+                                        <div class="description light rm">{description}</div>
                                         <small>Sold by: {seller}</small>
                                     </div>
                                     <div class = "details__btns">
@@ -30,13 +44,20 @@ export const CartCard = ({product}) => {
                         </div>
                         <div class="horizontal-card__btns">
                             <div class = "remove-container">
-                                <button class = "remove">REMOVE</button>
+                                <button class = "remove" onClick = {() => {
+                                    dispatch({type:"SET_OVERLAY"})
+                                }}>REMOVE</button>
                             </div>
                             <div>
-                                <button class = "move-to-wishlist">MOVE TO WISHLIST</button>
+                                {
+                                    <button class = "move-to-wishlist" onClick = {addToWishlist}>MOVE TO WISHLIST</button>
+                                }
+                                
         
                             </div>
                         </div>
                     </div>
+                    {state.overlay && <Modal product = {product}/>}
+                </>
     )
 }

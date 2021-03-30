@@ -1,15 +1,19 @@
 import { useProduct } from "../../Context/ProductContext";
+import {useState} from "react"
 import "./CartListing.css";
 import {CartCard} from "./CartCard";
 import { OrderSummary } from "./OrderSummary";
+import { Modal } from "../Modal/Modal";
+
 export const CartListing = () => {
     const {state,dispatch} = useProduct();
-    console.log("state from cart page",state);
+    const [showModal,setShowModal] = useState(false);
     const getTotalOrderPrice = (cart) => {
         return cart.reduce((acc,currentCartItem) => {
             return acc+Number(currentCartItem.price)
         },0)
     }
+    console.log(showModal,state.overlay);
     return(
         <div>
                 {state.cart.length === 0 ? 
@@ -17,6 +21,7 @@ export const CartListing = () => {
                 <div className = "container">
                
                 <div class = "cart-wrapper">
+                    {state.overlay && <div className = "background-overlay"></div>}
                     <div className = "cart-grid">
                     <div className = "cart-heading flex">
                     <strong>My Shopping Bag ({state.wishlist.length} items)</strong>
@@ -28,6 +33,7 @@ export const CartListing = () => {
                     
                     </div>
                     <OrderSummary/>
+                    
                 </div>
                 </div>}
         </div>

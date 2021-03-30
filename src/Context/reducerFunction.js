@@ -4,8 +4,6 @@ import { createObject } from "./ProductContext";
 
 export const reducerFunction = (state, { type, payload,value }) => {
     switch (type) {
-      case "ROUTE":
-        return { ...state, route: payload };
       case "SET_PRODUCTS":
         return { ...state, products: payload };
       case "SET_CART":
@@ -22,6 +20,11 @@ export const reducerFunction = (state, { type, payload,value }) => {
         return {
           ...state,
           cart:addNewItemToExistingArray(state.cart,payload,"isInCart")
+        }
+      case "REMOVE_FROM_CART":
+        return {
+          ...state,
+          cart:removeItemFromExistingArray(state.cart,payload)
         }
       case "WISHLIST_ADD_OR_REMOVE":
         // console.log("payload");
@@ -53,7 +56,8 @@ export const reducerFunction = (state, { type, payload,value }) => {
           [payload.toLowerCase()]:true}}
       case "OPEN_FILTER":
         return {...state,openFilter:!state.openFilter}
-          
+      case "OPEN_SORT":  
+        return {...state,openSort:!state.openSort}
       case "CLEAR_ALL_FILTERS":
         return {...state,
           brandFilter:createObject(brandNameArray,{}),
@@ -65,6 +69,9 @@ export const reducerFunction = (state, { type, payload,value }) => {
             "price : high to low":false
           }
         }
+
+      case "SET_OVERLAY":
+        return {...state,overlay:!state.overlay}
       default:
         return state;
     }

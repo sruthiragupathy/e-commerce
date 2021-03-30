@@ -41,6 +41,7 @@ export const ProductListingPage = ({props,productCategory}) => {
     return (
         <div className = "PLP-wrapper">
         {/* {transformProducts(state.products)} */}
+        {state.overlay && <div className = "background-overlay"></div>}
         <FilterSideBar/>
         <div className = "product-flex">
             {transformProducts(state.products).map(product => 

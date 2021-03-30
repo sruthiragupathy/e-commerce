@@ -15,7 +15,7 @@ import { WishlistListing } from './Components/Wishlist/WishlistListing';
 
 function App() {
   const [openHamburger, setOpenHamburger] = useState(false);
-  const {dispatch} = useProduct();
+  const {state,dispatch} = useProduct();
   const [status,setStatus] = useState({
     loading:true,
     error:false
@@ -50,7 +50,12 @@ function App() {
       }
     })();
   }, []);
-  console.log("loading",status.loading);
+  if(state.overlay){
+    document.body.style.overflow="hidden"
+  }
+  else {
+    document.body.style.overflow="scroll"
+  }
   return (
     <div className ="App" style = {{display:"flex",flexDirection:"column"}}>
       <Router>

@@ -29,7 +29,9 @@ export const ProductProvider = ({ children }) => {
       "price : low to high":false,
       "price : high to low":false
     },
-    openFilter : false
+    openFilter : false,
+    openSort : false,
+    overlay : false
   });
 
   console.log(state.filter);

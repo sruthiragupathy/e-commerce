@@ -20,6 +20,10 @@
   margin-top: 0;
 }
 
+.description {
+  width: 100%;
+}
+
 @media only screen and (min-width: 750px) {
   .details__primary {
     margin-bottom: 2rem;

@@ -10,13 +10,21 @@ export const MobileSortAndFilter = () => {
     const {state,dispatch} = useProduct();
 
     const sortButtonHandler = () => {
-        setSort(true);
+        dispatch({type:"OPEN_SORT"})
+        dispatch({type:"SET_OVERLAY"})
+    }
+
+    const filterButtonHandler = () => {
+        dispatch({type:"OPEN_FILTER"})
+        dispatch({type:"SET_OVERLAY"})
     }
 
 
     const closeFilterHandler = () => {
         dispatch({type:"CLEAR_ALL_FILTERS"});
         dispatch({type:"OPEN_FILTER"});
+        dispatch({type:"SET_OVERLAY"})
+
 
     }
 
@@ -31,15 +39,15 @@ export const MobileSortAndFilter = () => {
             <button className = "sort-btn" onClick = {sortButtonHandler}>
                 <i className = "fa fa-sort"></i> SORT
             </button>
-            <button className = "filter-btn" onClick = {() => dispatch({type:"OPEN_FILTER"})}>
+            <button className = "filter-btn" onClick = {filterButtonHandler}>
             <i className = "fa fa-filter"></i> FILTER
             </button>
         </div>
             {
-                sort && <div className = "sort-wrapper">
+                state.openSort && <div className = "sort-wrapper">
                         <div className = "flex padding filter-border-bottom">
                         <h4 className = "sort-by-heading  rm">SORT BY</h4>
-                        <button><i className = "fa fa-close"></i></button>
+                        <button onClick = {sortButtonHandler}><i className = "fa fa-close"></i></button>
                         </div>
                         {
                             sortByNames.map((name,index) => {
@@ -47,7 +55,8 @@ export const MobileSortAndFilter = () => {
                                 className = {`sort-by-names-btn ${state.sort[name.toLowerCase()]?"current-sort":""}`}
                                 onClick = {() => {
                                     dispatch({type:"SORT",payload:name})
-                                    setSort(false)
+                                    dispatch({type:"OPEN_SORT"})
+                                    dispatch({type:"SET_OVERLAY"})
                                 }}>{name}</button>
                             })
                         }
@@ -110,7 +119,7 @@ export const MobileSortAndFilter = () => {
                     <button className = "sort-btn" onClick = {closeFilterHandler}>
                     CLOSE
                     </button>
-                    <button className = "filter-btn purple-txt" onClick = {() => dispatch({type:"OPEN_FILTER"})}>
+                    <button className = "filter-btn purple-txt" onClick = {filterButtonHandler}>
                     APPLY
                     </button>
                 </div>
