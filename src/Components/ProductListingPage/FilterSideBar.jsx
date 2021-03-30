@@ -13,11 +13,28 @@ export const FilterSideBar = () => {
         <>
         <div className = "sidebar-wrapper">
             <div className = "flex">
-            <div className = "filter-sidebar__heading">FILTERS</div>
-            <button 
-            className="clear-all"
-            onClick = {() => (dispatch({type:"CLEAR_ALL_FILTERS"}))}>CLEAR ALL</button>
+                <div className = "filter-sidebar__heading">SORT BY</div>
+                <button 
+                className="clear-all"
+                onClick = {() => (dispatch({type:"CLEAR_ALL_FILTERS"}))}>CLEAR ALL</button>
             </div>
+            <div className = "filter-border-bottom">
+            {
+                sortByNames.map((name,index) => {
+                    return <div key = {index}>
+                            <input 
+                            name = "sort_by" 
+                            type = "radio" 
+                            className = "filter-margin"
+                            checked = {state.sort[name.toLowerCase()]} 
+                            onChange = {() => (dispatch({type:"SORT", payload:name}))}/>
+                            <label htmlFor = {name}>{name}</label>
+                            </div>
+                            })
+            }
+            </div>
+            
+            <div className = "filter-sidebar__heading">FILTERS</div>
                 <div>
                     <input
                     type="checkbox"
@@ -42,7 +59,7 @@ export const FilterSideBar = () => {
                 />
                 </div>
                 <div className = "filter-border-bottom">
-                <div className = "filter-sidebar__heading">BRANDS</div>
+                <div className = "filter-sidebar__heading">FILTER BY BRANDS</div>
                 {
                     getBrands(state.products).map((item,index) => {
                         return <div key ={index}>
@@ -58,21 +75,7 @@ export const FilterSideBar = () => {
                     })
                 }
                 </div>
-                <div className = "filter-sidebar__heading">SORT BY</div>
-                {
-                            sortByNames.map((name,index) => {
-                                return <div key = {index}>
-                        
-                                    <input 
-                                    name = "sort_by" 
-                                    type = "radio" 
-                                    className = "filter-margin"
-                                    checked = {state.sort[name.toLowerCase()]} 
-                                    onChange = {() => (dispatch({type:"SORT", payload:name}))}/>
-                                    <label htmlFor = {name}>{name}</label>
-                                    </div>
-                            })
-                        }
+                
                 
             
         </div>

@@ -9,6 +9,7 @@ input {
 .filter-sidebar__heading {
   margin: 0.5rem 0;
   font-weight: 1000;
+  /* color: var(--midgrey); */
 }
 
 .sidebar__sort {
@@ -37,7 +38,7 @@ input {
 }
 
 .clear-all:hover {
-  color: var(--darkpurple1);
+  background: var(--lightpurple2);
 }
 
 @media only screen and (min-width: 800px) {
