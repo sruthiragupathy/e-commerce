@@ -1,5 +1,7 @@
 .sidebar-wrapper {
   display: none;
+  font-size: 0.75rem;
+  color: var(--midgrey);
 }
 
 input {
@@ -9,7 +11,6 @@ input {
 .filter-sidebar__heading {
   margin: 0.5rem 0;
   font-weight: 1000;
-  /* color: var(--midgrey); */
 }
 
 .sidebar__sort {
@@ -20,7 +21,7 @@ input {
 }
 
 .filter-margin {
-  margin: 0.75rem 0.75rem 0.75rem 0;
+  margin: 0.5rem 0.5rem 0.5rem 0;
 }
 
 .margin-top {
@@ -30,7 +31,7 @@ input {
 .clear-all {
   margin-right: 0.5rem;
   padding: 0.25rem;
-  /* font-size: 0.65rem; */
+  font-size: 0.75rem;
   font-weight: bold;
   background: transparent;
   border: 0;
@@ -47,7 +48,7 @@ input {
     left: 0;
     top: 6.5rem;
     width: 18vw;
-    height: 83vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
