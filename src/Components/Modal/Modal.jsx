@@ -2,7 +2,7 @@ import { useProduct } from "../../Context/ProductContext"
 import "./Modal.css"
 
 export const Modal = ({product}) => {
-    const {state,dispatch} = useProduct();
+    const {dispatch} = useProduct();
     const removeHandler = () => {
         dispatch({type: "SET_OVERLAY"});
         dispatch({type: "REMOVE_FROM_CART",payload:product})

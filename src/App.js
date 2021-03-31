@@ -21,7 +21,6 @@ function App() {
     error:false
   })
 
-  console.log(status,"before useEffect");
   useEffect(() => {
     // setStatus({...status,loading:true})
     //fetching products

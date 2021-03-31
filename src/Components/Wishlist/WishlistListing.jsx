@@ -4,7 +4,7 @@ import "./WishlistListing.css";
 
 
 export const WishlistListing = () => {
-    const {state,dispatch} = useProduct();
+    const {state} = useProduct();
     return(
         <div>
                 {state.wishlist.length === 0 ? 

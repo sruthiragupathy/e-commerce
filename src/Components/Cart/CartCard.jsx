@@ -1,12 +1,10 @@
-import { useState } from "react";
 import { useProduct } from "../../Context/ProductContext";
 import { isInWishlist } from "../CardCommonFunctions";
 import { Modal } from "../Modal/Modal";
-import {Link} from "react-router-dom";
 import "./CartCard.css"
 
 export const CartCard = ({product}) => {
-    const {id,image,brandName,description,price,isnew,sale,outOfStock,discountByPercentage,count,seller} = product;
+    const {image,brandName,description,price,discountByPercentage,seller} = product;
     const {state,dispatch} = useProduct();
     const addToWishlist = () => {
         if(isInWishlist(state.wishlist,product.id)){

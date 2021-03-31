@@ -5,9 +5,9 @@ import "./OrderSummary.css";
 
 
 export const OrderSummary = () => {
-    const {state,dispatch} = useProduct();
-    const [totalPrice,setTotalPrice] = useState(totalMRP(state.cart))
-    const [totalOrderPrice,setTotalOrderPrice] = useState(getTotalOrderPrice(state.cart))
+    const {state} = useProduct();
+    const [totalPrice] = useState(totalMRP(state.cart))
+    const [totalOrderPrice] = useState(getTotalOrderPrice(state.cart))
      return <div className = "order-summary">
         <div className = "cart-heading flex-center">
             <strong>PRICE DETAILS ({state.wishlist.length} items)</strong>

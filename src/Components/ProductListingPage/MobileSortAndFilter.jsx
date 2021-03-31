@@ -1,11 +1,11 @@
-import {useState} from "react";
+
 import { useProduct } from "../../Context/ProductContext";
 
 import "./MobileSortAndFilter.css";
 import "./FilterSideBar.css"
 const sortByNames = ["Latest","Discount","Price : High to Low","Price : Low to High"]
 export const MobileSortAndFilter = () => {
-    const [sort,setSort] = useState(false);
+
 
     const {state,dispatch} = useProduct();
 

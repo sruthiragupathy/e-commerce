@@ -1,19 +1,18 @@
 import { useProduct } from "../../Context/ProductContext";
-import {useState} from "react"
 import "./CartListing.css";
 import {CartCard} from "./CartCard";
 import { OrderSummary } from "./OrderSummary";
-import { Modal } from "../Modal/Modal";
+
 
 export const CartListing = () => {
-    const {state,dispatch} = useProduct();
-    const [showModal,setShowModal] = useState(false);
+    const {state} = useProduct();
+    
     const getTotalOrderPrice = (cart) => {
         return cart.reduce((acc,currentCartItem) => {
             return acc+Number(currentCartItem.price)
         },0)
     }
-    console.log(showModal,state.overlay);
+    
     return(
         <div>
                 {state.cart.length === 0 ? 

@@ -14,6 +14,8 @@ export const createObject  = (brandNameArray,filterObject) => {
 }
 
 export const ProductProvider = ({ children }) => {
+  
+  
   const [state, dispatch] = useReducer(reducerFunction, {
     product: [],
     cart: [],
@@ -31,10 +33,10 @@ export const ProductProvider = ({ children }) => {
     },
     openFilter : false,
     openSort : false,
-    overlay : false
+    overlay : false,
+    toast : false
   });
 
-  console.log(state.filter);
   return (
     <ProductContext.Provider value={{ state, dispatch }}>
       {children}

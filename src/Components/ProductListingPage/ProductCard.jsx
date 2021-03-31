@@ -3,9 +3,16 @@ import "./ProductCard.css";
 import {useProduct} from "../../Context/ProductContext";
 import {Link} from "react-router-dom";
 import { calculateOriginalPrice,getProductFromWishlistDb, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
+
 export const ProductCard = ({product}) => {
     const {id,image,brandName,description,price,isnew,sale,outOfStock,discountByPercentage,count} = product;
     const {state,dispatch} = useProduct();
+
+    const productAddToCartHandler = () => {
+        dispatch({type:"ADD_TO_CART",payload:product})
+        dispatch({type:"TOGGLE_TOAST"})
+        
+    }
 
     return (
         <div className={`card ${outOfStock ? "overlay" : ""} pointer`} key = {id} >
@@ -35,7 +42,7 @@ export const ProductCard = ({product}) => {
                     </button>:
                     <button 
                     className = "btn btn-primary" 
-                    onClick = {() => dispatch({type:"ADD_TO_CART",payload:product})} 
+                    onClick = {productAddToCartHandler} 
                     disabled = {outOfStock}>Add to Cart</button>}
                 </div>
                 <button 
@@ -44,6 +51,7 @@ export const ProductCard = ({product}) => {
                     <i className="fa fa-heart"></i>
                 </button>
             </div>
+            
         </div>
                 
     )

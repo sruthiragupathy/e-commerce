@@ -4,7 +4,7 @@ import "./WishlistCard.css"
 import { calculateOriginalPrice, getProductFromWishlistDb, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
 
 export const WishlistCard = ({product}) => {
-        const {id,image,brandName,description,price,isnew,sale,outOfStock,discountByPercentage,count} = product;
+        const {id,image,brandName,description,price,outOfStock,discountByPercentage,count} = product;
         const {state,dispatch} = useProduct();
 
         return (

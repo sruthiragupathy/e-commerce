@@ -12,7 +12,7 @@ export const ProductListingPage = ({props,productCategory}) => {
     const transformProducts = (products) => {
         let products_to_filter = products;
         //sort based on instock
-        console.log(state);
+        
         
         //filter by brands and in stock
         const keysOfFilterObject = Object.keys(state.brandFilter);
@@ -33,7 +33,7 @@ export const ProductListingPage = ({props,productCategory}) => {
         if(currentSortByType.length !== 0){
         products_to_filter = sortFunction(products_to_filter,currentSortByType[0])
         }
-        console.log(products_to_filter);
+        console.log({state});
         products_to_filter.sort((a,b) => (b.outOfStock === false ? 1 : -1))
         return products_to_filter;
     }
@@ -45,7 +45,7 @@ export const ProductListingPage = ({props,productCategory}) => {
         <FilterSideBar/>
         <div className = "product-flex">
             {transformProducts(state.products).map(product => 
-                <ProductCard product = {product}/>
+                <ProductCard product = {product} key = {product.id}/>
             )}
         </div>
         </div>
