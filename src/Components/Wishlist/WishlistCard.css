@@ -5,10 +5,17 @@
 .wishlist-card {
   justify-self: center;
   position: relative;
+  width: 12rem;
 }
 
 .btn-icon {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
+}
+
+@media only screen and (min-width: 750px) {
+  .wishlist-card {
+    width: 14rem;
+  }
 }

@@ -20,7 +20,7 @@
 @media only screen and (min-width: 750px) {
   .wishlist-wrapper {
     grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 4rem;
+    grid-column-gap: 3rem;
     grid-row-gap: 2rem;
     margin: 1rem 0;
   }
