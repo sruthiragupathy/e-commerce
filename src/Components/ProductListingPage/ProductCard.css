@@ -1,5 +1,6 @@
 .card {
-  width: 12.75rem;
+  width: 100%;
+  max-width: 100%;
   justify-self: center;
   position: relative;
 }
@@ -40,10 +41,4 @@
   opacity: 0.6;
   filter: grayscale(0.5);
   /* z-index: 1; */
-}
-
-@media only screen and (min-width: 500px) {
-  .card {
-    width: 15rem;
-  }
 }
