@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import { CartListing } from './Components/Cart/CartListing';
 import { WishlistListing } from './Components/Wishlist/WishlistListing';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 function App() {
@@ -63,7 +64,10 @@ function App() {
       setOpenHamburger={setOpenHamburger}
       />
       
-      {status.loading ? <p>Loading.....</p> : 
+      {status.loading ? 
+      <div className = "loader">
+        <CircularProgress color = "#5b21b6"/>
+      </div> : 
       <Switch>
         <Route path = "/products/women" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "women"/>)}/>
         <Route path = "/products/men" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "men"/>)}/>

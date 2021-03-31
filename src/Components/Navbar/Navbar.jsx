@@ -32,8 +32,20 @@ const Navbar = ({ openHamburger, setOpenHamburger}) => {
       >
         {category.map((item, index) => {
           return item === "home" ? 
-          <Link to = "/" key = {index} className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/`)?"mobile__current-category":""}`}>{item}</Link>:
-          <Link to = {`/products/${item}`} key = {index} className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/products/${item}`)?"mobile__current-category":""}`}>{item}</Link>
+          <Link 
+          to = "/" 
+          key = {index} >
+            <button className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/`)?"mobile__current-category":""}`}
+            onClick = {toggleHamburgerMenu}>
+              {item}
+            </button>
+          </Link>:
+          <Link to = {`/products/${item}`} key = {index} >
+            <button className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/products/${item}`)?"mobile__current-category":""}`}
+            onClick = {toggleHamburgerMenu}>
+              {item}
+            </button>
+          </Link>
           
         })}
       </ul>

@@ -20,3 +20,15 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--lightgrey2);
 }
+
+.loader {
+  position: absolute;
+  width: 100vw;
+  height: 80vh;
+  top: 4rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
