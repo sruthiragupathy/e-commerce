@@ -9,7 +9,7 @@ export const WishlistCard = ({product}) => {
 
         return (
 
-            <div className={`card ${outOfStock ? "overlay" : ""} pointer`} key = {id} >
+            <div className={`wishlist-card ${outOfStock ? "overlay" : ""} pointer`} key = {id} >
                 {outOfStock && <div className="out-of-stock">OUT OF STOCK</div>}
                 <img className="responsive-img" src={image} alt={brandName}/>
                 <div className="card__description">

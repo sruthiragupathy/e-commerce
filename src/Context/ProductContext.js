@@ -34,7 +34,10 @@ export const ProductProvider = ({ children }) => {
     openFilter : false,
     openSort : false,
     overlay : false,
-    toast : false
+    toast : {
+      value:false,
+      message:""
+    }
   });
 
   return (

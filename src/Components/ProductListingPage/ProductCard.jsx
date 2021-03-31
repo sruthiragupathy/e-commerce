@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProductCard.css";
 import {useProduct} from "../../Context/ProductContext";
 import {Link} from "react-router-dom";
 import { calculateOriginalPrice,getProductFromWishlistDb, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
+import { Toast } from "../Toast/Toast";
 
 export const ProductCard = ({product}) => {
     const {id,image,brandName,description,price,isnew,sale,outOfStock,discountByPercentage,count} = product;
     const {state,dispatch} = useProduct();
+    const [toastMessage, setToastMessage] = useState("");
+
+    const hideToast = () => {
+        setTimeout(() => {
+            dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
+          }, 1000)
+    }
 
     const productAddToCartHandler = () => {
         dispatch({type:"ADD_TO_CART",payload:product})
-        dispatch({type:"TOGGLE_TOAST"})
+        dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
+        hideToast()
         
     }
 
     return (
+        <>
         <div className={`card ${outOfStock ? "overlay" : ""} pointer`} key = {id} >
             {outOfStock && <div className="out-of-stock">OUT OF STOCK</div>}
             <img className="responsive-img" src={image} alt={brandName}/>
@@ -53,6 +63,8 @@ export const ProductCard = ({product}) => {
             </div>
             
         </div>
+        </>
+
                 
     )
 }

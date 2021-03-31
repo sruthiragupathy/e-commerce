@@ -73,7 +73,7 @@ export const reducerFunction = (state, { type, payload,value }) => {
       case "SET_OVERLAY":
         return {...state,overlay:!state.overlay}
         case "TOGGLE_TOAST":
-          return {...state,toast:!state.toast}
+          return {...state,toast:{value:!state.toast.value,message:payload}}
       default:
         return state;
     }

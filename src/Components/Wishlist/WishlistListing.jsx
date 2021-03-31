@@ -9,7 +9,7 @@ export const WishlistListing = () => {
         <div>
                 {state.wishlist.length === 0 ? 
                 <div className = "empty-product">"Your Wishlist is empty"</div> :
-                <div className = "container">
+                <div className = "wishlist-container">
                 <div className = "wishlist-heading"><strong>My Wishlist</strong> - {state.wishlist.length} items</div>
                 <div class = "wishlist-wrapper">
                 {

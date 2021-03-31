@@ -1,5 +1,6 @@
 import React from "react";
 import { useProduct } from "../../Context/ProductContext";
+import { Toast } from "../Toast/Toast";
 import { FilterSideBar } from "./FilterSideBar";
 import { ProductCard } from "./ProductCard";
 import "./ProductListingPage.css";
@@ -48,6 +49,7 @@ export const ProductListingPage = ({props,productCategory}) => {
                 <ProductCard product = {product} key = {product.id}/>
             )}
         </div>
+        {state.toast.value && <Toast message = {state.toast.message}/>}
         </div>
         
     )

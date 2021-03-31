@@ -2,6 +2,11 @@
   position: relative;
 }
 
+.wishlist-card {
+  justify-self: center;
+  position: relative;
+}
+
 .btn-icon {
   position: absolute;
   top: 0.5rem;
