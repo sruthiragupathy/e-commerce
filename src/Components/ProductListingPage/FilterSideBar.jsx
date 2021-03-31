@@ -21,7 +21,7 @@ export const FilterSideBar = () => {
             <div className = "filter-border-bottom">
             {
                 sortByNames.map((name,index) => {
-                    return <div key = {index}>
+                    return <div key = {index} className = "individual-filter-desktop">
                             <input 
                             name = "sort_by" 
                             type = "radio" 
@@ -45,7 +45,7 @@ export const FilterSideBar = () => {
                     />
                     <label htmlFor="in_stock_only">In Stock Only</label>
                 </div>
-                <div className = "filter-border-bottom margin-top">
+                <div className = "filter-border-bottom">
                 <label htmlFor="price">Price Range : 0 to {state.otherFilter.ranger_value}</label>
                 <br/>
                 <input
@@ -54,11 +54,11 @@ export const FilterSideBar = () => {
                     max="1000"
                     step="100"
                     value = {state.otherFilter.ranger_value}
-                    className = "filter-margin"
+                    className = "margin-top"
                     onChange = {(e) => (dispatch({type:"OTHER_FILTER",payload:"ranger_value",value:e.target.value}))}
                 />
                 </div>
-                <div className = "filter-border-bottom">
+                
                 <div className = "filter-sidebar__heading">FILTER BY BRANDS</div>
                 {
                     getBrands(state.products).map((item,index) => {
@@ -74,7 +74,7 @@ export const FilterSideBar = () => {
                     </div>
                     })
                 }
-                </div>
+               
                 
                 
             

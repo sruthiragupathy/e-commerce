@@ -1,6 +1,6 @@
 .sidebar-wrapper {
   display: none;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: var(--midgrey);
 }
 
@@ -13,6 +13,10 @@ input {
   font-weight: 1000;
 }
 
+.filter-sidebar__heading:nth-child(1) {
+  margin-top: 0;
+}
+
 .sidebar__sort {
   height: 10rem;
   display: flex;
@@ -21,11 +25,11 @@ input {
 }
 
 .filter-margin {
-  margin: 0.5rem 0.5rem 0.5rem 0;
+  margin: 0rem 0.5rem 0.75rem 0;
 }
 
 .margin-top {
-  margin-top: 0.5rem;
+  margin: 0.5rem 0.5rem 0.5rem 0;
 }
 
 .clear-all {
@@ -48,11 +52,12 @@ input {
     left: 0;
     top: 6.5rem;
     width: 18vw;
-    height: 80vh;
+    /* height: vh; */
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
     padding-left: 1rem;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+    border-right: 1px solid var(--light-grey1);
   }
 }
