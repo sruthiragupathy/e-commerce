@@ -12,6 +12,7 @@ import {
 import { CartListing } from './Components/Cart/CartListing';
 import { WishlistListing } from './Components/Wishlist/WishlistListing';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Home } from './Components/Home/Home';
 
 
 function App() {
@@ -66,13 +67,13 @@ function App() {
       
       {status.loading ? 
       <div className = "loader">
-        <CircularProgress color = "#5b21b6"/>
+        <CircularProgress color = "inherit"/>
       </div> : 
       <Switch>
         <Route path = "/products/women" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "women"/>)}/>
         <Route path = "/products/men" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "men"/>)}/>
         <Route path = "/products/sneakers" component = {(props) => (<ProductListingPage props = {props} productCategory = "sneakers"/>)}/>
-        <Route path = "/" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "men"/>)}/>
+        <Route path = "/" exact component = {(props) => (<Home/>)}/>
         <Route path = "/checkout/cart" component = {(props) => (<CartListing props = {props}/>)}/>
         <Route path = "/wishlist" component = {(props) => (<WishlistListing props = {props}/>)}/>
       </Switch>} 
