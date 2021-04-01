@@ -39,10 +39,10 @@ export const ProductCard = ({product}) => {
                         {discountByPercentage !== 0 && <h5 className="rm light strikethrough">Rs. {calculateOriginalPrice(price,discountByPercentage)} </h5>}
                         {discountByPercentage !== 0 && <h5 className="rm discount">({discountByPercentage}% OFF)</h5>}
                     </div>
-                    {count <= 5 &&
+                    {/* {count <= 5 &&
                             <div className = "secondary">
                                 <span className="orange-txt"><strong>Only few left!</strong></span>
-                    </div>}
+                    </div>} */}
                     {isInCart(state.cart,id) ?
                     <button className = "btn btn-primary"  disabled = {outOfStock}>
                         <Link to = "/checkout/cart">
