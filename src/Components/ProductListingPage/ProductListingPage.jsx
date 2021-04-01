@@ -45,9 +45,11 @@ export const ProductListingPage = ({props,productCategory}) => {
         {state.overlay && <div className = "background-overlay"></div>}
         <FilterSideBar/>
         <div className = "product-flex">
-            {transformProducts(state.products).map(product => 
+            {transformProducts(state.products).length !== 0 ? 
+            transformProducts(state.products).map(product => 
                 <ProductCard product = {product} key = {product.id}/>
-            )}
+            ) : 
+            <div className = "empty-product__PLP">"No products to display"</div>}
         </div>
         {state.toast.value && <Toast message = {state.toast.message}/>}
         </div>
