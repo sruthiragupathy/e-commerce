@@ -2,7 +2,7 @@ import { useProduct } from "../../Context/ProductContext";
 import "./CartListing.css";
 import {CartCard} from "./CartCard";
 import { OrderSummary } from "./OrderSummary";
-
+import { Toast } from "../Toast/Toast";
 
 export const CartListing = () => {
     const {state} = useProduct();
@@ -12,6 +12,8 @@ export const CartListing = () => {
             return acc+Number(currentCartItem.price)
         },0)
     }
+
+    console.log(state.toast);
     
     return(
         <div>
@@ -35,6 +37,8 @@ export const CartListing = () => {
                     
                 </div>
                 </div>}
+                {state.toast.value && <Toast message = {state.toast.message}/>}
+
         </div>
 
     )

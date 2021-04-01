@@ -1,10 +1,11 @@
 import { useProduct } from "../../Context/ProductContext"
+import { Toast } from "../Toast/Toast";
 import { WishlistCard } from "./WishlistCard";
 import "./WishlistListing.css";
 
-
 export const WishlistListing = () => {
     const {state} = useProduct();
+    console.log(state.toast)
     return(
         <div>
                 {state.wishlist.length === 0 ? 
@@ -17,6 +18,8 @@ export const WishlistListing = () => {
                 }
                 </div>
                 </div>}
+                {state.toast.value && <Toast message = {state.toast.message}/>}
+
         </div>
 
     )

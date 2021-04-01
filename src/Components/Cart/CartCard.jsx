@@ -6,6 +6,13 @@ import "./CartCard.css"
 export const CartCard = ({product}) => {
     const {image,brandName,description,price,discountByPercentage,seller} = product;
     const {state,dispatch} = useProduct();
+
+    const hideToast = () => {
+        setTimeout(() => {
+            dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
+          }, 1000)
+    }
+
     const addToWishlist = () => {
         if(isInWishlist(state.wishlist,product.id)){
             dispatch({type:"REMOVE_FROM_CART",payload:product})
@@ -14,7 +21,11 @@ export const CartCard = ({product}) => {
         dispatch({type:"WISHLIST_ADD_OR_REMOVE",payload:product})
         dispatch({type:"REMOVE_FROM_CART",payload:product})
         }
+        dispatch({type:"TOGGLE_TOAST",payload:"1 item added to wishlist"});
+        hideToast()
+
     }
+
     return (    <>
                     <div class="horizontal-card mb">
                         <div class="horizontal-card__cart-item">

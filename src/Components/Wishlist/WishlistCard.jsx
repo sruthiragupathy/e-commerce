@@ -6,7 +6,17 @@ import { calculateOriginalPrice, getProductFromWishlistDb, getTrimmedDescription
 export const WishlistCard = ({product}) => {
         const {id,image,brandName,description,price,outOfStock,discountByPercentage,count} = product;
         const {state,dispatch} = useProduct();
+        const hideToast = () => {
+            setTimeout(() => {
+                dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
+              }, 1000)
+        }
 
+        const addToCartHandler = () => {
+            dispatch({type:"ADD_TO_CART",payload:product});
+            dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
+            hideToast()
+        }
         return (
 
             <div className={`wishlist-card ${outOfStock ? "overlay" : ""} pointer`} key = {id} >
@@ -21,10 +31,10 @@ export const WishlistCard = ({product}) => {
                             {discountByPercentage !== 0 && <h5 className="rm light strikethrough">Rs. {calculateOriginalPrice(price,discountByPercentage)} </h5>}
                             {discountByPercentage !== 0 && <h5 className="rm discount">({discountByPercentage}% OFF)</h5>}
                         </div>
-                        {count <= 5 &&
+                        {/* {count <= 5 &&
                                 <div className = "secondary">
                                     <span className="orange-txt"><strong>Only few left!</strong></span>
-                        </div>}
+                        </div>} */}
                         {isInCart(state.cart,id) ?
                         <button className = "btn btn-primary"  disabled = {outOfStock}>
                             <Link to = "/checkout/cart">
@@ -34,7 +44,7 @@ export const WishlistCard = ({product}) => {
                         </button>:
                         <button 
                         className = "btn btn-primary" 
-                        onClick = {() => dispatch({type:"ADD_TO_CART",payload:product})} 
+                        onClick = { addToCartHandler } 
                         disabled = {outOfStock}>Move to Cart</button>}
                     </div>
                 </div>
