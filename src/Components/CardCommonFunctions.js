@@ -12,6 +12,7 @@ export const isInCart = (cart,id) => {
 }
 
 export const isInWishlist = (wishlist,id) => {
+    console.log(wishlist.map(item => item.id).includes(id))
     return wishlist.map(item => item.id).includes(id)
 }
 

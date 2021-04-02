@@ -1,5 +1,5 @@
-export const addNewItemToExistingArray = (existingArray,newItem,propertyToBeSetTrue) => (
-    [{...newItem,[propertyToBeSetTrue]:true},...existingArray,]
+export const addNewItemToExistingArray = (existingArray,newItem,propertyToBeSetTrue,propertToBeSetFalse) => (
+    [{...newItem,[propertyToBeSetTrue]:true , [propertToBeSetFalse]:false},...existingArray]
 )
 
 export const removeItemFromExistingArray = (existingArray,itemToBeRemoved) => (

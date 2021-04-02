@@ -14,7 +14,7 @@ export const WishlistListing = () => {
                 <div className = "wishlist-heading"><strong>My Wishlist</strong> - {state.wishlist.length} items</div>
                 <div class = "wishlist-wrapper">
                 {
-                    state.wishlist.map(product => <WishlistCard product = {product}/>)
+                    state.wishlist.map(product => <WishlistCard product = {product} key = {product.id}/>)
                 }
                 </div>
                 </div>}

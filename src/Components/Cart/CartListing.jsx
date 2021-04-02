@@ -12,8 +12,6 @@ export const CartListing = () => {
             return acc+Number(currentCartItem.price)
         },0)
     }
-
-    console.log(state.toast);
     
     return(
         <div>
@@ -29,7 +27,7 @@ export const CartListing = () => {
                     <strong>Total: Rs. {getTotalOrderPrice(state.cart)}</strong>
                     </div>
                     {
-                    state.cart.map(product => <CartCard product = {product}/>)
+                    state.cart.map(product => <CartCard product = {product} key = {product.id}/>)
                     }
                     
                     </div>

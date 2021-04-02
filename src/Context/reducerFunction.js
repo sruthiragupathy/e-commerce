@@ -19,7 +19,7 @@ export const reducerFunction = (state, { type, payload,value }) => {
       case "ADD_TO_CART":
         return {
           ...state,
-          cart:addNewItemToExistingArray(state.cart,payload,"isInCart")
+          cart:addNewItemToExistingArray(state.cart,payload,"isInCart" , "isWishlisted")
         }
       case "REMOVE_FROM_CART":
         return {
@@ -27,7 +27,7 @@ export const reducerFunction = (state, { type, payload,value }) => {
           cart:removeItemFromExistingArray(state.cart,payload)
         }
       case "WISHLIST_ADD_OR_REMOVE":
-        // console.log("payload");
+        console.log("payload",payload.isWishlisted);
         return {
           ...state,
           wishlist:payload.isWishlisted ? 
