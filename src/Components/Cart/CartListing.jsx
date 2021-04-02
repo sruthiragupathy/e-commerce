@@ -25,7 +25,7 @@ export const CartListing = () => {
                     {state.overlay && <div className = "background-overlay"></div>}
                     <div className = "cart-grid">
                     <div className = "cart-heading flex">
-                    <strong>My Shopping Bag ({state.wishlist.length} items)</strong>
+                    <strong>My Shopping Bag ({state.cart.length} items)</strong>
                     <strong>Total: Rs. {getTotalOrderPrice(state.cart)}</strong>
                     </div>
                     {
