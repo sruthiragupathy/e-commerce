@@ -5,7 +5,6 @@ import { useProduct } from './Context/ProductContext';
 import { RestApiCalls } from './CallRestApi';
 import { ProductListingPage } from './Components/ProductListingPage/ProductListingPage';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
@@ -59,7 +58,7 @@ function App() {
   }
   return (
     <div className ="App" style = {{display:"flex",flexDirection:"column"}}>
-      <Router>
+      
       <Navbar
       openHamburger={openHamburger}
       setOpenHamburger={setOpenHamburger}
@@ -77,9 +76,6 @@ function App() {
         <Route path = "/checkout/cart" component = {(props) => (<CartListing props = {props}/>)}/>
         <Route path = "/wishlist" component = {(props) => (<WishlistListing props = {props}/>)}/>
       </Switch>} 
-    
-    
-    </Router>
     </div>
   );
 }
