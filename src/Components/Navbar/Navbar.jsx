@@ -3,14 +3,14 @@ import { RightNavbar } from "./RightNavbar";
 import "./Navbar.css";
 
 import {
-  Link,useHistory, withRouter
+  Link,NavLink
 } from "react-router-dom";
-import { isInCurrentPage } from "./isInCurrentPage";
+
 
 const category = ["home","men", "women", "sneakers"];
 
 const Navbar = ({ openHamburger, setOpenHamburger}) => {
-  const history = useHistory();
+
   const toggleHamburgerMenu = () => {
     setOpenHamburger((prev) => !prev);
   };
@@ -32,28 +32,28 @@ const Navbar = ({ openHamburger, setOpenHamburger}) => {
       >
         {category.map((item, index) => {
           return item === "home" ? 
-          <Link 
+          <NavLink 
           to = "/" 
           key = {index} >
-            <button className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/`)?"mobile__current-category":""}`}
+            <button className = "sidebar__item" activeClassName="mobile__current-category"
             onClick = {toggleHamburgerMenu}>
               {item}
             </button>
-          </Link>:
-          <Link to = {`/products/${item}`} key = {index} >
-            <button className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/products/${item}`)?"mobile__current-category":""}`}
+          </NavLink>:
+          <NavLink to = {`/products/${item}`} key = {index} >
+            <button className = "sidebar__item" activeClassName="mobile__current-category"
             onClick = {toggleHamburgerMenu}>
               {item}
             </button>
-          </Link>
+          </NavLink>
           
         })}
       </ul>
       <ul className="nav__category rm-ul-padding flex">
         {category.map((item, index) => {
           return item === "home" ? 
-          <Link to = "/" key = {index} className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/`)?"current-category":""}`}>{item}</Link>:
-          <Link to = {`/products/${item}`} key = {index} className = {`sidebar__item ${isInCurrentPage(history.location.pathname,`/products/${item}`)?"current-category":""}`}>{item}</Link>
+          <NavLink to = "/" end key = {index} className = "sidebar__item" activeClassName = "current-category">{item}</NavLink>:
+          <NavLink to = {`/products/${item}`} key = {index} className = "sidebar__item" activeClassName = "current-category">{item}</NavLink>
           
         })}
       </ul>
@@ -62,4 +62,4 @@ const Navbar = ({ openHamburger, setOpenHamburger}) => {
   );
 };
 
-export default withRouter(Navbar)
+export default Navbar;

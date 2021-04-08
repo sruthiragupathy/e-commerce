@@ -5,9 +5,9 @@ import { useProduct } from './Context/ProductContext';
 import { RestApiCalls } from './CallRestApi';
 import { ProductListingPage } from './Components/ProductListingPage/ProductListingPage';
 import {
-  Switch,
+ Routes,
   Route,
-} from "react-router-dom";
+} from "react-router";
 import { CartListing } from './Components/Cart/CartListing';
 import { WishlistListing } from './Components/Wishlist/WishlistListing';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -68,14 +68,14 @@ function App() {
       <div className = "loader">
         <CircularProgress color = "inherit"/>
       </div> : 
-      <Switch>
-        <Route path = "/products/women" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "women"/>)}/>
-        <Route path = "/products/men" exact component = {(props) => (<ProductListingPage props = {props} productCategory = "men"/>)}/>
-        <Route path = "/products/sneakers" component = {(props) => (<ProductListingPage props = {props} productCategory = "sneakers"/>)}/>
-        <Route path = "/" exact component = {(props) => (<Home/>)}/>
-        <Route path = "/checkout/cart" component = {(props) => (<CartListing props = {props}/>)}/>
-        <Route path = "/wishlist" component = {(props) => (<WishlistListing props = {props}/>)}/>
-      </Switch>} 
+      <Routes>
+        <Route path = "/products/women" element = {<ProductListingPage/>}/>
+        <Route path = "/products/men" element = {<ProductListingPage/>}/>
+        <Route path = "/products/sneakers" element = {<ProductListingPage/>}/>
+        <Route path = "/"  element = {<Home/>}/>
+        <Route path = "/checkout/cart" element = {<CartListing/>}/>
+        <Route path = "/wishlist" element = {<WishlistListing/>}/>
+      </Routes>} 
     </div>
   );
 }
