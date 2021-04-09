@@ -62,7 +62,7 @@ export const AuthProvider = ({children}) => {
             const response = await fakeAuthApi(email,password,auth.database)
             if(response?.success){
                 localStorage.setItem("logincredentials",
-                JSON.stringify({isUserLoggedIn:true, userName: email }))
+                JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(email) }))
                 authDispatch({type:"SET_ISLOGGEDIN" ,payload:true})
                 authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(email)})
                 navigate(pathTo)
