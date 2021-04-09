@@ -1,7 +1,11 @@
 import {Link} from "react-router-dom";
+import { useProduct } from "../../Context/ProductContext";
+import { Toast } from "../Toast/Toast";
+
 import "./Home.css"
 
 export const Home = () => {
+    const {state, dispatch} = useProduct()
     return (
         <>
         <Link to = "/products/women">
@@ -29,6 +33,7 @@ export const Home = () => {
         </Link>
         </div>
         </div>
+        {state.toast.value && <Toast message = {state.toast.message}/>}
         
         </>
         

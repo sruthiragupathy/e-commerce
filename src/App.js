@@ -12,6 +12,11 @@ import { CartListing } from './Components/Cart/CartListing';
 import { WishlistListing } from './Components/Wishlist/WishlistListing';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Home } from './Components/Home/Home';
+import { Login } from './Components/Login/Login';
+import { SignUp } from './Components/Login/SignUp';
+import { PrivateRoutes } from './Components/Navbar/PrivateRoutes';
+import { AuthProvider, useAuth } from './Context/AuthContext';
+
 
 
 function App() {
@@ -21,7 +26,8 @@ function App() {
     loading:true,
     error:false
   })
-
+  const {auth} = useAuth();
+  console.log(auth)
   useEffect(() => {
     // setStatus({...status,loading:true})
     //fetching products
@@ -63,19 +69,29 @@ function App() {
       openHamburger={openHamburger}
       setOpenHamburger={setOpenHamburger}
       />
-      
+      <div>
       {status.loading ? 
       <div className = "loader">
         <CircularProgress color = "inherit"/>
       </div> : 
       <Routes>
-        <Route path = "/products/women" element = {<ProductListingPage/>}/>
+        <Route path = "/products/women" element = {<ProductListingPage />}/>
         <Route path = "/products/men" element = {<ProductListingPage/>}/>
         <Route path = "/products/sneakers" element = {<ProductListingPage/>}/>
         <Route path = "/"  element = {<Home/>}/>
-        <Route path = "/checkout/cart" element = {<CartListing/>}/>
-        <Route path = "/wishlist" element = {<WishlistListing/>}/>
+        <PrivateRoutes path = "/checkout/cart" element = {<CartListing/>}/>
+        <PrivateRoutes path = "/wishlist" element = {<WishlistListing/>}/>
+
       </Routes>} 
+      </div>
+      <Routes>
+      <Route path = "/login" element = {<Login/>} />
+        <Route path = "/signup" element = {<SignUp/>} />
+      </Routes>
+
+      {auth.loading && <div className = "loader">
+        <CircularProgress color = "inherit"/>
+      </div>}
     </div>
   );
 }

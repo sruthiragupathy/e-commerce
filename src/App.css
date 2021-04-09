@@ -32,4 +32,5 @@
   justify-content: center;
   align-items: center;
   color: var(--purple);
+  z-index: 10;
 }
