@@ -42,7 +42,7 @@ export const SignUp = () => {
            setError(error => ({...error,firstName:"Please Enter a valid name"}))
            validationSuccess = false;
        }
-       if(!user.email && isValidEmail(user.email)){
+       if(!user.email || !isValidEmail(user.email)){
         setError(error => ({...error,email:"Please Enter a valid email"}))
         validationSuccess = false;
 
@@ -89,7 +89,7 @@ export const SignUp = () => {
             placeholder = "first name"
             value = {user.firstName}
             onChange = {onChangeHandler}/>
- 	       {error.firstName && <small>*{error.firstName}</small>}
+ 	       {error.firstName && <small className = "red-txt">*{error.firstName}</small>}
         </div>
         <div class="input-group">
 	        <input 
@@ -109,7 +109,7 @@ export const SignUp = () => {
             placeholder = "email : johndoe@gmail.com"
             value = {user.email}
             onChange = {onChangeHandler}/>
- 	        {error.email && <small>*{error.email}</small>}
+ 	        {error.email && <small className = "red-txt">*{error.email}</small>}
         </div>
         <div class="input-group">
 	        <input 
@@ -119,12 +119,12 @@ export const SignUp = () => {
             placeholder = "password"
             value = {user.password}
             onChange = {onChangeHandler}/>
- 	        {error.password && <small>*{error.password}</small>}
+ 	        {error.password && <small className = "red-txt">*{error.password}</small>}
  	        
         </div>
         <div className = "login-btn__container">
             <button className = "btn btn-primary" onClick = {() => signUpHandler(location.state?.from?location.state.from:"/")}>{
-            loading?"SIGNING IN .....":"CREATE AN ACCOUNT"}</button>
+            loading?"SIGNING IN.....":"CREATE AN ACCOUNT"}</button>
 
         </div>
     </div>
