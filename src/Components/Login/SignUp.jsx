@@ -79,7 +79,8 @@ export const SignUp = () => {
         
     }
 
-    return <div className = "login-container">
+    return <div className = "auth-wrapper flex-center">
+        <div className = "login-container">
         <h1 className = "rm purple-txt login-title">Create an account</h1>
         <div class="input-group">
 	        <input 
@@ -127,5 +128,6 @@ export const SignUp = () => {
             loading?"SIGNING IN.....":"CREATE AN ACCOUNT"}</button>
 
         </div>
+    </div>
     </div>
 }
