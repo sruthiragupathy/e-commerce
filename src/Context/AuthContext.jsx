@@ -78,7 +78,7 @@ export const AuthProvider = ({children}) => {
     const logoutHandler = () => {
         authDispatch({type:"SET_LOADING"})
         setTimeout(() => {
-            localStorage?.removeItem("loginCredentials")
+            localStorage?.removeItem("logincredentials")
             authDispatch({type:"SET_ISLOGGEDIN",payload:false})
             authDispatch({type:"SET_LOADING"})
 
