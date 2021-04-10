@@ -65,7 +65,7 @@ export const AuthProvider = ({children}) => {
                 JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(email) }))
                 authDispatch({type:"SET_ISLOGGEDIN" ,payload:true})
                 authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(email)})
-                navigate(pathTo)
+                navigate(pathTo,{replace:pathTo})
                 return response
             }
         }
@@ -81,6 +81,7 @@ export const AuthProvider = ({children}) => {
             localStorage?.removeItem("logincredentials")
             authDispatch({type:"SET_ISLOGGEDIN",payload:false})
             authDispatch({type:"SET_LOADING"})
+            navigate("/");
 
         },2000)
     }

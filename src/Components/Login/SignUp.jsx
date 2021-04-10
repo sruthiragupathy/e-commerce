@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate,useLocation,useNavigate } from "react-router"
 import { useAuth,getNameFromEmail } from "../../Context/AuthContext";
 import { useProduct } from "../../Context/ProductContext";
@@ -29,6 +29,9 @@ export const SignUp = () => {
         password:"",
     })
     const [loading, setLoading] = useState(false);
+    useEffect (() => {
+        auth.isLoggedIn && navigate("/");
+    })
    const onChangeHandler = (e) => {
        setUser({...user,[e.target.name]:e.target.value})
    }
@@ -68,7 +71,7 @@ export const SignUp = () => {
                 authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(user.email)})
                 localStorage.setItem("logincredentials",
                 JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(user.firstName) }))
-                navigate(from)
+                navigate(from,{replace:true})
                 dispatch({type:"TOGGLE_TOAST",payload:"You have been signed up successfully, Happy Shopping"});
                 hideToast()
             }

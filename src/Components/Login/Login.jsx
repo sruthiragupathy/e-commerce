@@ -1,6 +1,6 @@
 import { Navigate,useLocation,useNavigate } from "react-router"
 import "./Login.css"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useProduct } from "../../Context/ProductContext";
 import setupMockServer from "../../api/mock.server";
@@ -21,6 +21,9 @@ export const Login = () => {
     })
     const [errorFromBackend, setErrorFromBackend] = useState("");
     const [loading,setLoading] = useState(false)
+    useEffect(() => {
+        auth.isLoggedIn && navigate("/");
+    })
    
         const validateForm = () => {
             setError({
