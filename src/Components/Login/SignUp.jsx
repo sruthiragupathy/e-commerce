@@ -70,7 +70,7 @@ export const SignUp = () => {
                 authDispatch({type:"SET_ISLOGGEDIN" , payload:true});
                 authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(user.email)})
                 localStorage.setItem("logincredentials",
-                JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(user.firstName) }))
+                JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(user.email) }))
                 navigate(from,{replace:true})
                 dispatch({type:"TOGGLE_TOAST",payload:"You have been signed up successfully, Happy Shopping"});
                 hideToast()
