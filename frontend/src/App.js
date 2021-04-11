@@ -16,6 +16,8 @@ import { Login } from './Components/Login/Login';
 import { SignUp } from './Components/Login/SignUp';
 import { PrivateRoutes } from './Components/Navbar/PrivateRoutes';
 import { AuthProvider, useAuth } from './Context/AuthContext';
+import { BACKEND } from './api';
+import axios from 'axios';
 
 
 
@@ -27,34 +29,35 @@ function App() {
     error:false
   })
   const {auth} = useAuth();
-  console.log(auth)
+
   useEffect(() => {
     // setStatus({...status,loading:true})
     //fetching products
     (async function () {
-      const { response, error } = await RestApiCalls("GET", "api/products");
+      const {response,error} = await RestApiCalls("GET",`${BACKEND}/products`)
       if (!error) {
         dispatch({ type: "SET_PRODUCTS", payload: response });
       }
+      setStatus({...status,loading:false});
     })();
 
-    //fetching cart
-    (async function () {
-      const { response, error } = await RestApiCalls("GET", "api/carts");
-      if (!error) {
-        dispatch({ type: "SET_CART", payload: response });
-        setStatus({...status,loading:false});
+    // //fetching cart
+    // (async function () {
+    //   const { response, error } = await RestApiCalls("GET", "api/carts");
+    //   if (!error) {
+    //     dispatch({ type: "SET_CART", payload: response });
+    //     setStatus({...status,loading:false});
 
-      }
-    })();
+    //   }
+    // })();
 
-    //fetching wishlist
-    (async function () {
-      const { response, error } = await RestApiCalls("GET", "api/wishlists");
-      if (!error) {
-        dispatch({ type: "SET_WISHLIST", payload: response });
-      }
-    })();
+    // //fetching wishlist
+    // (async function () {
+    //   const { response, error } = await RestApiCalls("GET", "api/wishlists");
+    //   if (!error) {
+    //     dispatch({ type: "SET_WISHLIST", payload: response });
+    //   }
+    // })();
   }, []);
   if(state.overlay){
     document.body.style.overflow="hidden"

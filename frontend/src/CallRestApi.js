@@ -8,13 +8,17 @@ class RESTError extends Error {
 }
 
 export const RestApiCalls = async (method, route, data) => {
+  console.log(method,route)
   switch (method) {
     case "GET": {
       try {
-        const res = await axios.get(route);
+        const res = await axios({
+          method: 'GET',
+          url: route
+        });
         if (res.status === 200) {
           return {
-            response: res.data[route.split("/")[1]],
+            response: res.data,
             error: false
           };
         } else {
