@@ -55,7 +55,6 @@ const countArray = [2,5,6,10,20];
 const sellerArray = ["house of masaba"]
 
 const femaleProducts = [...Array(25)].map((item) => ({
-  id: faker.datatype.uuid(),
   image: faker.random.arrayElement(femaleImageArray),
   brandName: faker.random.arrayElement(brandNameArray),
   description: faker.random.arrayElement(descriptionArray),
@@ -66,8 +65,6 @@ const femaleProducts = [...Array(25)].map((item) => ({
   discountByPercentage: faker.random.arrayElement(discountArray),
   rating: faker.random.arrayElement(ratingArray),
   count:faker.random.arrayElement(countArray),
-  isWishlisted:false,
-  isInCart:false,
   seller:faker.random.arrayElement(sellerArray),
   type: "female"
 }));
