@@ -4,10 +4,13 @@ const express = require("express");
 const app = express()
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const  Routes  = require("./Routes/products")
+const  productRoutes  = require("./Routes/products")
+const userRoutes = require("./Routes/user");
+
 const connectMongoDb = require("./Database/connectMongoDb");
-const femaleProducts = require("./Database/database");
-const Product = require("./Database/Product");
+// const femaleProducts = require("./Database/database");
+// const Product = require("./Database/Product");
+
 const PORT = 3000
 
 const bool = true;
@@ -15,20 +18,21 @@ const bool = true;
 app.use(cors());
 connectMongoDb();
 // console.log(femaleProducts);
-const populateData = async ( femaleProducts ) => {
-    try {
-    await Product.insertMany(femaleProducts);
-    }
-    catch (error) {
-        console.log(error)
-    }
-}
+// const populateData = async ( femaleProducts ) => {
+//     try {
+//     await Product.insertMany(femaleProducts);
+//     }
+//     catch (error) {
+//         console.log(error)
+//     }
+// }
 
 //Middlewares
 app.use(bodyParser.json());
 
 //Routes
-app.use("/api",Routes);
+app.use("/api", productRoutes);
+app.use("/api", userRoutes);
 
 
 app.listen(PORT, () => {
