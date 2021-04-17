@@ -1,5 +1,21 @@
 const User = require("../Database/User")
 
+//Error constructors
+class LoginError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = "LoginError";
+    }
+  }
+
+class AuthError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = "AuthError";
+    }
+  }
+
+//controllers
 exports.findUserById = async (req, res, next, id) => {
      await User.findById(id).exec(( err, user) => {
          if(err) {
@@ -32,5 +48,24 @@ exports.findUserById = async (req, res, next, id) => {
         }
         catch(error) {
             res.json({success: false, message: error.message})
+        }
+    }
+    exports.loginHandler = async (req,res) => {
+        const {email, password} = req.body;
+        try {
+            const user = await User.find({email: email})
+            if(!user.length) {
+                throw new LoginError(" User does not exist, Signup to enter ")
+            }
+            if( password !== user[0].password) {
+                throw new AuthError(" Email and password does not match ");
+            }
+            res.json ({ success: true, message: "Authentication successful", user: user})
+        }
+        catch (error){
+            if(error instanceof LoginError || error instanceof LoginError){
+                res.json({success: false, error: error.message})
+            }
+            res.json({success: false, error: error.message})
         }
     }
