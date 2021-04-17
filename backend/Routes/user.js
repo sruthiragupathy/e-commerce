@@ -1,8 +1,9 @@
 const express = require("express");
-const { findUserById } = require("../Controllers/user.js");
+const { findUserById, signupHandler, getUsersFromDatabase } = require("../Controllers/user.js");
 const router = express.Router();
 
 router.param("userId", findUserById);
-router.get("/user")
+router.get("/users", getUsersFromDatabase);
+router.post("/signup", signupHandler);
 
 module.exports = router;

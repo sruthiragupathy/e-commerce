@@ -16,6 +16,10 @@ const userSchema = new Schema ({
         unique: true,
         trim: true,
     },
+    password: {
+        type: String,
+        trim: true
+    },
     wishlist: {
         type: Array,
         default: []
