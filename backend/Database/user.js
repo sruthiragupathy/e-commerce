@@ -5,7 +5,7 @@ const userSchema = new Schema ({
     name: {
         type: String,
         trim: true,
-        required: true
+        required: [ true, "name is required" ]
     },
     lastName: {
         type: String,
@@ -15,19 +15,26 @@ const userSchema = new Schema ({
         type: String,
         unique: true,
         trim: true,
+        required: [ true, "email is required" ],
+        validate: {
+            validator: function(v) {
+                return /[a-z][0-9]*@gmail.com/.test(v)
+            },
+            message: props => `${props.value} is not a valid email`
+        }
     },
+    
     password: {
         type: String,
-        trim: true
+        trim: true,
+        require: [true, "password field is required"],
+        validate: {
+            validator: function(v) {
+                return v.length>6 && /\d+/.test(v)
+            },
+            message: props => `password must be 6 characters long and must contain a number`
+        }
     },
-    wishlist: {
-        type: Array,
-        default: []
-    },
-    cart: {
-        type: Array,
-        default: []
-    }
     
 })
 

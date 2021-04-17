@@ -38,10 +38,6 @@ exports.findUserById = async (req, res, next, id) => {
     exports.signupHandler = async (req, res) => {
         const user = new User(req.body);
         try{
-            if(await User.find({email: user.email}))
-            {
-                throw new Error("User has already signed up, Please login to enter");
-            }
             const savedUser = await user.save()
             res.send({success:true, user: savedUser})
 
