@@ -35,7 +35,12 @@ const userSchema = new Schema ({
             message: props => `password must be 6 characters long and must contain a number`
         }
     },
+
+    cart: {
+        type: Schema.Types.ObjectId,
+        ref: "Cart"
+    }
     
-})
+}, {timestamps: true})
 
 module.exports = mongoose.model( "User", userSchema );

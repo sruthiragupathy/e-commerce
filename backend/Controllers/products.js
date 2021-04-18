@@ -1,6 +1,6 @@
 const femaleProducts  = require("../Database/database");
 const faker = require("faker");
-const Product = require("../Database/Product");
+const Product = require("../Database/product");
 faker.seed(123);
 
 exports.findProductById = (req, res, next, id) => {

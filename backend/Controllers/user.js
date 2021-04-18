@@ -1,4 +1,6 @@
-const User = require("../Database/User")
+const Cart = require("../Database/cart");
+const User = require("../Database/user");
+const wishlist = require("../Database/wishlist");
 
 //Error constructors
 class LoginError extends Error {
@@ -16,7 +18,7 @@ class AuthError extends Error {
   }
 
 //controllers
-exports.findUserById = async (req, res, next, id) => {
+    exports.findUserById = async (req, res, next, id) => {
      await User.findById(id).exec(( err, user) => {
          if(err) {
              return res.status(404).json({
@@ -26,6 +28,7 @@ exports.findUserById = async (req, res, next, id) => {
          req.user = user;
      })
     }
+
     exports.getUsersFromDatabase = async (req, res) =>{
         try{
             const users = await User.find({});
@@ -39,11 +42,34 @@ exports.findUserById = async (req, res, next, id) => {
         const user = new User(req.body);
         try{
             const savedUser = await user.save()
-            res.send({success:true, user: savedUser})
+            const userCart = new Cart({
+                _id: savedUser._id
+            })
+            const savedCart = await userCart.save();
+            const userWishlist = new wishlist({
+                _id: savedUser._id
+            })
+            const savedWishlist = await userWishlist.save();
+            await Cart.findOne({ _id: savedWishlist._id })
+            .populate('_id')
+            .exec(function (err, usercart) {
+            console.log('The author is %s', usercart);
+            })
+
+            await wishlist.findOne({_id:savedWishlist._id})
+            .populate('_id')
+            .exec(function (err, usercart) {
+                console.log('The author is %s', userWishlist);
+                })
+      
+            res.json({success:true, user: savedUser, userCart: userCart, userWishlist: userWishlist})
 
         }
         catch(error) {
-            res.json({success: false, message: error.message})
+            // console.log(error)
+            res.json({success: false, 
+                error: error.message
+            })
         }
     }
     exports.loginHandler = async (req,res) => {

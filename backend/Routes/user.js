@@ -1,5 +1,5 @@
 const express = require("express");
-const { findUserById, signupHandler, getUsersFromDatabase, loginHandler } = require("../Controllers/user.js");
+const { findUserById, signupHandler, getUsersFromDatabase, loginHandler, formValidation } = require("../Controllers/user.js");
 const router = express.Router();
 
 router.param("userId", findUserById);
