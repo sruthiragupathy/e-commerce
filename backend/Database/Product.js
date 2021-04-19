@@ -19,7 +19,7 @@ const productSchema = new Schema ({
         required: "description is required"
     },
     price : {
-        type: Decimal128,
+        type: String,
         trim: true,
         required: "price is required"
     },

@@ -18,7 +18,6 @@ const PORT = 3000
 
 const bool = true;
 
-app.use(cors());
 connectMongoDb();
 // console.log(femaleProducts);
 // const populateData = async ( femaleProducts ) => {
@@ -31,7 +30,10 @@ connectMongoDb();
 // }
 
 //Middlewares
-app.use(bodyParser.json());
+app.use(bodyParser.json()) // handle json data
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors());
+
 
 //Routes
 app.use("/api", productRoutes);

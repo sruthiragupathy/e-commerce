@@ -19,7 +19,7 @@ export const CartListing = () => {
                 <div className = "empty-product">"Your Cart is empty"</div> :
                 <div className = "container">
                
-                <div class = "cart-wrapper">
+                <div className = "cart-wrapper">
                     {state.overlay && <div className = "background-overlay"></div>}
                     <div className = "cart-grid">
                     <div className = "cart-heading flex">

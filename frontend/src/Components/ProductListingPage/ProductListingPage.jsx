@@ -9,12 +9,11 @@ import {sortFunction} from "./SortFunction";
 export const ProductListingPage = ({props,productCategory}) => {
     
     const {state} = useProduct();
+    console.log(state);
 
     const transformProducts = (products) => {
         let products_to_filter = products;
         //sort based on instock
-        
-        
         //filter by brands and in stock
         const keysOfFilterObject = Object.keys(state.brandFilter);
         const checkedBrands = keysOfFilterObject.filter(item => state.brandFilter[item] === true)
@@ -28,13 +27,12 @@ export const ProductListingPage = ({props,productCategory}) => {
         }
         //list products based on price range
         products_to_filter = products_to_filter.filter(product => Number(product.price) <= state.otherFilter.ranger_value)
-        //sorting
+                //sorting
         const keysOfSortObject  = Object.keys(state.sort);
         const currentSortByType = keysOfSortObject.filter(type => state.sort[type] === true);
         if(currentSortByType.length !== 0){
         products_to_filter = sortFunction(products_to_filter,currentSortByType[0])
         }
-        console.log({state});
         products_to_filter.sort((a,b) => (b.outOfStock === false ? 1 : -1))
         return products_to_filter;
     }

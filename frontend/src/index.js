@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import { ProductProvider } from "./Context/ProductContext";
 import App from "./App";
 import {HashRouter as Router} from "react-router-dom";
-
-import setupMockServer from "./api/mock.server";
 import { AuthProvider } from "./Context/AuthContext";
 
 // setupMockServer();

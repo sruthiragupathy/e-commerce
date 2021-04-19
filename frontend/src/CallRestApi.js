@@ -16,6 +16,7 @@ export const RestApiCalls = async (method, route, data) => {
           method: 'GET',
           url: route
         });
+        console.log({res});
         if (res.status === 200) {
           return {
             response: res.data,
@@ -28,6 +29,18 @@ export const RestApiCalls = async (method, route, data) => {
         return { response: error, error: true };
       }
     }
+    case  "POST": {
+      console.log(JSON.stringify(data))
+      try {
+        const res = await axios.post(route,data)
+        return res.data;
+      }
+      catch(error) {
+        console.log(error);
+        return { success: false, error: error.message};
+      }
+    }
+
     default:
       return "The provided method is not valid";
   }

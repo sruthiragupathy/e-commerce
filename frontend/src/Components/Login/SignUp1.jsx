@@ -22,40 +22,40 @@ export const SignUp = () => {
     }
     return <div className = "login-container">
         <h1 className = "purple-txt">Sign Up</h1>
-        <div class="input-group">
+        <div className="input-group">
 	        <input 
             type="text" 
-            class = "input-area" 
+            className = "input-area" 
             name = "firstName" 
             placeholder = "first name"
             value = {userDetails.firstName}
             onChange = {(e) => onChangeHandler(e.target.name,e.target.value)}/>
  	       {userDetails.error.firstName && <small>*{userDetails.error.firstName}</small>}
         </div>
-        <div class="input-group">
+        <div className="input-group">
 	        <input 
             type="text" 
-            class = "input-area" 
+            className = "input-area" 
             name = "lastName" 
             placeholder = "last name"
             value = {userDetails.lastName}
             onChange = {(e) => onChangeHandler(e.target.name,e.target.value)}/>
  	     
         </div>
-        <div class="input-group">
+        <div className="input-group">
 	        <input 
             type="text" 
-            class = "input-area" 
+            className = "input-area" 
             name = "email" 
             placeholder = "email"
             value = {userDetails.email}
             onChange = {(e) => onChangeHandler(e.target.name,e.target.value)}/>
  	        {userDetails.error.email && <small>*{userDetails.error.email}</small>}
         </div>
-        <div class="input-group">
+        <div className="input-group">
 	        <input 
             type="text" 
-            class = "input-area" 
+            className = "input-area" 
             name = "password" 
             placeholder = "password"
             value = {userDetails.password}

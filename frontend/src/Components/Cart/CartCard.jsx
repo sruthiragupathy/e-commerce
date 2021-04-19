@@ -27,39 +27,39 @@ export const CartCard = ({product}) => {
     }
 
     return (    <>
-                    <div class="horizontal-card mb">
-                        <div class="horizontal-card__cart-item">
-                            <div class="cart-item__img">
-                                <img class="responsive-img" src={image} alt={brandName}/>
+                    <div className="horizontal-card mb">
+                        <div className="horizontal-card__cart-item">
+                            <div className="cart-item__img">
+                                <img className="responsive-img" src={image} alt={brandName}/>
                             </div>
-                            <div class="cart-item__flex">
-                                <div class="cart-item__details">
-                                    <div class="details__primary">
-                                        <p class =  "rm"><strong>{brandName}</strong></p>
-                                        <div class="description light rm">{description}</div>
+                            <div className="cart-item__flex">
+                                <div className="cart-item__details">
+                                    <div className="details__primary">
+                                        <p className =  "rm"><strong>{brandName}</strong></p>
+                                        <div className="description light rm">{description}</div>
                                         <small>Sold by: {seller}</small>
                                     </div>
-                                    <div class = "details__btns">
-                                        <button class="badge primary-badge">Size: S <i class="fa fa-caret-down"></i></button>
-                                        <button class="badge primary-badge">Qty: 1 <i class="fa fa-caret-down"></i></button>
+                                    <div className = "details__btns">
+                                        <button className="badge primary-badge">Size: S <i className="fa fa-caret-down"></i></button>
+                                        <button className="badge primary-badge">Qty: 1 <i className="fa fa-caret-down"></i></button>
                                     </div>
                                 </div>
-                                <div class="cart-item__price">
-                                    <h5 class = "rm"><strong>Rs. {price} </strong></h5>
-                                    <span class="rm light strikethrough">Rs.1400 </span>
-                                    <span class = "price__discount">({discountByPercentage} OFF)</span>
+                                <div className="cart-item__price">
+                                    <h5 className = "rm"><strong>Rs. {price} </strong></h5>
+                                    <span className="rm light strikethrough">Rs.1400 </span>
+                                    <span className = "price__discount">({discountByPercentage} OFF)</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="horizontal-card__btns">
-                            <div class = "remove-container">
-                                <button class = "remove" onClick = {() => {
+                        <div className="horizontal-card__btns">
+                            <div className = "remove-container">
+                                <button className = "remove" onClick = {() => {
                                     dispatch({type:"SET_OVERLAY"})
                                 }}>REMOVE</button>
                             </div>
                             <div>
                                 {
-                                    <button class = "move-to-wishlist" onClick = {addToWishlist}>MOVE TO WISHLIST</button>
+                                    <button className = "move-to-wishlist" onClick = {addToWishlist}>MOVE TO WISHLIST</button>
                                 }
                                 
         

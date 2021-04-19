@@ -1,9 +1,10 @@
-import { Navigate,useLocation,useNavigate } from "react-router"
+import { useLocation,useNavigate } from "react-router"
 import "./Login.css"
 import {useEffect, useState} from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useProduct } from "../../Context/ProductContext";
-import setupMockServer from "../../api/mock.server";
+import { RestApiCalls } from "../../CallRestApi";
+
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -59,13 +60,13 @@ export const Login = () => {
         setErrorFromBackend("");
         setLoading(true);
         if(validateForm()){
-            const response = await LoginUserWithCredentials(user.email,user.password,location.state?.from?location.state.from:"/");
-            console.log(response.status);
-            if(response?.status === 200) {
+            const response = await LoginUserWithCredentials(user,location.state?.from?location.state.from:"/");
+            console.log({response})
+            if(response?.success) {
                 dispatch({type:"TOGGLE_TOAST",payload:"You have been logged in successfully, Happy Shopping"});
                 hideToast()
             }
-            if(response.status === 401){
+            if(!response?.success){
                 setErrorFromBackend(response.error)
             }
         }
@@ -75,7 +76,7 @@ export const Login = () => {
     return <div className = "auth-wrapper flex-center">
         <div className = "login-container">
         <h1 className = "rm purple-txt login-title">Login</h1>
-        <div class="input-group">
+        <div className="input-group">
 	        <input 
             type="text" 
             className = "input-area"
@@ -87,7 +88,7 @@ export const Login = () => {
             
 
         </div>
-        <div class="input-group">
+        <div className="input-group">
 	        <input 
             type="password" 
             className = "input-area"
@@ -102,8 +103,8 @@ export const Login = () => {
         <div className = "login-btn__container">
             
             {loading ? <button className = "btn btn-primary">LOGGING IN...</button>: <button className = "btn btn-primary" onClick = {loginHandler}>LOGIN</button>}
-             {errorFromBackend && <div class = "alert danger-alert">
-            <div><i class="fa fa-exclamation-circle fa-2x"></i></div>
+             {errorFromBackend && <div className = "alert danger-alert">
+            <div><i className="fa fa-exclamation-circle fa-2x"></i></div>
             <span>{errorFromBackend}</span>
             </div>}
             <small className = "mb">Don't have an account? <span className= "purple-txt underline pointer" onClick = {() => navigate("/signup")}>Create an account</span></small>

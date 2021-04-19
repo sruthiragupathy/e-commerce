@@ -12,7 +12,7 @@ export const WishlistListing = () => {
                 <div className = "empty-product">"Your Wishlist is empty"</div> :
                 <div className = "wishlist-container">
                 <div className = "wishlist-heading"><strong>My Wishlist</strong> - {state.wishlist.length} items</div>
-                <div class = "wishlist-wrapper">
+                <div className = "wishlist-wrapper">
                 {
                     state.wishlist.map(product => <WishlistCard product = {product} key = {product.id}/>)
                 }

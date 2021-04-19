@@ -29,14 +29,16 @@ function App() {
     error:false
   })
   const {auth} = useAuth();
-
+  console.log(auth.user._id);
   useEffect(() => {
     // setStatus({...status,loading:true})
     //fetching products
     (async function () {
       const {response,error} = await RestApiCalls("GET",`${BACKEND}/products`)
+      
+      console.log({response});
       if (!error) {
-        dispatch({ type: "SET_PRODUCTS", payload: response });
+        dispatch({ type: "SET_PRODUCTS", payload: response.products});
       }
       setStatus({...status,loading:false});
     })();

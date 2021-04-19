@@ -47,7 +47,7 @@ class AuthError extends Error {
             })
             const savedCart = await userCart.save();
             const userWishlist = new wishlist({
-                _id: savedUser._id
+                _id: savedCart._id
             })
             const savedWishlist = await userWishlist.save();
             await Cart.findOne({ _id: savedWishlist._id })
@@ -77,17 +77,14 @@ class AuthError extends Error {
         try {
             const user = await User.find({email: email})
             if(!user.length) {
-                throw new LoginError(" User does not exist, Signup to enter ")
+                throw new Error(" User does not exist, Signup to enter ")
             }
             if( password !== user[0].password) {
-                throw new AuthError(" Email and password does not match ");
+                throw new Error(" Email and password does not match ");
             }
-            res.json ({ success: true, message: "Authentication successful", user: user})
+            res.json ({ success: true, message: "Authentication successful", response: user})
         }
         catch (error){
-            if(error instanceof LoginError || error instanceof LoginError){
-                res.json({success: false, error: error.message})
-            }
             res.json({success: false, error: error.message})
         }
     }

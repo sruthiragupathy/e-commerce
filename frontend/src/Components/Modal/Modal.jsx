@@ -12,12 +12,12 @@ export const Modal = ({product}) => {
 
     }
     return (
-        <div class="modal-container">
-	        <h2 class = "rm">Remove Item</h2>
+        <div className="modal-container">
+	        <h2 className = "rm">Remove Item</h2>
             <p>Are you sure you want to remove this item?</p>
-            <div class="modal__btns">
-    	        <button class="btn btn-outline-secondary" onClick = {cancelHandler}>Cancel</button>
-                <button class="btn btn-danger" onClick  = {removeHandler}>Remove</button>
+            <div className="modal__btns">
+    	        <button className="btn btn-outline-secondary" onClick = {cancelHandler}>Cancel</button>
+                <button className="btn btn-danger" onClick  = {removeHandler}>Remove</button>
             </div>
         </div>
             
