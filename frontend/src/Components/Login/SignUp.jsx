@@ -80,9 +80,10 @@ export const SignUp = () => {
                 console.log({response});
                 if(response?.success){
                     authDispatch({type:"SET_ISLOGGEDIN" , payload:true});
-                    authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(user.email)})
+                    authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(user.email)});
+                    authDispatch({type:"SET_USER",payload:response.user._id})
                     localStorage.setItem("logincredentials",
-                    JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(user.email) }))
+                    JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(user.email), _id:response.user._id }))
                     navigate(from,{replace:true})
                     dispatch({type:"TOGGLE_TOAST",payload:"You have been signed up successfully, Happy Shopping"});
                     hideToast()

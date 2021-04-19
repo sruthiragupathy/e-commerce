@@ -43,6 +43,8 @@ export const AuthProvider = ({children}) => {
         authDispatch({type:"SET_ISLOGGEDIN",payload:userCredentials.isUserLoggedIn})
         userCredentials?.userName &&
         authDispatch({type:"SET_CURRENTUSER" ,payload:userCredentials.userName}) 
+        userCredentials?._id &&
+        authDispatch({type:"SET_USER" ,payload:userCredentials._id}) 
     },[])
     const navigate = useNavigate();
  
@@ -55,7 +57,7 @@ export const AuthProvider = ({children}) => {
             console.log(response);
             if(response?.success){
             localStorage.setItem("logincredentials",
-            JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(user.email) }))
+            JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(user.email), _id: response.response[0]._id }))
             authDispatch({type:"SET_ISLOGGEDIN" ,payload:true})
             authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(user.email)})
             authDispatch({type:"SET_USER",payload:response.response[0]._id})

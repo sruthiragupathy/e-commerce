@@ -4,7 +4,7 @@ import "./WishlistCard.css"
 import { calculateOriginalPrice, getProductFromWishlistDb, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
 
 export const WishlistCard = ({product}) => {
-        const {id,image,brandName,description,price,outOfStock,discountByPercentage} = product;
+        const {_id,image,brandName,description,price,outOfStock,discountByPercentage} = product;
         const {state,dispatch} = useProduct();
         const hideToast = () => {
             setTimeout(() => {
@@ -19,7 +19,7 @@ export const WishlistCard = ({product}) => {
         }
         return (
 
-            <div className={`wishlist-card ${outOfStock ? "overlay" : ""} pointer`} key = {id} >
+            <div className={`wishlist-card ${outOfStock ? "overlay" : ""} pointer`} key = {_id} >
                 {outOfStock && <div className="out-of-stock">OUT OF STOCK</div>}
                 <img className="responsive-img" src={image} alt={brandName}/>
                 <div className="card__description">
@@ -35,7 +35,7 @@ export const WishlistCard = ({product}) => {
                                 <div className = "secondary">
                                     <span className="orange-txt"><strong>Only few left!</strong></span>
                         </div>} */}
-                        {isInCart(state.cart,id) ?
+                        {isInCart(state.cart,_id) ?
                         <button className = "btn btn-primary"  disabled = {outOfStock}>
                             <Link to = "/checkout/cart">
                                 <span style = {{marginRight:"1rem"}}>Go to Cart</span> 
@@ -50,7 +50,7 @@ export const WishlistCard = ({product}) => {
                 </div>
                 <button 
                 className = "btn-icon br trash"
-                onClick = {() => dispatch({type:"WISHLIST_ADD_OR_REMOVE",payload:isInWishlist(state.wishlist,id)?getProductFromWishlistDb(state.wishlist,id):product})}>
+                onClick = {() => dispatch({type:"WISHLIST_ADD_OR_REMOVE",payload:isInWishlist(state.wishlist,_id)?getProductFromWishlistDb(state.wishlist,_id):product})}>
                     <i className="fa fa-trash-o fa-2x"></i>
                 </button>
             </div>

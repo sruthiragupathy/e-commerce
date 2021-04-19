@@ -29,7 +29,7 @@ function App() {
     error:false
   })
   const {auth} = useAuth();
-  console.log(auth.user._id);
+  console.log({state});
   useEffect(() => {
     // setStatus({...status,loading:true})
     //fetching products
@@ -61,6 +61,25 @@ function App() {
     //   }
     // })();
   }, []);
+
+  useEffect (() => {
+    console.log("from useeffect");
+    console.log(auth.user._id);
+    auth.user._id && (async function() {
+      const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/cart`) ;
+      console.log(response);
+      if(response.success) {
+        dispatch ({type: "SET_CART", payload: response.response.cartItems })
+      }
+    })() && (async function() {
+      const { response, success } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/wishlist`) ;
+      console.log(response);
+      if(response.success) {
+        dispatch ({type: "SET_WISHLIST", payload: response.response.wishlistItems })
+      }
+    })()
+
+  },[auth.user._id])
   if(state.overlay){
     document.body.style.overflow="hidden"
   }

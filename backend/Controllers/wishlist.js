@@ -11,7 +11,7 @@ exports.getWishlistItems = async (req,res) => {
         })
     }
     catch(error) {
-        res.json({success: false, message: error.message})
+        res.json({success: false, response: error.message})
     }
 }
 
@@ -41,6 +41,7 @@ exports.deleteWishlistItems = async (req, res) => {
     const { userId } = req.params;
     try{
         const wishlistitems = await Wishlist.findById(userId);
+        console.log(wishlistitems);
         await wishlistitems.wishlistItems.id(productId).remove()
         await wishlistitems.save((err, wishlistItem) => {
             if(err) {

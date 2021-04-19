@@ -5,15 +5,14 @@ const _ = require('lodash');
 const { extend } = require("lodash");
 
 exports.getCartItems = async (req,res) => {
-    const user = req.user;
-    console.log(user._id);
+    const {userId} = req.params
     try {
-        const cartItems = await Cart.findById(user._id);
-        console.log(cartItems);
-        res.json({success: true, cartItems: cartItems});
+        await Cart.findOne({_id:userId}).populate('cartItems.product').exec((err, products) => {
+            res.json({success:true, response: products})
+        })
     }
     catch(error) {
-        res.json({success: false, message: error.message})
+        res.json({success: false, response: error.message})
     }
 }
 

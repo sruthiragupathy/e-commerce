@@ -30,13 +30,21 @@ export const RestApiCalls = async (method, route, data) => {
       }
     }
     case  "POST": {
-      console.log(JSON.stringify(data))
       try {
         const res = await axios.post(route,data)
         return res.data;
       }
       catch(error) {
         console.log(error);
+        return { success: false, error: error.message};
+      }
+    }
+    case "DELETE": {
+      try {
+        const res = await axios.delete(route)
+        return res.data
+      }
+      catch(error) {
         return { success: false, error: error.message};
       }
     }

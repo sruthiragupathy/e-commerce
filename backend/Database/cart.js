@@ -5,7 +5,6 @@ const childSchema = new Schema({
     product: {
         type: Schema.Types.ObjectId,
         ref: "Product",
-        unique: true
     },
     quantity: {
         type: Number

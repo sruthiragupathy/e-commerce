@@ -3,13 +3,15 @@ import { brandNameArray } from "../Database";
 import { createObject } from "./ProductContext";
 
 export const reducerFunction = (state, { type, payload,value }) => {
+  console.log({payload});
     switch (type) {
       case "SET_PRODUCTS":
         return { ...state, products: payload };
       case "SET_CART":
         return {
           ...state,
-          cart: payload.map(item => ({...item,inInCart:true}))
+          cart: payload.map(item => ({...item,isInCart:true}))
+          // cart: payload
         };
       case "SET_WISHLIST":
         return {

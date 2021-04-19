@@ -8,12 +8,11 @@ export const getTrimmedDescription = (description) => {
 }
 
 export const isInCart = (cart,id) => {
-    return cart.map(item => item.id).includes(id)
+    return cart.map(item => item._id).includes(id)
 }
 
 export const isInWishlist = (wishlist,id) => {
-    console.log(wishlist.map(item => item.id).includes(id))
-    return wishlist.map(item => item.id).includes(id)
+    return wishlist.map(item => item._id).includes(id)
 }
 
 export const getProductFromWishlistDb = (wishlist,id) => wishlist.find(product => product.id === id)

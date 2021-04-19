@@ -77,14 +77,16 @@ class AuthError extends Error {
         try {
             const user = await User.find({email: email})
             if(!user.length) {
-                throw new Error(" User does not exist, Signup to enter ")
+                throw new Error("User does not exist, Signup to enter")
             }
             if( password !== user[0].password) {
-                throw new Error(" Email and password does not match ");
+                throw new Error("Email and password does not match");
             }
-            res.json ({ success: true, message: "Authentication successful", response: user})
+            res.json ({ success: true, message: "Authentication successful", response: user })
         }
-        catch (error){
-            res.json({success: false, error: error.message})
+        catch (error) {
+            res.json({ success: false, error: error.message })
         }
     }
+
+    
