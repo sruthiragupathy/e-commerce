@@ -69,7 +69,7 @@ export const ProductListingPage = ({props,productCategory}) => {
             ) : 
             <div className = "empty-product__PLP">"No products to display"</div>}
         </div>
-        {state.toast.value && <Toast message = {state.toast.message}/>}
+        {state.toast.message && <Toast message = {state.toast.message}/>}
         </div>
         
     )

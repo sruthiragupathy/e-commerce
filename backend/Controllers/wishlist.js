@@ -25,6 +25,7 @@ exports.addWishlistItems = async (req,res) => {
         if(!wishlistDocument.wishlistItems.id(productId)){
             wishlistDocument = _.extend(wishlistDocument, {wishlistItems: _.concat(wishlistDocument.wishlistItems,{_id:productId, product: productId})})
             wishlistDocument = await wishlistDocument.save()
+            console.log(wishlistDocument);
             await Wishlist.findOne({_id: userId}).populate('wishlistItems.product').exec((err, products) => {
                 res.json({success:true, response: products})
             })
@@ -43,11 +44,9 @@ exports.deleteWishlistItems = async (req, res) => {
         const wishlistitems = await Wishlist.findById(userId);
         console.log(wishlistitems);
         await wishlistitems.wishlistItems.id(productId).remove()
-        await wishlistitems.save((err, wishlistItem) => {
-            if(err) {
-                throw new Error(err.message);
-            }
-            res.json({ success: true, response: "1 product removed from wishlist" })
+        await wishlistitems.save()
+        await Wishlist.findOne({_id: userId}).populate('wishlistItems.product').exec((err, products) => {
+            res.json({success:true, response: products})
         })
     }
     catch(error) {

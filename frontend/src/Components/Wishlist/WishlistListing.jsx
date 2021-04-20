@@ -14,11 +14,11 @@ export const WishlistListing = () => {
                 <div className = "wishlist-heading"><strong>My Wishlist</strong> - {state.wishlist.length} items</div>
                 <div className = "wishlist-wrapper">
                 {
-                    state.wishlist.map(product => <WishlistCard product = {product} key = {product.id}/>)
+                    state.wishlist.map(({_id, product, inWishlisted}) => <WishlistCard product = {product} inWishlisted = {inWishlisted} key = {_id}/>)
                 }
                 </div>
                 </div>}
-                {state.toast.value && <Toast message = {state.toast.message}/>}
+                {state.toast.message && <Toast message = {state.toast.message}/>}
 
         </div>
 

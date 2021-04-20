@@ -3,53 +3,51 @@ import "./ProductCard.css";
 import {useProduct} from "../../Context/ProductContext";
 import {Link} from "react-router-dom";
 import { calculateOriginalPrice,getProductFromWishlistDb, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
-import { Toast } from "../Toast/Toast";
 import { RestApiCalls } from "../../CallRestApi";
 import { useAuth } from "../../Context/AuthContext";
 import { BACKEND } from "../../api";
+import axios from "axios";
 
 
 export const ProductCard = ({product}) => {
     const {_id,image,brandName,description,price,isnew,sale,outOfStock,discountByPercentage,count} = product;
     const {state,dispatch} = useProduct();
     const {auth} = useAuth();
-    const [toastMessage, setToastMessage] = useState("");
+
 
     const hideToast = () => {
         setTimeout(() => {
-            dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
+            dispatch({type: "TOGGLE_TOAST", payload: "", value: false});
           }, 1000)
     }
 
     const productAddToCartHandler = async () => {
-        await RestApiCalls("POST", `${BACKEND}/${auth.user._id}/cart/${_id}`)
+        dispatch({type:"TOGGLE_TOAST",payload:"adding to cart..."});
+        const {response} = await RestApiCalls("POST", `${BACKEND}/${auth.user._id}/cart/${_id}`)
+        console.log("response from cart", response);
+        dispatch({type: "SET_CART", payload: response.cartItems});
         dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
         hideToast()
-        const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/cart`) ;
-        if(response.success) {
-            dispatch ({type: "SET_CART", payload: response.response.cartItems })
-        }
-        
     }
 
     const productAddToWishlistHandler = async () => {
         if(isInWishlist(state.wishlist,_id)){
-        await RestApiCalls("DELETE", `${BACKEND}/${auth.user._id}/wishlist/${_id}`)
+        dispatch({type:"TOGGLE_TOAST",payload:"removing from wishlist...", value: true});
+        // const {response} = await RestApiCalls("DELETE", `${BACKEND}/${auth.user._id}/wishlist/${_id}`)
+        const {data : {response, success}} = await axios.delete(`${BACKEND}/${auth.user._id}/wishlist/${_id}`);
+        console.log({response,success});
+        if(success) {
+        dispatch({type: "SET_WISHLIST", payload: response.wishlistItems});
         dispatch({type:"TOGGLE_TOAST",payload:"1 item removed from wishlist"});
         hideToast()
-        const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/wishlist`) ;
-        if(response.success) {
-            dispatch ({type: "SET_WISHLIST", payload: response.response.wishlistItems })
         }
         }
         else {
-        await RestApiCalls("POST", `${BACKEND}/${auth.user._id}/wishlist/${_id}`)
+        dispatch({type:"TOGGLE_TOAST",payload:"adding to wishlist...", value: true});
+        const {response} = await RestApiCalls("POST", `${BACKEND}/${auth.user._id}/wishlist/${_id}`)
+        dispatch({type: "SET_WISHLIST", payload: response.wishlistItems});
         dispatch({type:"TOGGLE_TOAST",payload:"1 item added to wishlist"});
         hideToast()
-        const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/wishlist`) ;
-        if(response.success) {
-            dispatch ({type: "SET_WISHLIST", payload: response.response.wishlistItems })
-        }
         }
         }
     

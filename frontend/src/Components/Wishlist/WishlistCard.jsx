@@ -2,21 +2,42 @@ import { useProduct } from "../../Context/ProductContext";
 import { Link } from "react-router-dom";
 import "./WishlistCard.css"
 import { calculateOriginalPrice, getProductFromWishlistDb, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
+import { RestApiCalls } from "../../CallRestApi";
+import { BACKEND } from "../../api";
+import { useAuth } from "../../Context/AuthContext";
+import axios from "axios";
+
 
 export const WishlistCard = ({product}) => {
         const {_id,image,brandName,description,price,outOfStock,discountByPercentage} = product;
         const {state,dispatch} = useProduct();
+        const {auth} = useAuth();
         const hideToast = () => {
             setTimeout(() => {
-                dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
+                dispatch({type:"TOGGLE_TOAST",payload:"", value: false});
               }, 1000)
         }
-
-        const addToCartHandler = () => {
-            dispatch({type:"ADD_TO_CART",payload:product});
-            dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
-            hideToast()
+            const removeFromWishlist = async () => {
+                dispatch({type:"TOGGLE_TOAST",payload:"removing from wishlist...", value: true});
+                const {data : {response, success}} = await axios.delete(`${BACKEND}/${auth.user._id}/wishlist/${_id}`);
+                console.log({response,success});
+                if(success) {
+                dispatch({type: "SET_WISHLIST", payload: response.wishlistItems});
+                dispatch({type:"TOGGLE_TOAST",payload:"1 item removed from wishlist", value: true});
+                hideToast()
+                }
         }
+
+        
+            const productAddToCartHandler = async () => {
+                dispatch({type:"TOGGLE_TOAST",payload:"adding to cart...", value: true});
+                const {response} = await RestApiCalls("POST", `${BACKEND}/${auth.user._id}/cart/${_id}`)
+                console.log("response from cart", response);
+                dispatch({type: "SET_CART", payload: response.cartItems});
+                dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart", value: true});
+                hideToast()
+            }
+        
         return (
 
             <div className={`wishlist-card ${outOfStock ? "overlay" : ""} pointer`} key = {_id} >
@@ -31,10 +52,6 @@ export const WishlistCard = ({product}) => {
                             {discountByPercentage !== 0 && <h5 className="rm light strikethrough">Rs. {calculateOriginalPrice(price,discountByPercentage)} </h5>}
                             {discountByPercentage !== 0 && <h5 className="rm discount">({discountByPercentage}% OFF)</h5>}
                         </div>
-                        {/* {count <= 5 &&
-                                <div className = "secondary">
-                                    <span className="orange-txt"><strong>Only few left!</strong></span>
-                        </div>} */}
                         {isInCart(state.cart,_id) ?
                         <button className = "btn btn-primary"  disabled = {outOfStock}>
                             <Link to = "/checkout/cart">
@@ -44,13 +61,13 @@ export const WishlistCard = ({product}) => {
                         </button>:
                         <button 
                         className = "btn btn-primary" 
-                        onClick = { addToCartHandler } 
+                        onClick = { productAddToCartHandler } 
                         disabled = {outOfStock}>Move to Cart</button>}
                     </div>
                 </div>
                 <button 
                 className = "btn-icon br trash"
-                onClick = {() => dispatch({type:"WISHLIST_ADD_OR_REMOVE",payload:isInWishlist(state.wishlist,_id)?getProductFromWishlistDb(state.wishlist,_id):product})}>
+                onClick = {removeFromWishlist}>
                     <i className="fa fa-trash-o fa-2x"></i>
                 </button>
             </div>
@@ -58,3 +75,4 @@ export const WishlistCard = ({product}) => {
 
     )
 }
+// () => dispatch({type:"WISHLIST_ADD_OR_REMOVE",payload:isInWishlist(state.wishlist,_id)?getProductFromWishlistDb(state.wishlist,_id):product})

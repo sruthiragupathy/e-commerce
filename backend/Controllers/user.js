@@ -88,5 +88,3 @@ class AuthError extends Error {
             res.json({ success: false, error: error.message })
         }
     }
-
-    

@@ -4,7 +4,7 @@ export const Toast = ({message}) => {
     const {state,dispatch} = useProduct();
     
     return (
-        <div className = {`toast ${state.toast.value ? "show-toast" : ""}`}>{message} 
+        <div className = {`toast ${state.toast.message ? "show-toast" : ""}`}>{message} 
         
         </div>
     )
