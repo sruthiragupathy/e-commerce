@@ -53,7 +53,7 @@ export const Login = () => {
     }
     const hideToast = () => {
         setTimeout(() => {
-            dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
+            dispatch({type:"TOGGLE_TOAST",payload:"", value: false});
           }, 3000)
     }
     const loginHandler = async () => {
@@ -63,7 +63,7 @@ export const Login = () => {
             const response = await LoginUserWithCredentials(user,location.state?.from?location.state.from:"/");
             console.log({response})
             if(response?.success) {
-                dispatch({type:"TOGGLE_TOAST",payload:"You have been logged in successfully, Happy Shopping"});
+                dispatch({type:"TOGGLE_TOAST",payload:"You have been logged in successfully, Happy Shopping", value: true});
                 hideToast()
             }
             if(!response?.success){

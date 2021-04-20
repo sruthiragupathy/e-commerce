@@ -9,7 +9,7 @@ export const CartCard = ({product}) => {
 
     const hideToast = () => {
         setTimeout(() => {
-            dispatch({type:"TOGGLE_TOAST",payload:"1 item added to cart"});
+            dispatch({type:"TOGGLE_TOAST",payload:""});
           }, 1000)
     }
 
