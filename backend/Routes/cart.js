@@ -8,11 +8,8 @@ router.param("userId", getCartById);
 router.param("productId", getProductById);
 
 router.get("/:userId/cart", getCartItems);
-
 router.post("/:userId/cart/:productId", addCartItems);
 router.put("/:userId/cart/:productId", updateQuantityOfCartItems);
 router.delete("/:userId/cart/:productId", deleteCartItems);
-
-
 
 module.exports = router;

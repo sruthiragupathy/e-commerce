@@ -3,15 +3,10 @@ import "./CartListing.css";
 import {CartCard} from "./CartCard";
 import { OrderSummary } from "./OrderSummary";
 import { Toast } from "../Toast/Toast";
+import { getTotalOrderPrice, isInCart } from "../CardCommonFunctions";
 
 export const CartListing = () => {
     const {state} = useProduct();
-    
-    const getTotalOrderPrice = (cart) => {
-        return cart.reduce((acc,currentCartItem) => {
-            return acc+Number(currentCartItem.price)
-        },0)
-    }
     
     return(
         <div>
@@ -27,7 +22,7 @@ export const CartListing = () => {
                     <strong>Total: Rs. {getTotalOrderPrice(state.cart)}</strong>
                     </div>
                     {
-                    state.cart.map(product => <CartCard product = {product} key = {product.id}/>)
+                    state.cart.map(({_id, product, quantity, isInCart}) => <CartCard product = {product} key = {_id} quantity = {quantity} isInCart = {isInCart} _id = {_id}/>)
                     }
                     
                     </div>

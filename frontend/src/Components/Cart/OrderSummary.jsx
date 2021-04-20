@@ -10,7 +10,7 @@ export const OrderSummary = () => {
     const [totalOrderPrice] = useState(getTotalOrderPrice(state.cart))
      return <div className = "order-summary">
         <div className = "cart-heading flex-center">
-            <strong>PRICE DETAILS ({state.wishlist.length} items)</strong>
+            <strong>PRICE DETAILS ({state.cart.length} items)</strong>
         </div>
         <div className = "order-summary__card">
             <div className = "flex">

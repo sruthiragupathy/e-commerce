@@ -1,15 +1,11 @@
-
 const Cart = require("../Database/cart");
-// const Child = require("../Database/cart");
 const _ = require('lodash');
-const { extend } = require("lodash");
 
 exports.getCartItems = async (req,res) => {
-    const {userId} = req.params
+    let {cart} = req
     try {
-        await Cart.findOne({_id:userId}).populate('cartItems.product').exec((err, products) => {
-            res.json({success:true, response: products})
-        })
+        cart = await cart.populate('cartItems.product').execPopulate()
+        res.json({success:true, response: cart})
     }
     catch(error) {
         res.json({success: false, response: error.message})
@@ -17,19 +13,17 @@ exports.getCartItems = async (req,res) => {
 }
 
 exports.addCartItems = async (req,res) => {
-    const {productId} = req.params;
-    const {userId} = req.params;
+    let {product} = req;
+    let {cart} = req;
     try {
-        
-        let cartDocument = await Cart.findById(userId);
-        if(!cartDocument.cartItems.id(productId)){
-            cartDocument = _.extend(cartDocument, {cartItems: _.concat(cartDocument.cartItems,{_id:productId, product: productId, quantity: 1})})
-            cartDocument = await cartDocument.save()
-            await Cart.findOne({_id: userId}).populate('cartItems.product').exec((err, products) => {
-                res.json({success:true, response: products})
-            })
-
-            console.log({cartDocument});
+        if(!cart.cartItems.id(product._id)){
+            cart = _.extend(cart, {cartItems: _.concat(cart.cartItems,{_id:product._id, product: product._id, quantity: 1})})
+            cart = await cart.save()
+            cart = await cart.populate('cartItems.product').execPopulate()
+            res.json({success:true, response: cart})
+        }
+        else {
+            res.json({success:true, response: "already exists in cart"})
         }
     }
     catch(error) {
@@ -44,32 +38,25 @@ exports.updateQuantityOfCartItems = async (req, res) => {
     let updateCartItem = cart.cartItems.id(productId)
     updateCartItem = _.extend(updateCartItem,{quantity: quantity})
     cart.cartItems = _.extend(...cart.cartItems, updateCartItem);
-    console.log(cart);
     try {
       cart = new Cart(cart);
       cart = await cart.save((err, cart) => {
           res.json({success: true, response: cart})
       })
     }
-    catch(err) {
-        res.json({success: false, error: err.message})
+    catch(error) {
+        res.json({success: false, response: error.message})
     }
 }
 
 exports.deleteCartItems = async (req, res) => {
-    const { productId } = req.params;
-    const { userId } = req.params;
-    // const cart = newCart;
+    let {product} = req;
+    let {cart} = req;
     try{
-        // await Cart.findById(userId).cartItems.remove({product: productId})
-        const cartitems = await Cart.findById(userId);
-        await cartitems.cartItems.id(productId).remove()
-        await cartitems.save((err, cartItem) => {
-            if(err) {
-                throw new Error(err.message);
-            }
-            res.json({ success: true, respose: cartItem })
-        })
+        await cart.cartItems.id(product._id).remove()
+        await cart.save()
+        cart = await cart.populate('cartItems.product').execPopulate()
+        res.json({success:true, response: cart})
     }
     catch(error) {
         res.json({ success: false, message: error.message })

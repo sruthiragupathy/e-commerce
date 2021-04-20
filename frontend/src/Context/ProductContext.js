@@ -34,6 +34,7 @@ export const ProductProvider = ({ children }) => {
     openFilter : false,
     openSort : false,
     overlay : false,
+    modalId : "",
     toast : {
       value:false,
       message:""

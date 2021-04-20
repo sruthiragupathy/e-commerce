@@ -74,6 +74,8 @@ export const reducerFunction = (state, { type, payload,value }) => {
 
       case "SET_OVERLAY":
         return {...state,overlay:!state.overlay}
+      case "SET_MODALID":
+        return {...state, modalId: payload}
         case "TOGGLE_TOAST":
           return {...state,toast:{value:value,message:payload}}
       default:

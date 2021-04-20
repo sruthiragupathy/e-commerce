@@ -1,8 +1,7 @@
 const Cart = require("../Database/cart");
 const User = require("../Database/user")
-const Product = require("../Database/product")
-const Item = require("../Database/cart");
-
+const Product = require("../Database/product");
+const Wishlist = require("../Database/wishlist");
 
 
 exports.getUserById = async (req,res,next,id) => {
@@ -12,7 +11,6 @@ exports.getUserById = async (req,res,next,id) => {
         throw Error("No such user found");
     }
     req.user = user;
-    console.log(req.user)
     next();
     }
     catch(error) {
@@ -27,13 +25,29 @@ exports.getCartById = async (req,res,next,id) => {
         throw Error("No such cart found");
     }
     req.cart = cart;
-    console.log(req.cart);
     next();
     }
     catch(error) {
         return res.status(400).json({success: true, error: error.message})
     }
 }
+
+
+exports.getWishlistById = async (req,res,next,id) => {
+    try{
+    const wishlist = await Wishlist.findById(id);
+    console.log({wishlist});
+    if(!wishlist){
+        throw Error("No such wishlist found");
+    }
+    req.wishlist = wishlist;
+    next();
+    }
+    catch(error) {
+        return res.status(400).json({success: true, error: error.message})
+    }
+}
+
 
 exports.getProductById = async (req,res,next,id) => {
     console.log("hi");
@@ -43,7 +57,6 @@ exports.getProductById = async (req,res,next,id) => {
         throw Error("No such product found");
     }
     req.product = product;
-    console.log(req.product);
     next();
     }
     catch(error) {

@@ -19,12 +19,13 @@ export const getProductFromWishlistDb = (wishlist,id) => wishlist.find(product =
 
 export const getTotalOrderPrice = (cart) => {
     return cart.reduce((acc,currentCartItem) => {
-        return acc+Number(currentCartItem.price)
+        return acc+Number(currentCartItem.product.price)
     },0)
 }
 
 export const totalMRP = (cart) => {
+    console.log(cart);
     return cart.reduce((acc,currentCartItem) => {
-        return acc + calculateOriginalPrice(currentCartItem.price,currentCartItem.discountByPercentage)
+        return acc + calculateOriginalPrice(Number(currentCartItem.product.price),Number(currentCartItem.product.discountByPercentage))
     },0)
 }

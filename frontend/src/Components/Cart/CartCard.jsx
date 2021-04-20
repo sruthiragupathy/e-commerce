@@ -1,28 +1,36 @@
+import axios from "axios";
+import { useState } from "react";
+import { BACKEND } from "../../api";
+import { RestApiCalls } from "../../CallRestApi";
+import { useAuth } from "../../Context/AuthContext";
 import { useProduct } from "../../Context/ProductContext";
 import { isInWishlist } from "../CardCommonFunctions";
 import { Modal } from "../Modal/Modal";
 import "./CartCard.css"
 
-export const CartCard = ({product}) => {
+export const CartCard = ({_id, product, quantity, isInCart}) => {
     const {image,brandName,description,price,discountByPercentage,seller} = product;
     const {state,dispatch} = useProduct();
-
+    const {auth} = useAuth();
     const hideToast = () => {
         setTimeout(() => {
-            dispatch({type:"TOGGLE_TOAST",payload:""});
+            dispatch({type:"TOGGLE_TOAST",payload:"", value: false});
           }, 1000)
     }
 
-    const addToWishlist = () => {
-        if(isInWishlist(state.wishlist,product.id)){
-            dispatch({type:"REMOVE_FROM_CART",payload:product})
+    const addToWishlist = async () => {
+        dispatch({type:"TOGGLE_TOAST",payload:"adding to wishlist...", value: true});
+        const {data : {response, success}} = await axios.delete(`${BACKEND}/${auth.user._id}/cart/${product._id}`);
+        if(success) {
+            dispatch({type: "SET_CART", payload: response.cartItems});
         }
-        else{
-        dispatch({type:"WISHLIST_ADD_OR_REMOVE",payload:product})
-        dispatch({type:"REMOVE_FROM_CART",payload:product})
+        if(!isInWishlist(state.wishlist,_id)){
+        const {response} = await RestApiCalls("POST", `${BACKEND}/${auth.user._id}/wishlist/${_id}`)
+        dispatch({type: "SET_WISHLIST", payload: response.wishlistItems});
         }
-        dispatch({type:"TOGGLE_TOAST",payload:"1 item added to wishlist"});
+        dispatch({type:"TOGGLE_TOAST",payload:"1 item added to wishlist", value: true});
         hideToast()
+
 
     }
 
@@ -55,6 +63,7 @@ export const CartCard = ({product}) => {
                             <div className = "remove-container">
                                 <button className = "remove" onClick = {() => {
                                     dispatch({type:"SET_OVERLAY"})
+                                    dispatch({type:"SET_MODALID", payload: _id})
                                 }}>REMOVE</button>
                             </div>
                             <div>
@@ -66,7 +75,9 @@ export const CartCard = ({product}) => {
                             </div>
                         </div>
                     </div>
-                    {state.overlay && <Modal product = {product}/>}
+                    {console.log({_id})}
+                    {state.overlay && state.modalId === _id && <Modal product = {product} />}
+
                 </>
     )
 }
