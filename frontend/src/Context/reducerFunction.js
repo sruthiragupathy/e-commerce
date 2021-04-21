@@ -18,6 +18,11 @@ export const reducerFunction = (state, { type, payload,value }) => {
           ...state,
           wishlist:payload.map(item => ({...item,inWishlisted:true}))
         };
+      case "SET_ADDRESS":
+        return {
+          ...state,
+          address: payload
+        }
       case "ADD_TO_CART":
         return {
           ...state,

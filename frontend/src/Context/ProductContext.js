@@ -20,6 +20,7 @@ export const ProductProvider = ({ children }) => {
     product: [],
     cart: [],
     wishlist: [],
+    address: [],
     brandFilter : createObject(brandNameArray,filterObject),
     otherFilter : {
       ranger_value : 1000,

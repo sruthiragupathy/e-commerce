@@ -75,6 +75,12 @@ function App() {
       if(response.success) {
         dispatch ({type: "SET_WISHLIST", payload: response.response.wishlistItems })
       }
+    })() && (async function() {
+      const { response, success } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/address`) ;
+      console.log(response);
+      if(response.success) {
+        dispatch ({type: "SET_ADDRESS", payload: response.response.addresses })
+      }
     })()
 
   },[auth.user._id])
