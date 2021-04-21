@@ -10,7 +10,7 @@ export const reducerFunction = (state, { type, payload,value }) => {
       case "SET_CART":
         return {
           ...state,
-          cart: payload.map(item => ({...item,isInCart:true}))
+          cart: payload
           // cart: payload
         };
       case "SET_WISHLIST":

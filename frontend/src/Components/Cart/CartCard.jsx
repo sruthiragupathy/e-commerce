@@ -4,9 +4,10 @@ import { BACKEND } from "../../api";
 import { RestApiCalls } from "../../CallRestApi";
 import { useAuth } from "../../Context/AuthContext";
 import { useProduct } from "../../Context/ProductContext";
-import { isInWishlist } from "../CardCommonFunctions";
+import { calculateOriginalPrice, isInWishlist } from "../CardCommonFunctions";
 import { Modal } from "../Modal/Modal";
 import "./CartCard.css"
+
 
 export const CartCard = ({_id, product, quantity, isInCart}) => {
     const {image,brandName,description,price,discountByPercentage,seller} = product;
@@ -17,6 +18,7 @@ export const CartCard = ({_id, product, quantity, isInCart}) => {
             dispatch({type:"TOGGLE_TOAST",payload:"", value: false});
           }, 1000)
     }
+    const [qty, setQty ] = useState( quantity );
 
     const addToWishlist = async () => {
         dispatch({type:"TOGGLE_TOAST",payload:"adding to wishlist...", value: true});
@@ -33,6 +35,22 @@ export const CartCard = ({_id, product, quantity, isInCart}) => {
 
 
     }
+    
+    const quantityHandler = async ( type ) => {
+        if(type === "+") {
+            setQty(qty => qty + 1);
+            const {response} = await RestApiCalls("PUT", `${BACKEND}/${auth.user._id}/cart/${_id}`, {quantity: qty+1})
+            dispatch({type: "SET_CART", payload: response.cartItems})
+
+
+        }
+        else {
+            setQty(qty => qty - 1);
+            const {response, success} = await RestApiCalls("PUT", `${BACKEND}/${auth.user._id}/cart/${_id}`, {quantity: qty-1})
+            // console.log({response});
+            dispatch({type: "SET_CART", payload: response.cartItems})
+        }
+    }
 
     return (    <>
                     <div className="horizontal-card mb">
@@ -48,14 +66,17 @@ export const CartCard = ({_id, product, quantity, isInCart}) => {
                                         <small>Sold by: {seller}</small>
                                     </div>
                                     <div className = "details__btns">
-                                        <button className="badge primary-badge">Size: S <i className="fa fa-caret-down"></i></button>
-                                        <button className="badge primary-badge">Qty: 1 <i className="fa fa-caret-down"></i></button>
+                                        {qty-1 === 0 ? 
+                                        <button className="btn btn-primary disabled">-</button> : 
+                                        <button className = "btn btn-primary" onClick = {() => quantityHandler("-")}>-</button> }
+                                        <span>{ qty }</span>
+                                        <button className = "btn btn-primary" onClick = {() => quantityHandler("+")}>+</button>
                                     </div>
                                 </div>
                                 <div className="cart-item__price">
-                                    <h5 className = "rm"><strong>Rs. {price} </strong></h5>
-                                    <span className="rm light strikethrough">Rs.1400 </span>
-                                    <span className = "price__discount">({discountByPercentage} OFF)</span>
+                                    <h5 className = "rm"><strong>Rs. {qty * Number(price)} </strong></h5>
+                                    <span className="rm light strikethrough">Rs. {calculateOriginalPrice(price, discountByPercentage, qty)} </span>
+                                    <span className = "price__discount">({discountByPercentage}% OFF)</span>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +96,7 @@ export const CartCard = ({_id, product, quantity, isInCart}) => {
                             </div>
                         </div>
                     </div>
-                    {console.log({_id})}
+                    {/* {console.log({_id})} */}
                     {state.overlay && state.modalId === _id && <Modal product = {product} />}
 
                 </>

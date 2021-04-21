@@ -26,7 +26,7 @@ export const CartListing = () => {
                     }
                     
                     </div>
-                    <OrderSummary/>
+                    <OrderSummary cart = {state.cart}/>
                     
                 </div>
                 </div>}
