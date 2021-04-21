@@ -3,7 +3,7 @@ import "./CartListing.css";
 import {CartCard} from "./CartCard";
 import { OrderSummary } from "./OrderSummary";
 import { Toast } from "../Toast/Toast";
-import { getTotalOrderPrice, isInCart } from "../CardCommonFunctions";
+import { getTotalOrderPrice } from "../CardCommonFunctions";
 import { Checkout } from "../Checkout/Checkout";
 
 

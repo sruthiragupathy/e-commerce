@@ -3,7 +3,7 @@ import { RightNavbar } from "./RightNavbar";
 import "./Navbar.css";
 
 import {
-  Link,NavLink
+  NavLink
 } from "react-router-dom";
 
 

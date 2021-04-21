@@ -15,7 +15,7 @@ import { Home } from './Components/Home/Home';
 import { Login } from './Components/Login/Login';
 import { SignUp } from './Components/Login/SignUp';
 import { PrivateRoutes } from './Components/Navbar/PrivateRoutes';
-import { AuthProvider, useAuth } from './Context/AuthContext';
+import { useAuth } from './Context/AuthContext';
 import { BACKEND } from './api';
 import { Address } from './Components/Address/Address';
 

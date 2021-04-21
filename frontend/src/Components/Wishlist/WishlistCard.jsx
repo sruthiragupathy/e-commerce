@@ -1,7 +1,7 @@
 import { useProduct } from "../../Context/ProductContext";
 import { Link } from "react-router-dom";
 import "./WishlistCard.css"
-import { calculateOriginalPrice, getProductFromWishlistDb, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
+import { calculateOriginalPrice, getTrimmedDescription, isInCart } from "../CardCommonFunctions";
 import { RestApiCalls } from "../../CallRestApi";
 import { BACKEND } from "../../api";
 import { useAuth } from "../../Context/AuthContext";

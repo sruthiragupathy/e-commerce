@@ -3,15 +3,14 @@ import "./Login.css"
 import {useEffect, useState} from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useProduct } from "../../Context/ProductContext";
-import { RestApiCalls } from "../../CallRestApi";
 
 
 export const Login = () => {
     const navigate = useNavigate();
-    const {auth, authDispatch, LoginUserWithCredentials} = useAuth();
+    const {auth, LoginUserWithCredentials} = useAuth();
     const location= useLocation();
     // console.log(from);
-    const {state,dispatch} = useProduct();
+    const {dispatch} = useProduct();
     const [user, setUser] = useState({
         email: "",
         password: ""

@@ -1,7 +1,4 @@
-import React, {useEffect} from "react";
-import { BACKEND } from "../../api";
-import { RestApiCalls } from "../../CallRestApi";
-import { useAuth } from "../../Context/AuthContext";
+import React from "react";
 import { useProduct } from "../../Context/ProductContext";
 import { Toast } from "../Toast/Toast";
 import { FilterSideBar } from "./FilterSideBar";
@@ -10,25 +7,7 @@ import "./ProductListingPage.css";
 import {sortFunction} from "./SortFunction";
 
 export const ProductListingPage = ({props,productCategory}) => {
-    const {state, dispatch} = useProduct();
-    const {auth} = useAuth()
-    // useEffect (async ()=> {
-
-    //     const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/cart`) ;
-    //     console.log(response);
-    //     if(response.success) {
-    //         dispatch ({type: "SET_CART", payload: response.response.cartItems })
-    //     }
-
-
-    //     // const { res } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/wishlist`) ;
-    //     // if(res.success) {
-    //     //     dispatch ({type: "SET_WISHLIST", payload: res.response.wishlistItems })
-    //     // }
-
-    // }, [state.cart, state.wishlist])
-    
-    
+    const {state} = useProduct();
     console.log(state);
 
     const transformProducts = (products) => {

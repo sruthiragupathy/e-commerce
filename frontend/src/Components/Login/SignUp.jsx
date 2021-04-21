@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate,useLocation,useNavigate } from "react-router"
+import { useLocation,useNavigate } from "react-router"
 import { BACKEND } from "../../api";
 import { RestApiCalls } from "../../CallRestApi";
 import { useAuth,getNameFromEmail } from "../../Context/AuthContext";
@@ -21,7 +21,7 @@ const isValidPassword = (password) => {
 
 export const SignUp = () => {
     const {auth, authDispatch} = useAuth();
-    const {state, dispatch} = useProduct();
+    const {dispatch} = useProduct();
     const navigate = useNavigate();
     const [user, setUser] = useState({
         firstName:"",

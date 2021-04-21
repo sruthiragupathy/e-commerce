@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ProductCard.css";
 import {useProduct} from "../../Context/ProductContext";
 import {Link} from "react-router-dom";
-import { calculateOriginalPrice,getProductFromWishlistDb, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
+import { calculateOriginalPrice, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
 import { RestApiCalls } from "../../CallRestApi";
 import { useAuth } from "../../Context/AuthContext";
 import { BACKEND } from "../../api";
@@ -10,7 +10,7 @@ import axios from "axios";
 
 
 export const ProductCard = ({product}) => {
-    const {_id,image,brandName,description,price,isnew,sale,outOfStock,discountByPercentage,count} = product;
+    const {_id,image,brandName,description,price,isnew,sale,outOfStock,discountByPercentage} = product;
     const {state,dispatch} = useProduct();
     const {auth} = useAuth();
 

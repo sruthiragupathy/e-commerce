@@ -47,8 +47,9 @@ export const CartCard = ({_id, product, quantity, isInCart}) => {
         else {
             setQty(qty => qty - 1);
             const {response, success} = await RestApiCalls("PUT", `${BACKEND}/${auth.user._id}/cart/${_id}`, {quantity: qty-1})
-            // console.log({response});
+            if(success){
             dispatch({type: "SET_CART", payload: response.cartItems})
+            }
         }
     }
 

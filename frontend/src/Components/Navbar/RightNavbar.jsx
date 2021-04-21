@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useProduct } from "../../Context/ProductContext";
 import "./Navbar.css";
-import {Link,Navigate,NavLink,useNavigate} from "react-router-dom";
+import {Link,NavLink,useNavigate} from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 
 export const RightNavbar = () => {

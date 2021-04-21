@@ -1,4 +1,3 @@
-import {useState} from "react";
 import { Link } from "react-router-dom";
 import { useProduct } from "../../Context/ProductContext";
 import { getTotalOrderPrice, totalMRP } from "../CardCommonFunctions";
@@ -7,8 +6,6 @@ import "./OrderSummary.css";
 
 export const OrderSummary = ({cart}) => {
     const {state} = useProduct();
-    const [totalPrice] = useState(totalMRP(state.cart))
-    const [totalOrderPrice] = useState(getTotalOrderPrice(state.cart))
      return <div className = "order-summary">
         <div className = "cart-heading flex-center">
             <strong>PRICE DETAILS ({state.cart.length} items)</strong>

@@ -1,10 +1,9 @@
 
 import { createContext, useContext, useEffect, useReducer } from "react";
-import {Navigate,useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import { BACKEND } from "../api";
 import { RestApiCalls } from "../CallRestApi";
-import { fakeAuthApi } from "./fakeAuthApi";
-import { useProduct } from "./ProductContext";
+
 
 const AuthContext = createContext();
 
