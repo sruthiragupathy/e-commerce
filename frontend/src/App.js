@@ -17,9 +17,7 @@ import { SignUp } from './Components/Login/SignUp';
 import { PrivateRoutes } from './Components/Navbar/PrivateRoutes';
 import { AuthProvider, useAuth } from './Context/AuthContext';
 import { BACKEND } from './api';
-import axios from 'axios';
-
-
+import { Address } from './Components/Address/Address';
 
 function App() {
   const [openHamburger, setOpenHamburger] = useState(false);
@@ -104,6 +102,7 @@ function App() {
         <Route path = "/products/sneakers" element = {<ProductListingPage/>}/>
         <Route path = "/"  element = {<Home/>}/>
         <PrivateRoutes path = "/checkout/cart" element = {<CartListing/>}/>
+        <PrivateRoutes path = "/checkout/address" element = {<Address/>}/>
         <PrivateRoutes path = "/wishlist" element = {<WishlistListing/>}/>
 
       </Routes>} 

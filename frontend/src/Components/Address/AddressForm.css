@@ -1,0 +1,16 @@
+.form-container {
+  margin-top: 2rem;
+  border: 1px solid var(--lightgrey2);
+  padding: 0 1rem 1rem 1rem;
+}
+
+.form-container .btn {
+  width: 100%;
+  float: right;
+}
+@media only screen and (min-width: 750px) {
+  .form-container {
+    grid-template-columns: 1fr 0.5fr;
+    margin: 2rem 7rem 0 5rem;
+  }
+}

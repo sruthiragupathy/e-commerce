@@ -96,7 +96,6 @@ export const CartCard = ({_id, product, quantity, isInCart}) => {
                             </div>
                         </div>
                     </div>
-                    {/* {console.log({_id})} */}
                     {state.overlay && state.modalId === _id && <Modal product = {product} />}
 
                 </>

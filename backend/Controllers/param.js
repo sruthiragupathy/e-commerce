@@ -50,7 +50,6 @@ exports.getWishlistById = async (req,res,next,id) => {
 
 
 exports.getProductById = async (req,res,next,id) => {
-    console.log("hi");
     try{
     const product = await Product.findById(id);
     if(!product){

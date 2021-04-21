@@ -4,6 +4,8 @@ import {CartCard} from "./CartCard";
 import { OrderSummary } from "./OrderSummary";
 import { Toast } from "../Toast/Toast";
 import { getTotalOrderPrice, isInCart } from "../CardCommonFunctions";
+import { Checkout } from "../Checkout/Checkout";
+
 
 export const CartListing = () => {
     const {state} = useProduct();
@@ -13,7 +15,7 @@ export const CartListing = () => {
                 {state.cart.length === 0 ? 
                 <div className = "empty-product">"Your Cart is empty"</div> :
                 <div className = "container">
-               
+                <Checkout/>
                 <div className = "cart-wrapper">
                     {state.overlay && <div className = "background-overlay"></div>}
                     <div className = "cart-grid">

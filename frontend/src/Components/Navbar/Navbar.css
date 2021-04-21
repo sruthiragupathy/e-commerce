@@ -77,7 +77,7 @@
   border: none;
 }
 
-.nav__category .current-category {
+.current-category {
   border-bottom: 3px solid var(--purple);
   color: var(--purple);
   font-weight: 1000;
