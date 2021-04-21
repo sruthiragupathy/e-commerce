@@ -8,9 +8,11 @@ const  productRoutes  = require("./Routes/products")
 const userRoutes = require("./Routes/user");
 const cartRoutes = require("./Routes/cart");
 const wishlistRoutes = require("./Routes/wishlist");
+const addressRoutes = require("./Routes/address")
 
 
 const connectMongoDb = require("./Database/connectMongoDb");
+const address = require("./Database/address");
 // const femaleProducts = require("./Database/database");
 // const Product = require("./Database/Product");
 
@@ -40,6 +42,7 @@ app.use("/api", productRoutes);
 app.use("/api", userRoutes);
 app.use("/api", cartRoutes);
 app.use("/api", wishlistRoutes);
+app.use("/api", addressRoutes);
 
 
 app.listen(PORT, () => {

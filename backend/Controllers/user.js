@@ -1,6 +1,8 @@
+const Address = require("../Database/address");
 const Cart = require("../Database/cart");
 const User = require("../Database/user");
-const wishlist = require("../Database/wishlist");
+const Wishlist = require("../Database/wishlist");
+
 
 //Error constructors
 class LoginError extends Error {
@@ -46,27 +48,36 @@ class AuthError extends Error {
                 _id: savedUser._id
             })
             const savedCart = await userCart.save();
-            const userWishlist = new wishlist({
-                _id: savedCart._id
+            const userWishlist = new Wishlist({
+                _id: savedUser._id
             })
             const savedWishlist = await userWishlist.save();
-            await Cart.findOne({ _id: savedWishlist._id })
+            const userAddress = new Address({
+                _id: savedUser._id
+            })
+            const savedUserAddress = await userAddress.save();
+            await Cart.findOne({ _id: savedCart._id })
             .populate('_id')
             .exec(function (err, usercart) {
             console.log('The author is %s', usercart);
             })
 
-            await wishlist.findOne({_id:savedWishlist._id})
+            await Wishlist.findOne({_id:savedWishlist._id})
             .populate('_id')
-            .exec(function (err, usercart) {
+            .exec(function (err, userWishlist) {
                 console.log('The author is %s', userWishlist);
                 })
+
+            await Address.findOne({_id: savedUserAddress._id})
+            .populate('_id')
+            .exec(function (err, userAddress) {
+                console.log('The author is %s', userAddress);
+                })
       
-            res.json({success:true, user: savedUser, userCart: userCart, userWishlist: userWishlist})
+            res.json({success:true, user: savedUser, userCart: userCart, userWishlist: userWishlist, userAddress: userAddress })
 
         }
         catch(error) {
-            // console.log(error)
             res.json({success: false, 
                 error: error.message
             })
