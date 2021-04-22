@@ -6,22 +6,23 @@ import { RestApiCalls } from '../../utils/CallRestApi';
 import "./AddressForm.css"
 import { BACKEND } from "../../api";
 import { useAuth } from "../../Context/AuthContext";
+import { hideToast } from "../../utils/hideToast";
 
 
 
 export const AddressForm = () => {
     const [ address, setAddress ] = useState({
         name: "",
-        mobile_number: "",
-        pin_code: "",
+        mobileNumber: "",
+        pinCode: "",
         address: "",
         town: "",
         state: ""
     })
     const [ error, setError ] = useState({
         name: "",
-        mobile_number: "",
-        pin_code: "",
+        mobileNumber: "",
+        pinCode: "",
         address: "",
         town: "",
         state: ""
@@ -33,8 +34,8 @@ export const AddressForm = () => {
     const formValidate = () => {
         setError({
             name: "",
-            mobile_number: "",
-            pin_code: "",
+            mobileNumber: "",
+            pinCode: "",
             address: "",
             town: "",
             state: ""
@@ -44,12 +45,12 @@ export const AddressForm = () => {
             setError(error => ({...error, name: "Please enter a valid name"}))
             validationSuccess = false
         }
-        if(!address.mobile_number || !isValidMobileNumber(address.mobile_number)){
-            setError(error => ({...error, mobile_number: "Please enter a valid mobile number"}))
+        if(!address.mobileNumber || !isValidMobileNumber(address.mobileNumber)){
+            setError(error => ({...error, mobileNumber: "Please enter a valid mobile number"}))
             validationSuccess = false
         }
-        if(!address.pin_code || !isValidPinCode(address.pin_code)){
-            setError(error => ({...error, pin_code: "Please enter a valid pin code"}))
+        if(!address.pinCode || !isValidPinCode(address.pinCode)){
+            setError(error => ({...error, pinCode: "Please enter a valid pin code"}))
             validationSuccess = false
         }
         if(!address.address){
@@ -71,8 +72,8 @@ export const AddressForm = () => {
         dispatch({type: "SET_ADDRESS", payload: response.addresses})
         setAddress({
         name: "",
-        mobile_number: "",
-        pin_code: "",
+        mobileNumber: "",
+        pinCode: "",
         address: "",
         town: "",
         state: ""
@@ -82,18 +83,24 @@ export const AddressForm = () => {
     const addAddress = async () => {
         if(formValidate()){
             if(editAddress) {
+            dispatch({type:"TOGGLE_TOAST",payload:"updating an address...", value: true});
             let {response, success} = await RestApiCalls("POST", `${BACKEND}/${auth.user._id}/address/${editAddress}`, address)
                 
             if( success ) {
                 successHandler(response)
             }
             setEditAddress(prev => "")
+            dispatch({type:"TOGGLE_TOAST",payload:"1 address updated", value: true});
+            hideToast(dispatch)
             }
             else {
+            dispatch({type:"TOGGLE_TOAST",payload:"adding an address...", value: true});
             let {response, success} = await RestApiCalls("POST", `${BACKEND}/${auth.user._id}/address`, address)
             if( success ) {
                 successHandler(response)
             }
+            dispatch({type:"TOGGLE_TOAST",payload:"Address has been added", value: true});
+            hideToast(dispatch)
             }
             
         }
@@ -121,12 +128,12 @@ export const AddressForm = () => {
 	        <input 
             type="text" 
             className = "input-area"
-            name = "mobile_number"
-            value = {address.mobile_number}
+            name = "mobileNumber"
+            value = {address.mobileNumber}
             placeholder = "Mobile Number"
             onChange = {onChangeHandler}/>
  	        {/* <label for="Mobile No">Mobile No</label> */}
- 	       {error.mobile_number && <small className = "red-txt">*{error.mobile_number}</small>}
+ 	       {error.mobileNumber && <small className = "red-txt">*{error.mobileNumber}</small>}
 
         </div>
         <h5>CONTACT DETAILS</h5>
@@ -134,12 +141,12 @@ export const AddressForm = () => {
 	        <input 
             type="text" 
             className = "input-area"
-            name = "pin_code"
+            name = "pinCode"
             placeholder = "Pin Code"
-            value = {address.pin_code}
+            value = {address.pinCode}
             onChange = {onChangeHandler}/>
  	        {/* <label for="Pin Code">Pin Code</label> */}
- 	        {error.pin_code && <small className = "red-txt">*{error.pin_code}</small>}
+ 	        {error.pinCode && <small className = "red-txt">*{error.pinCode}</small>}
         </div>
         <div className="input-group">
 	        <input 

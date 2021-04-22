@@ -2,24 +2,27 @@ import { BACKEND } from "../../api";
 import { useAuth } from "../../Context/AuthContext"
 import { useProduct } from "../../Context/ProductContext";
 import { RestApiCalls } from "../../utils/CallRestApi"
-
+import { hideToast } from "../../utils/hideToast";
 
 export const AddressCard = ({address, addressState, setAddressState, setOpenForm, setEditAddress, openForm}) => {
     const { auth } = useAuth();
     const { dispatch } = useProduct();
     
     const removeAddressHandler = async () => {
+        dispatch({type:"TOGGLE_TOAST",payload:"removing an address...", value: true});
         const { response, success } = await RestApiCalls("DELETE",`${BACKEND}/${auth.user._id}/address/${address._id}`) 
         if(success){
             dispatch({type: "SET_ADDRESS", payload: response.addresses})
+            dispatch({type:"TOGGLE_TOAST",payload:"1 address removed", value: true});
+            hideToast(dispatch);
         }
     }
     const editAddressHandler = () => {
         setOpenForm( prev => true )
         setAddressState (prev => ({
             name: address.name,
-            mobile_number: address.mobileNumber,
-            pin_code: address.pinCode,
+            mobileNumber: address.mobileNumber,
+            pinCode: address.pinCode,
             address: address.address,
             town: address.town,
             state: address.state
