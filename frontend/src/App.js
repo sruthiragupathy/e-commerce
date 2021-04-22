@@ -2,7 +2,6 @@ import './App.css';
 import React,{useEffect, useState} from "react";
 import Navbar from "./Components/Navbar/Navbar"
 import { useProduct } from './Context/ProductContext';
-import { RestApiCalls } from './CallRestApi';
 import { ProductListingPage } from './Components/ProductListingPage/ProductListingPage';
 import {
  Routes,
@@ -18,6 +17,7 @@ import { PrivateRoutes } from './Components/Navbar/PrivateRoutes';
 import { useAuth } from './Context/AuthContext';
 import { BACKEND } from './api';
 import { Address } from './Components/Address/Address';
+import { RestApiCalls } from './utils/CallRestApi';
 
 function App() {
   const [openHamburger, setOpenHamburger] = useState(false);

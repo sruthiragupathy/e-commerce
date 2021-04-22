@@ -1,4 +1,4 @@
-import { addNewItemToExistingArray, removeItemFromExistingArray } from "../array-manipulation";
+import { addNewItemToExistingArray, removeItemFromExistingArray } from "../utils/array-manipulation";
 import { brandNameArray } from "../Database";
 import { createObject } from "./ProductContext";
 

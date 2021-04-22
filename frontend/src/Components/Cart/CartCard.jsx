@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { BACKEND } from "../../api";
-import { RestApiCalls } from "../../CallRestApi";
+import { RestApiCalls } from "../../utils/CallRestApi";
 import { useAuth } from "../../Context/AuthContext";
 import { useProduct } from "../../Context/ProductContext";
 import { calculateOriginalPrice, isInWishlist } from "../CardCommonFunctions";

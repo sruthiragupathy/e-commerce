@@ -3,7 +3,7 @@ import "./ProductCard.css";
 import {useProduct} from "../../Context/ProductContext";
 import {Link} from "react-router-dom";
 import { calculateOriginalPrice, getTrimmedDescription, isInCart, isInWishlist } from "../CardCommonFunctions";
-import { RestApiCalls } from "../../CallRestApi";
+import { RestApiCalls } from "../../utils/CallRestApi";
 import { useAuth } from "../../Context/AuthContext";
 import { BACKEND } from "../../api";
 import axios from "axios";
