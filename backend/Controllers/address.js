@@ -31,7 +31,7 @@ exports.updateAddress = async (req, res) => {
     address.addresses = _.extend(address.addresses,{updateAddress});
     try {
         address = await address.save()
-        res.json({succes: true, response: address})
+        res.json({success: true, response: address})
     }
     catch (error) {
         res.json({success: false, response: error.message})
