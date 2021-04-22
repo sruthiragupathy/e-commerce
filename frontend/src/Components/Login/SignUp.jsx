@@ -15,7 +15,6 @@ const isValidEmail = (email) => {
 
 const isValidPassword = (password) => {
     const passwordRegex = new RegExp("\d+");
-    console.log(password.length>6 && !passwordRegex.test(password))
     return password.length>6 && !passwordRegex.test(password);
 }
 
@@ -77,7 +76,6 @@ export const SignUp = () => {
         if(validateForm()){
             try{
                 const response = await RestApiCalls("POST", `${BACKEND}/signup`, user)
-                console.log({response});
                 if(response?.success){
                     authDispatch({type:"SET_ISLOGGEDIN" , payload:true});
                     authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(user.email)});

@@ -33,8 +33,6 @@ function App() {
     //fetching products
     (async function () {
       const {response,error} = await RestApiCalls("GET",`${BACKEND}/products`)
-      
-      console.log({response});
       if (!error) {
         dispatch({ type: "SET_PRODUCTS", payload: response.products});
       }
@@ -61,22 +59,18 @@ function App() {
   }, []);
 
   useEffect (() => {
-    console.log("from useeffect");
-    console.log(auth.user._id);
     auth.user._id && (async function() {
       const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/cart`) ;
-      console.log(response);
       if(response.success) {
         dispatch ({type: "SET_CART", payload: response.response.cartItems })
       }
     })() && (async function() {
-      const { response, success } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/wishlist`) ;
-      console.log(response);
+      const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/wishlist`) ;
       if(response.success) {
         dispatch ({type: "SET_WISHLIST", payload: response.response.wishlistItems })
       }
     })() && (async function() {
-      const { response, success } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/address`) ;
+      const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/address`) ;
       console.log(response);
       if(response.success) {
         dispatch ({type: "SET_ADDRESS", payload: response.response.addresses })

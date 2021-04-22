@@ -8,8 +8,6 @@ import "./Modal.css"
 export const Modal = ({product}) => {
     const {dispatch} = useProduct();
     const {auth} = useAuth();
-    console.log({product})
-    console.log(`${BACKEND}/${auth.user._id}/cart/${product._id}`)
     const cancelHandler = () => {
         dispatch({type: "SET_OVERLAY"})
 
@@ -24,7 +22,6 @@ export const Modal = ({product}) => {
         dispatch({type:"TOGGLE_TOAST",payload:"removing from cart...", value: true});
         
         const {data : {response, success}} = await axios.delete(`${BACKEND}/${auth.user._id}/cart/${product._id}`);
-        console.log({response,success});
         if(success) {
         dispatch({type: "SET_CART", payload: response.cartItems});
         dispatch({type:"TOGGLE_TOAST",payload:"1 item removed from cart", value: true});

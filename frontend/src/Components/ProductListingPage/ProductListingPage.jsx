@@ -8,7 +8,6 @@ import {sortFunction} from "./SortFunction";
 
 export const ProductListingPage = ({props,productCategory}) => {
     const {state} = useProduct();
-    console.log(state);
 
     const transformProducts = (products) => {
         let products_to_filter = products;

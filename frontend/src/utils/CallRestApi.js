@@ -8,7 +8,6 @@ class RESTError extends Error {
 }
 
 export const RestApiCalls = async (method, route, data) => {
-  console.log(method, route, data)
   switch (method) {
     case "GET": {
       try {
@@ -16,7 +15,6 @@ export const RestApiCalls = async (method, route, data) => {
           method: 'GET',
           url: route
         });
-        console.log({res});
         if (res.status === 200) {
           return {
             response: res.data,
@@ -35,14 +33,12 @@ export const RestApiCalls = async (method, route, data) => {
         return res.data;
       }
       catch(error) {
-        console.log(error);
         return { success: false, error: error.message};
       }
     }
     case "PUT": {
       try {
         const res = await axios.put(route,data)
-        console.log("put", res.data);
         return res.data;
       }
       catch(error) {

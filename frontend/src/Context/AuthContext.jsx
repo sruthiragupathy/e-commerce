@@ -48,10 +48,7 @@ export const AuthProvider = ({children}) => {
     const navigate = useNavigate();
  
     const LoginUserWithCredentials = async(user,pathTo) => {
-        console.log("in auth context");
-
         try{
-
             const response = await RestApiCalls("POST", `${BACKEND}/login`, user)
             console.log(response);
             if(response?.success){

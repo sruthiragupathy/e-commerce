@@ -5,7 +5,6 @@ import "./WishlistListing.css";
 
 export const WishlistListing = () => {
     const {state} = useProduct();
-    console.log(state.toast)
     return(
         <div>
                 {state.wishlist.length === 0 ? 

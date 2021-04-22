@@ -6,7 +6,6 @@ export const SignUp = () => {
     const {auth,authDispatch} = useAuth();
     const {userDetails} = auth;
     const navigate = useNavigate();
-    // console.log(auth);
     const onChangeHandler = (fieldName,fieldValue) => {
         
         authDispatch({type:"MANAGE_SIGNINDETAILS",payload:fieldName,value:fieldValue})

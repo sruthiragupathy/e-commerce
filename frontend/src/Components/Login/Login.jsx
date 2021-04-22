@@ -9,7 +9,6 @@ export const Login = () => {
     const navigate = useNavigate();
     const {auth, LoginUserWithCredentials} = useAuth();
     const location= useLocation();
-    // console.log(from);
     const {dispatch} = useProduct();
     const [user, setUser] = useState({
         email: "",
