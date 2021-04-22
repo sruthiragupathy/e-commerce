@@ -19,7 +19,8 @@
   height: 1.75rem;
 }
 
-.navbar__list .fa {
+.fa-heart,
+.fa-shopping-bag {
   color: var(--midgrey);
   font-size: 1.75rem;
 }
@@ -87,6 +88,14 @@
   color: var(--purple);
   font-weight: 1000;
 }
+.fa-user {
+  color: var(--purple);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--purple);
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+}
 
 @media only screen and (min-width: 750px) {
   .hamburger-menu {
@@ -108,9 +117,9 @@
 
 .profile-card {
   position: fixed;
-  top: 5rem;
+  top: 4rem;
   background: #fff;
-  right: 8rem;
+  right: 9rem;
   width: 10rem;
   padding: 0.25rem;
 }

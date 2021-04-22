@@ -20,7 +20,10 @@ export const RightNavbar = () => {
    const onMouseLeaveHandler = () => {
     setHover(false)
   }
-  console.log({hover})
+  const logout = () => {
+    logoutHandler();
+    setHover(false);
+  }
  
   return (
     <>
@@ -28,7 +31,10 @@ export const RightNavbar = () => {
       <div className="navbar__list pointer greet">
         {
           auth.isLoggedIn ? 
-          <div onMouseOver = {onMouseEnterHandler} className = "purple-txt">Hello {auth?.currentUser?auth.currentUser:""}!</div> : 
+          <div onMouseOver = {onMouseEnterHandler}  className = "purple-txt flex-center">
+            <i className = "fa fa-user purple-txt"></i> 
+            <span>Hello {auth?.currentUser?auth.currentUser:""}!</span>
+          </div> : 
           <div className = "purple-txt pointer" onClick = {loginHandler}>LOGIN / SIGNUP</div>
         }
       </div>
@@ -61,11 +67,10 @@ export const RightNavbar = () => {
       </li>
       
     </ul>
-    { hover && <div className = "profile-card" onMouseLeave = {onMouseLeaveHandler}>
-    <li>My Profile</li>
+    { hover && <div className = "profile-card"  onMouseLeave = {onMouseLeaveHandler}>
     <NavLink to  = "/checkout/cart">My Cart</NavLink>
     <NavLink to = "/wishlist">My Wishlist</NavLink>
-    <button className = "btn btn-outline-primary" onClick = {logoutHandler}>Logout</button>
+    <button className = "btn btn-outline-primary" onClick = {logout}>Logout</button>
   </div>
     }
     </>
