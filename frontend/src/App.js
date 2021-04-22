@@ -2,7 +2,6 @@ import './App.css';
 import React,{useEffect, useState} from "react";
 import Navbar from "./Components/Navbar/Navbar"
 import { useProduct } from './Context/ProductContext';
-import { RestApiCalls } from './CallRestApi';
 import { ProductListingPage } from './Components/ProductListingPage/ProductListingPage';
 import {
  Routes,
@@ -15,11 +14,10 @@ import { Home } from './Components/Home/Home';
 import { Login } from './Components/Login/Login';
 import { SignUp } from './Components/Login/SignUp';
 import { PrivateRoutes } from './Components/Navbar/PrivateRoutes';
-import { AuthProvider, useAuth } from './Context/AuthContext';
+import { useAuth } from './Context/AuthContext';
 import { BACKEND } from './api';
-import axios from 'axios';
-
-
+import { Address } from './Components/Address/Address';
+import { RestApiCalls } from './utils/CallRestApi';
 
 function App() {
   const [openHamburger, setOpenHamburger] = useState(false);
@@ -29,14 +27,14 @@ function App() {
     error:false
   })
   const {auth} = useAuth();
-
+  console.log({state});
   useEffect(() => {
     // setStatus({...status,loading:true})
     //fetching products
     (async function () {
       const {response,error} = await RestApiCalls("GET",`${BACKEND}/products`)
       if (!error) {
-        dispatch({ type: "SET_PRODUCTS", payload: response });
+        dispatch({ type: "SET_PRODUCTS", payload: response.products});
       }
       setStatus({...status,loading:false});
     })();
@@ -59,6 +57,27 @@ function App() {
     //   }
     // })();
   }, []);
+
+  useEffect (() => {
+    auth.user._id && (async function() {
+      const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/cart`) ;
+      if(response.success) {
+        dispatch ({type: "SET_CART", payload: response.response.cartItems })
+      }
+    })() && (async function() {
+      const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/wishlist`) ;
+      if(response.success) {
+        dispatch ({type: "SET_WISHLIST", payload: response.response.wishlistItems })
+      }
+    })() && (async function() {
+      const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/address`) ;
+      console.log(response);
+      if(response.success) {
+        dispatch ({type: "SET_ADDRESS", payload: response.response.addresses })
+      }
+    })()
+
+  },[auth.user._id])
   if(state.overlay){
     document.body.style.overflow="hidden"
   }
@@ -83,6 +102,7 @@ function App() {
         <Route path = "/products/sneakers" element = {<ProductListingPage/>}/>
         <Route path = "/"  element = {<Home/>}/>
         <PrivateRoutes path = "/checkout/cart" element = {<CartListing/>}/>
+        <PrivateRoutes path = "/checkout/address" element = {<Address/>}/>
         <PrivateRoutes path = "/wishlist" element = {<WishlistListing/>}/>
 
       </Routes>} 

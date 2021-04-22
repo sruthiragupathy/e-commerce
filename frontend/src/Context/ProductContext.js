@@ -20,6 +20,7 @@ export const ProductProvider = ({ children }) => {
     product: [],
     cart: [],
     wishlist: [],
+    address: [],
     brandFilter : createObject(brandNameArray,filterObject),
     otherFilter : {
       ranger_value : 1000,
@@ -34,6 +35,7 @@ export const ProductProvider = ({ children }) => {
     openFilter : false,
     openSort : false,
     overlay : false,
+    modalId : "",
     toast : {
       value:false,
       message:""

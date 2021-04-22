@@ -1,6 +1,5 @@
 
 const sortByDiscount = (products) => {
-    console.log("from discount");
     const sortedProducts = products.sort((a,b) => {
         return b.discountByPercentage - a.discountByPercentage;
     })

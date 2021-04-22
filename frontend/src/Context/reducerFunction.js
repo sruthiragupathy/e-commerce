@@ -1,21 +1,28 @@
-import { addNewItemToExistingArray, removeItemFromExistingArray } from "../array-manipulation";
+import { addNewItemToExistingArray, removeItemFromExistingArray } from "../utils/array-manipulation";
 import { brandNameArray } from "../Database";
 import { createObject } from "./ProductContext";
 
 export const reducerFunction = (state, { type, payload,value }) => {
+  console.log({payload});
     switch (type) {
       case "SET_PRODUCTS":
         return { ...state, products: payload };
       case "SET_CART":
         return {
           ...state,
-          cart: payload.map(item => ({...item,inInCart:true}))
+          cart: payload
+          // cart: payload
         };
       case "SET_WISHLIST":
         return {
           ...state,
           wishlist:payload.map(item => ({...item,inWishlisted:true}))
         };
+      case "SET_ADDRESS":
+        return {
+          ...state,
+          address: payload
+        }
       case "ADD_TO_CART":
         return {
           ...state,
@@ -72,8 +79,10 @@ export const reducerFunction = (state, { type, payload,value }) => {
 
       case "SET_OVERLAY":
         return {...state,overlay:!state.overlay}
+      case "SET_MODALID":
+        return {...state, modalId: payload}
         case "TOGGLE_TOAST":
-          return {...state,toast:{value:!state.toast.value,message:payload}}
+          return {...state,toast:{value:value,message:payload}}
       default:
         return state;
     }

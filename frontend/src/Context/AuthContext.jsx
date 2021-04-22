@@ -1,27 +1,22 @@
 
 import { createContext, useContext, useEffect, useReducer } from "react";
-import {Navigate,useNavigate} from "react-router-dom";
-import { fakeAuthApi } from "./fakeAuthApi";
-import { useProduct } from "./ProductContext";
+import {useNavigate} from "react-router-dom";
+import { BACKEND } from "../api";
+import { RestApiCalls } from "../utils/CallRestApi";
+
+
 const AuthContext = createContext();
 
 const authReducer = (auth,{type,payload,value}) => {
     switch(type){
-        case "SET_DATABASE":
-            return {...auth, database:[
-                ...auth.database, {
-                    firstName: payload.firstName,
-                    lastName: payload.lastName,
-                    email: payload.email,
-                    password: payload.password,
-                }
-            ]}
         case "SET_ISLOGGEDIN":
             return {...auth, isLoggedIn:payload}
         case "SET_CURRENTUSER":
             return {...auth, currentUser:payload}
         case "SET_LOADING":
             return {...auth, loading:!auth.loading}
+        case "SET_USER": 
+            return {...auth, user: {_id: payload}}
         default:
             return auth;
 
@@ -36,14 +31,9 @@ export const getNameFromEmail = (email) => {
 export const AuthProvider = ({children}) => {
     const [auth, authDispatch] = useReducer(authReducer,{
         isLoggedIn : false,
-        database : [
-            {
-            "email":"sruthi@gmail.com",
-            "password":"sruthi"
-            }
-        ],
         currentUser : "",
-        loading : false
+        loading : false,
+        user: {}
     });
     useEffect(() => {
         const userCredentials = JSON.parse(localStorage?.getItem("logincredentials"))
@@ -52,24 +42,28 @@ export const AuthProvider = ({children}) => {
         authDispatch({type:"SET_ISLOGGEDIN",payload:userCredentials.isUserLoggedIn})
         userCredentials?.userName &&
         authDispatch({type:"SET_CURRENTUSER" ,payload:userCredentials.userName}) 
+        userCredentials?._id &&
+        authDispatch({type:"SET_USER" ,payload:userCredentials._id}) 
     },[])
     const navigate = useNavigate();
  
-    const LoginUserWithCredentials = async(email,password,pathTo) => {
-        authDispatch({type:"SET_ERROR_FROM_BACKEND",payload:""})
-
+    const LoginUserWithCredentials = async(user,pathTo) => {
         try{
-            const response = await fakeAuthApi(email,password,auth.database)
+            const response = await RestApiCalls("POST", `${BACKEND}/login`, user)
+            console.log(response);
             if(response?.success){
-                localStorage.setItem("logincredentials",
-                JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(email) }))
-                authDispatch({type:"SET_ISLOGGEDIN" ,payload:true})
-                authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(email)})
-                navigate(pathTo,{replace:pathTo})
-                return response
+            localStorage.setItem("logincredentials",
+            JSON.stringify({isUserLoggedIn:true, userName: getNameFromEmail(user.email), _id: response.response[0]._id }))
+            authDispatch({type:"SET_ISLOGGEDIN" ,payload:true})
+            authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(user.email)})
+            authDispatch({type:"SET_USER",payload:response.response[0]._id})
+
+            navigate(pathTo,{replace:pathTo})
             }
+            return response
         }
         catch(err){
+            console.log({err});
             return err;
 
         }

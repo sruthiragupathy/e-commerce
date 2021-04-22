@@ -32,7 +32,6 @@ export const MobileSortAndFilter = () => {
         const allBrandNamesWithDuplicates = products.map(product => product.brandName)
         return allBrandNamesWithDuplicates.filter((brandname,index) => (allBrandNamesWithDuplicates.indexOf(brandname) === index)).sort()
     }
-    console.log(state.sort);
     return (
         <div className = "mobile-sort-and-filter-wrapper">
         <div className = "mobile-sort-and-filter__buttons">
