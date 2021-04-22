@@ -16,7 +16,7 @@ const address = require("./Database/address");
 // const femaleProducts = require("./Database/database");
 // const Product = require("./Database/Product");
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 const bool = true;
 
