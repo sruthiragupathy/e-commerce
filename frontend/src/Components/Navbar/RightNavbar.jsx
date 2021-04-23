@@ -10,6 +10,7 @@ export const RightNavbar = () => {
   } = useProduct();
   const {auth, logoutHandler} = useAuth();
   const [hover, setHover] = useState(false)
+
   const navigate = useNavigate();
   const loginHandler = () => {
     navigate('/login')
@@ -33,14 +34,14 @@ export const RightNavbar = () => {
           auth.isLoggedIn ? 
           <div onMouseOver = {onMouseEnterHandler}  className = "purple-txt flex-center">
             <i className = "fa fa-user purple-txt"></i> 
-            <span>Hello {auth?.currentUser?auth.currentUser:""}!</span>
+            <span>Hi {auth?.currentUser?auth.currentUser:""}!</span>
           </div> : 
           <div className = "purple-txt pointer" onClick = {loginHandler}>LOGIN / SIGNUP</div>
         }
       </div>
       
       
-      <li className="navbar__list pointer">
+      <li className="navbar__list cart-wishlist pointer">
         <div
           className="notification-badge-container"
         >
@@ -54,7 +55,7 @@ export const RightNavbar = () => {
       </li>
       
       
-      <li className="navbar__list pointer">
+      <li className="navbar__list cart-wishlist pointer">
         <div
           className="notification-badge-container"
         >

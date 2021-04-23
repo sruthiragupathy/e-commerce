@@ -110,8 +110,8 @@ export const AddressForm = () => {
     }
     return (
     <div className = "address-container">
-    { openForm && <div className = "form-container">
-        <h5>CONTACT DETAILS</h5>
+    { (openForm || state.address.length===0) && <div className = "form-container">
+        <h5>ADDRESS</h5>
         <div className="input-group">
 	        <input 
             type="text" 
@@ -125,7 +125,7 @@ export const AddressForm = () => {
         </div>
         <div className="input-group">
 	        <input 
-            type="text" 
+            type="text"         
             className = "input-area"
             name = "mobileNumber"
             value = {address.mobileNumber}
