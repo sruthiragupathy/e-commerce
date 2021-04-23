@@ -14,8 +14,9 @@ const isValidEmail = (email) => {
 }
 
 const isValidPassword = (password) => {
-    const passwordRegex = new RegExp("\d+");
+    const passwordRegex = new RegExp("[0-9]+");
     return password.length>6 && passwordRegex.test(password);
+    // return false
 }
 
 export const SignUp = () => {
