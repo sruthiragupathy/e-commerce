@@ -71,7 +71,6 @@ function App() {
       }
     })() && (async function() {
       const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/address`) ;
-      console.log(response);
       if(response.success) {
         dispatch ({type: "SET_ADDRESS", payload: response.response.addresses })
       }

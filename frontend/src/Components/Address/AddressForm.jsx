@@ -68,7 +68,6 @@ export const AddressForm = () => {
         return validationSuccess;
     }
     const successHandler = (response) => {
-        console.log({response});
         dispatch({type: "SET_ADDRESS", payload: response.addresses})
         setAddress({
         name: "",
