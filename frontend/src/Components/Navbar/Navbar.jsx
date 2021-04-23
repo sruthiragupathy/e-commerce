@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 
-const category = ["amara","men", "women", "sneakers"];
+const category = ["amaara","men", "women", "sneakers"];
 
 const Navbar = ({ openHamburger, setOpenHamburger}) => {
 
@@ -31,7 +31,7 @@ const Navbar = ({ openHamburger, setOpenHamburger}) => {
         }`}
       >
         {category.map((item, index) => {
-          return item === "amara" ? 
+          return item === "amaara" ? 
           <NavLink 
           to = "/" 
           key = {index} >
@@ -53,15 +53,15 @@ const Navbar = ({ openHamburger, setOpenHamburger}) => {
       <NavLink 
           to = "/"  className = "mobile-view"
           >
-            <button className = "sidebar__item amara mobile-view" 
+            <button className = "sidebar__item amaara mobile-view" 
             >
-              amara
+              amaara
             </button>
           </NavLink>
       <ul className="nav__category rm-ul-padding flex">
         {category.map((item, index) => {
-          return item === "amara" ? 
-          <NavLink to = "/" end key = {index} className = "sidebar__item amara">{item}</NavLink>:
+          return item === "amaara" ? 
+          <NavLink to = "/" end key = {index} className = "sidebar__item amaara">{item}</NavLink>:
           <NavLink to = {`/products/${item}`} key = {index} className = "sidebar__item" activeClassName = "current-category">{item}</NavLink>
           
         })}
