@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useProduct } from "../../Context/ProductContext";
 import "./Navbar.css";
 import {Link,NavLink,useNavigate} from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 
+
 export const RightNavbar = () => {
+  const useOutsideClickDetecter = (ref) => {
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                hoverHandler()
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
+  }
   const {
-    state: { cart, wishlist },
+    state: { cart, wishlist }, dispatch
   } = useProduct();
+  const wrapperRef = useRef(null);
+  useOutsideClickDetecter(wrapperRef);
   const {auth, logoutHandler} = useAuth();
   const [hover, setHover] = useState(false)
 
@@ -15,15 +31,14 @@ export const RightNavbar = () => {
   const loginHandler = () => {
     navigate('/login')
    }
-   const onMouseEnterHandler = () => {
-     setHover(true)
+   const hoverHandler = () => {
+     setHover(hover => !hover)
    }
-   const onMouseLeaveHandler = () => {
-    setHover(false)
-  }
+
   const logout = () => {
     logoutHandler();
-    setHover(false);
+    dispatch ({type: "CLEAR_CART_AND_WISHLIST"});
+    setHover(prev => false);
   }
  
   return (
@@ -32,7 +47,7 @@ export const RightNavbar = () => {
       <div className="navbar__list pointer greet">
         {
           auth.isLoggedIn ? 
-          <div onMouseOver = {onMouseEnterHandler}  className = "purple-txt flex-center">
+          <div onClick = {hoverHandler}  className = "purple-txt flex-center">
             <i className = "fa fa-user purple-txt"></i> 
             <span>Hi {auth?.currentUser?auth.currentUser:""}!</span>
           </div> : 
@@ -68,7 +83,8 @@ export const RightNavbar = () => {
       </li>
       
     </ul>
-    { hover && <div className = "profile-card"  onMouseLeave = {onMouseLeaveHandler}>
+
+    { hover && <div className = "profile-card"  ref={wrapperRef}>
     <NavLink to  = "/checkout/cart">My Cart</NavLink>
     <NavLink to = "/wishlist">My Wishlist</NavLink>
     <button className = "btn btn-outline-primary" onClick = {logout}>Logout</button>

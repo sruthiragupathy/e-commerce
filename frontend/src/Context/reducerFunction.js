@@ -74,6 +74,8 @@ export const reducerFunction = (state, { type, payload,value }) => {
             "price : high to low":false
           }
         }
+      case "CLEAR_CART_AND_WISHLIST":
+        return {...state, cart: [], wishlist: [], address: [] }
 
       case "SET_OVERLAY":
         return {...state,overlay:!state.overlay}

@@ -75,9 +75,8 @@ export const SignUp = () => {
         setErrorFromBackend("");
         setLoading(true)
         if(validateForm()){
-            try{
                 const response = await RestApiCalls("POST", `${BACKEND}/signup`, user)
-                console.log(response);
+                // console.log(response);
                 if(response?.success){
                     authDispatch({type:"SET_ISLOGGEDIN" , payload:true});
                     authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(user.email)});
@@ -91,11 +90,6 @@ export const SignUp = () => {
                 else {
                     setErrorFromBackend("User already exists")
                 }
-                
-            }
-            catch(error) {
-                console.log(error);
-            }
             }
             setLoading(false)
 

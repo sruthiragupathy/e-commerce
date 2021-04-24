@@ -27,7 +27,7 @@ function App() {
     error:false
   })
   const {auth} = useAuth();
-  console.log({state});
+  // console.log({state});
   useEffect(() => {
     // setStatus({...status,loading:true})
     //fetching products
@@ -76,7 +76,7 @@ function App() {
       }
     })()
 
-  },[auth.user._id])
+  },[auth.user._id, auth.isLoggedIn])
   if(state.overlay){
     document.body.style.overflow="hidden"
   }
