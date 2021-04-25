@@ -34,7 +34,8 @@ export const AddressForm = () => {
     const {auth } = useAuth();
     const [ openForm, setOpenForm ] = useState(false)
 
-    useEffect(async () => {
+    useEffect(() => {
+        auth.user._id && (async function() {
         try{
             const response = await axios.get('states.json');
             console.log(response)
@@ -43,6 +44,7 @@ export const AddressForm = () => {
         catch(error) {
             setStates(error)
         }
+    })()
     },[])
     const formValidate = () => {
         setError({

@@ -17,6 +17,8 @@ const authReducer = (auth,{type,payload,value}) => {
             return {...auth, loading:!auth.loading}
         case "SET_USER": 
             return {...auth, user: {_id: payload}}
+        case "RESET_USER":
+            return {...auth, user: {}, currentUser:""}
         default:
             return auth;
 
@@ -56,6 +58,7 @@ export const AuthProvider = ({children}) => {
             authDispatch({type:"SET_ISLOGGEDIN" ,payload:true})
             authDispatch({type:"SET_CURRENTUSER",payload:getNameFromEmail(user.email)})
             authDispatch({type:"SET_USER",payload:response.response[0]._id})
+            
 
             navigate(pathTo,{replace:pathTo})
             }
@@ -73,6 +76,7 @@ export const AuthProvider = ({children}) => {
             localStorage?.removeItem("logincredentials")
             authDispatch({type:"SET_ISLOGGEDIN",payload:false})
             authDispatch({type:"SET_LOADING"})
+            authDispatch({type: "RESET_USER"})
             navigate("/");
 
         },2000)

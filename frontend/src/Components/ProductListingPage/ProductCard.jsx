@@ -23,7 +23,8 @@ export const ProductCard = ({product}) => {
 
     
 
-    const productAddToCartHandler = async () => {
+    const productAddToCartHandler = async (e) => {
+        e.preventDefault();
         if(!auth.isLoggedIn) {
             dispatch({type:"TOGGLE_TOAST",payload:"Login Toast"});
             hideToast(3000);
@@ -37,7 +38,8 @@ export const ProductCard = ({product}) => {
         }
     }
 
-    const productAddToWishlistHandler = async () => {
+    const productAddToWishlistHandler = async (e) => {
+        e.preventDefault();
         if(!auth.isLoggedIn) {
             dispatch({type:"TOGGLE_TOAST",payload:"Login Toast"});
             hideToast(3000);
