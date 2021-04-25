@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import axios from "axios";
 import { Toast } from "../Toast/Toast";
+import { StarRatingTool } from "./StarRatingTool";
+
 
 
 export const ProductDescription = () => {
@@ -83,6 +85,7 @@ export const ProductDescription = () => {
                     <div className = "description">
                         {product.description}
                     </div>
+                    <StarRatingTool rating = { product.rating } />
 
                 </div>
                 <div className = "product-description__price">

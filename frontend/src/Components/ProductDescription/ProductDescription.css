@@ -24,6 +24,7 @@
 }
 .product-description__heading .description {
   color: var(--midgrey);
+  margin-bottom: 0.75rem;
 }
 
 .product-description__price {
@@ -58,6 +59,7 @@
   color: var(--darkgreen);
   font-weight: 1000;
 }
+
 @media only screen and (min-width: 750px) {
   .product-description {
     grid-template-columns: 1fr 2fr;
