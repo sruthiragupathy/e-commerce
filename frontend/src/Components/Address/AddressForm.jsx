@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useProduct } from "../../Context/ProductContext";
 import { isValidMobileNumber, isValidPinCode } from "../../utils/formValidationFunctions";
 import { AddressCard } from "./AddressCard";
@@ -7,6 +7,7 @@ import "./AddressForm.css"
 import { BACKEND } from "../../api";
 import { useAuth } from "../../Context/AuthContext";
 import { hideToast } from "../../utils/hideToast";
+import axios from "axios";
 
 
 
@@ -17,7 +18,7 @@ export const AddressForm = () => {
         pinCode: "",
         address: "",
         town: "",
-        state: ""
+        state: "Tamil Nadu"
     })
     const [ error, setError ] = useState({
         name: "",
@@ -27,10 +28,22 @@ export const AddressForm = () => {
         town: "",
         state: ""
     })
+    const [states, setStates] = useState({})
     const [ editAddress, setEditAddress ] = useState("");
     const {state, dispatch} = useProduct();
     const {auth } = useAuth();
     const [ openForm, setOpenForm ] = useState(false)
+
+    useEffect(async () => {
+        try{
+            const response = await axios.get('states.json');
+            console.log(response)
+            setStates(response.data);
+        }
+        catch(error) {
+            setStates(error)
+        }
+    },[])
     const formValidate = () => {
         setError({
             name: "",
@@ -75,7 +88,7 @@ export const AddressForm = () => {
         pinCode: "",
         address: "",
         town: "",
-        state: ""
+        state: "Tamil Nadu"
         })
         setOpenForm(prev => false)
     }
@@ -107,6 +120,20 @@ export const AddressForm = () => {
    
     const onChangeHandler = (e) => {
         setAddress({...address, [e.target.name]: e.target.value})
+    }
+
+    const cancelHandler = () => {
+        setAddress({
+            name: "",
+            mobileNumber: "",
+            pinCode: "",
+            address: "",
+            town: "",
+            state: "Tamil Nadu"
+            })
+        if(openForm){
+            setOpenForm(false);
+        }
     }
     return (
     <div className = "address-container">
@@ -166,17 +193,25 @@ export const AddressForm = () => {
             placeholder = "Town"
             value = {address.town}
             onChange = {onChangeHandler}/>
- 	        {/* <label for="town">Locality/Town</label> */}
  	        {error.town && <small className = "red-txt">*{error.town}</small>}
         </div>
         <div className="input-group">
-	        <input 
+	        <select
             type="text" 
-            className = "input-area"
+            className = "input-area dropdown"
             name = "state"
             value = {address.state}
             placeholder = "State"
-            onChange = {onChangeHandler}/>
+            onChange = {onChangeHandler}>
+                {
+                    Object.keys(states).map(state => {
+                        return(
+                        <option value = {states[state]}>{states[state]}</option> 
+
+                        )
+                    })
+                }
+            </select> 
  	        {/* <label for="state">State</label> */}
  	        {error.state && <small className = "red-txt">*{error.state}</small>}
         </div>
@@ -185,6 +220,7 @@ export const AddressForm = () => {
         <button className = "btn btn-primary" onClick = {addAddress}>UPDATE ADDRESS</button> :
         <button className = "btn btn-primary" onClick = {addAddress}>ADD ADDRESS</button>
         }
+        <button className = "btn btn-outline-secondary" onClick = {cancelHandler}>CANCEL</button>
 
         
     </div>
@@ -192,7 +228,7 @@ export const AddressForm = () => {
     {
         state.address.length !== 0 ? 
         <div>
-            {openForm ? <button className = "btn btn-outline-danger new-address-btn" onClick = {() => setOpenForm(false)}> - Close Address Form</button> :<button className = "btn btn-outline-primary new-address-btn" onClick = {() => setOpenForm(true)}> + Add New Address</button> }
+            {<button className = "btn btn-outline-primary new-address-btn" onClick = {() => setOpenForm(true)}> + Add New Address</button> }
             {state.address.map( currentAddress => <AddressCard address = {currentAddress} key = {address._id} addressState = {address} setAddressState = {setAddress} openForm = {openForm} setOpenForm = {setOpenForm} setEditAddress = {setEditAddress}/>)}
         </div> : null
     }
