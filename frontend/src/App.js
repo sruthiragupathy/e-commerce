@@ -60,9 +60,9 @@ function App() {
   }, []);
 
   useEffect (() => {
-    console.log({auth});
+    // console.log({auth});
     auth.user._id && (async function() {
-      console.log("in auth")
+      // console.log("in auth")
       const { response } = await RestApiCalls("GET",`${BACKEND}/${auth.user._id}/cart`) ;
       if(response.success) {
         dispatch ({type: "SET_CART", payload: response.response.cartItems })

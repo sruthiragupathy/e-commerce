@@ -25,7 +25,7 @@ export const ProductDescription = () => {
         (async function() {
             const { response } = await RestApiCalls("GET",`${BACKEND}/product/${productId}`) ;
             if(response.success) {
-            console.log(response.response);
+            // console.log(response.response);
               setProduct(response.response)
             }
           })()

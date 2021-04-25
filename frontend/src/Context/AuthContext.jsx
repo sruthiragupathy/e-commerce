@@ -70,14 +70,14 @@ export const AuthProvider = ({children}) => {
         }
     }
 
-    const logoutHandler = () => {
+    const logoutHandler = (to) => {
         authDispatch({type:"SET_LOADING"})
         setTimeout(() => {
             localStorage?.removeItem("logincredentials")
             authDispatch({type:"SET_ISLOGGEDIN",payload:false})
             authDispatch({type:"SET_LOADING"})
             authDispatch({type: "RESET_USER"})
-            navigate("/");
+            navigate(to);
 
         },2000)
     }

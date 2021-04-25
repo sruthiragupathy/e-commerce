@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useProduct } from "../../Context/ProductContext";
 import "./Navbar.css";
-import {Link,NavLink,useNavigate} from "react-router-dom";
+import {Link,NavLink,useLocation,useNavigate} from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 
+const privateRoutes = ["/wishlist", "/checkout/cart", "/checkout/address"]
 
 export const RightNavbar = () => {
   const useOutsideClickDetecter = (ref) => {
@@ -22,6 +23,8 @@ export const RightNavbar = () => {
   const {
     state: { cart, wishlist }, dispatch
   } = useProduct();
+  const location = useLocation();
+  // console.log(location);
   const wrapperRef = useRef(null);
   useOutsideClickDetecter(wrapperRef);
   const {auth, logoutHandler} = useAuth();
@@ -36,7 +39,8 @@ export const RightNavbar = () => {
    }
 
   const logout = () => {
-    logoutHandler();
+    // console.log(privateRoutes.includes(location.pathname))
+    logoutHandler(privateRoutes.includes(location.pathname)?"/":location.pathname);
     dispatch ({type: "CLEAR_CART_AND_WISHLIST"});
     setHover(prev => false);
   }

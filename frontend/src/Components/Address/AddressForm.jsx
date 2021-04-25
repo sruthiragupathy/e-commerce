@@ -38,7 +38,7 @@ export const AddressForm = () => {
         auth.user._id && (async function() {
         try{
             const response = await axios.get('states.json');
-            console.log(response)
+            // console.log(response)
             setStates(response.data);
         }
         catch(error) {
@@ -230,7 +230,7 @@ export const AddressForm = () => {
     {
         state.address.length !== 0 ? 
         <div>
-            {<button className = "btn btn-outline-primary new-address-btn" onClick = {() => setOpenForm(true)}> + Add New Address</button> }
+            {!openForm && <button className = "btn btn-outline-primary new-address-btn" onClick = {() => setOpenForm(true)}> + Add New Address</button> }
             {state.address.map( currentAddress => <AddressCard address = {currentAddress} key = {address._id} addressState = {address} setAddressState = {setAddress} openForm = {openForm} setOpenForm = {setOpenForm} setEditAddress = {setEditAddress}/>)}
         </div> : null
     }
