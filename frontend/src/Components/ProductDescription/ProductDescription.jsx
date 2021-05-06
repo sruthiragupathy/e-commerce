@@ -128,7 +128,7 @@ export const ProductDescription = () => {
                 </div>
                 <div className = "product-description__features">
                     <div>{product.outOfStock ? "Currently Out of Stock" : "Available now"}</div>
-                    <div>Free Delivery on order above Rs. 799</div>
+                    {/* <div>Free Delivery on order above Rs. 799</div> */}
                     <div>Cash on Delivery available</div>
                 </div>
             </div>
