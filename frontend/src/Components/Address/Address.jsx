@@ -14,7 +14,7 @@ export const Address = () => {
 			<div className='address-wrapper'>
 				<AddressForm />
 				<OrderSummary />
-				{state.toast.value && <Toast message={state.toast.message} />}
+				{state.toast.message && <Toast message={state.toast.message} />}
 			</div>
 		</div>
 	);

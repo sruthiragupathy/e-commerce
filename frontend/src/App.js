@@ -16,6 +16,7 @@ import { BACKEND } from './api';
 import { Address } from './Components/Address/Address';
 import { RestApiCalls } from './utils/CallRestApi';
 import { ProductDescription } from './Components/ProductDescription/ProductDescription';
+import axios from 'axios';
 
 function App() {
 	const [openHamburger, setOpenHamburger] = useState(false);
@@ -24,6 +25,7 @@ function App() {
 		loading: true,
 		error: false,
 	});
+	console.log({ state });
 	const { auth } = useAuth();
 
 	useEffect(() => {
@@ -41,41 +43,38 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		auth.user._id &&
+		auth.token &&
 			(async function () {
-				const { response } = await RestApiCalls(
-					'GET',
-					`${BACKEND}/${auth.user._id}/cart`,
-				);
-				if (response.success) {
-					dispatch({ type: 'SET_CART', payload: response.response.cartItems });
+				const response = await axios.get(`${BACKEND}/cart`, {
+					headers: {
+						authorization: auth.token,
+					},
+				});
+				if (response.status === 200) {
+					dispatch({ type: 'SET_CART', payload: response.data.response });
 				}
 			})() &&
 			(async function () {
-				const { response } = await RestApiCalls(
-					'GET',
-					`${BACKEND}/${auth.user._id}/wishlist`,
-				);
-				if (response.success) {
-					dispatch({
-						type: 'SET_WISHLIST',
-						payload: response.response.wishlistItems,
-					});
+				const response = await axios.get(`${BACKEND}/wishlist`, {
+					headers: {
+						authorization: auth.token,
+					},
+				});
+				if (response.status === 200) {
+					dispatch({ type: 'SET_WISHLIST', payload: response.data.response });
 				}
 			})() &&
 			(async function () {
-				const { response } = await RestApiCalls(
-					'GET',
-					`${BACKEND}/${auth.user._id}/address`,
-				);
-				if (response.success) {
-					dispatch({
-						type: 'SET_ADDRESS',
-						payload: response.response.addresses,
-					});
+				const response = await axios.get(`${BACKEND}/address`, {
+					headers: {
+						authorization: auth.token,
+					},
+				});
+				if (response.status === 200) {
+					dispatch({ type: 'SET_ADDRESS', payload: response.data.response });
 				}
 			})();
-	}, [auth.user._id]);
+	}, [auth.token]);
 	if (state.overlay) {
 		document.body.style.overflow = 'hidden';
 	} else {

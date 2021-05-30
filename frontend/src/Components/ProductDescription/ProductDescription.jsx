@@ -2,7 +2,11 @@ import './ProductDescription.css';
 import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { BACKEND } from '../../api';
-import { RestApiCalls } from '../../utils/CallRestApi';
+import {
+	productAddToCart,
+	wishlistManipulation,
+} from '../../utils/CallRestApi';
+
 import {
 	calculateOriginalPrice,
 	isInCart,
@@ -26,80 +30,22 @@ export const ProductDescription = () => {
 	const { state, dispatch } = useProduct();
 	const { auth } = useAuth();
 	useEffect(() => {
-		// console.log("from useeffect")
 		(async function () {
-			const { response } = await RestApiCalls(
-				'GET',
-				`${BACKEND}/product/${productId}`,
-			);
-			if (response.success) {
-				// console.log(response.response);
-				setProduct(response.response);
+			const {
+				data: { response },
+				status,
+			} = await axios.get(`${BACKEND}/product/${productId}`);
+			if (status === 200) {
+				setProduct(response);
 			}
 		})();
 	}, []);
-	const productAddToCartHandler = async () => {
-		if (!auth.isLoggedIn) {
-			dispatch({ type: 'TOGGLE_TOAST', payload: 'Login Toast' });
-			hideToast(dispatch, 3000);
-		} else {
-			dispatch({ type: 'TOGGLE_TOAST', payload: 'adding to cart...' });
-			const { response } = await RestApiCalls(
-				'POST',
-				`${BACKEND}/${auth.user._id}/cart/${product._id}`,
-			);
-			dispatch({ type: 'SET_CART', payload: response.cartItems });
-			dispatch({ type: 'TOGGLE_TOAST', payload: '1 item added to cart' });
-			hideToast(dispatch);
-		}
-	};
-
-	const productAddToWishlistHandler = async () => {
-		if (!auth.isLoggedIn) {
-			dispatch({ type: 'TOGGLE_TOAST', payload: 'Login Toast' });
-			hideToast(dispatch, 3000);
-		} else {
-			if (isInWishlist(state.wishlist, product._id)) {
-				dispatch({
-					type: 'TOGGLE_TOAST',
-					payload: 'removing from wishlist...',
-					value: true,
-				});
-
-				const {
-					data: { response, success },
-				} = await axios.delete(
-					`${BACKEND}/${auth.user._id}/wishlist/${product._id}`,
-				);
-				if (success) {
-					dispatch({ type: 'SET_WISHLIST', payload: response.wishlistItems });
-					dispatch({
-						type: 'TOGGLE_TOAST',
-						payload: '1 item removed from wishlist',
-					});
-					hideToast(dispatch);
-				}
-			} else {
-				dispatch({
-					type: 'TOGGLE_TOAST',
-					payload: 'adding to wishlist...',
-					value: true,
-				});
-				const { response } = await RestApiCalls(
-					'POST',
-					`${BACKEND}/${auth.user._id}/wishlist/${product._id}`,
-				);
-				dispatch({ type: 'SET_WISHLIST', payload: response.wishlistItems });
-				dispatch({ type: 'TOGGLE_TOAST', payload: '1 item added to wishlist' });
-				hideToast(dispatch);
-			}
-		}
-	};
 
 	const goToCart = (e) => {
 		e.preventDefault();
 		navigate('/checkout/cart');
 	};
+
 	return (
 		product && (
 			<>
@@ -151,7 +97,9 @@ export const ProductDescription = () => {
 								) : (
 									<button
 										className='btn btn-primary flex'
-										onClick={productAddToCartHandler}>
+										onClick={(e) =>
+											productAddToCart(e, dispatch, auth.token, product._id)
+										}>
 										<ShoppingCartIcon style={{ marginRight: '0.5rem' }} /> ADD
 										TO CART
 									</button>
@@ -168,7 +116,15 @@ export const ProductDescription = () => {
 								) : (
 									<button
 										className='btn btn-outline-secondary flex'
-										onClick={productAddToWishlistHandler}>
+										onClick={(e) =>
+											wishlistManipulation(
+												e,
+												state,
+												dispatch,
+												auth.token,
+												product._id,
+											)
+										}>
 										<FavoriteBorderIcon style={{ marginRight: '0.5rem' }} />{' '}
 										WISHLIST
 									</button>
@@ -181,7 +137,6 @@ export const ProductDescription = () => {
 									? 'Currently Out of Stock'
 									: 'Available now'}
 							</div>
-							{/* <div>Free Delivery on order above Rs. 799</div> */}
 							<div>Cash on Delivery available</div>
 						</div>
 					</div>

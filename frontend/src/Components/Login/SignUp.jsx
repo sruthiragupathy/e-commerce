@@ -6,6 +6,7 @@ import { useAuth, getNameFromEmail } from '../../Context/AuthContext';
 import { useProduct } from '../../Context/ProductContext';
 
 import './Login.css';
+import axios from 'axios';
 
 const isValidEmail = (email) => {
 	const emailRegex = new RegExp('[a-z][0-9]*@gmail.com');
@@ -38,7 +39,7 @@ export const SignUp = () => {
 	const [errorFromBackend, setErrorFromBackend] = useState('');
 	const [loading, setLoading] = useState(false);
 	useEffect(() => {
-		auth.isLoggedIn && navigate('/');
+		auth.token && navigate('/');
 	});
 	const onChangeHandler = (e) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
@@ -76,21 +77,18 @@ export const SignUp = () => {
 		setErrorFromBackend('');
 		setLoading(true);
 		if (validateForm()) {
-			const response = await RestApiCalls('POST', `${BACKEND}/signup`, user);
-			// console.log(response);
-			if (response?.success) {
-				authDispatch({ type: 'SET_ISLOGGEDIN', payload: true });
+			const response = await axios.post(`${BACKEND}/signup`, user);
+			if (response.status === 200) {
+				authDispatch({ type: 'SET_TOKEN', payload: response.data.token });
 				authDispatch({
 					type: 'SET_CURRENTUSER',
-					payload: getNameFromEmail(user.email),
+					payload: response.data.username,
 				});
-				authDispatch({ type: 'SET_USER', payload: response.user._id });
 				localStorage.setItem(
 					'logincredentials',
 					JSON.stringify({
-						isUserLoggedIn: true,
-						userName: getNameFromEmail(user.email),
-						_id: response.user._id,
+						token: response.data.token,
+						userName: response.data.username,
 					}),
 				);
 				navigate(from, { replace: true });

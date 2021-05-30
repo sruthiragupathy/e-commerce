@@ -20,7 +20,7 @@ export const Login = () => {
 	const [errorFromBackend, setErrorFromBackend] = useState('');
 	const [loading, setLoading] = useState(false);
 	useEffect(() => {
-		auth.isLoggedIn && navigate('/');
+		auth.token && navigate('/');
 	});
 
 	const validateForm = () => {
@@ -63,7 +63,7 @@ export const Login = () => {
 				user,
 				location.state?.from ? location.state.from : '/',
 			);
-			if (response?.success) {
+			if (response.status === 200) {
 				dispatch({
 					type: 'TOGGLE_TOAST',
 					payload: 'You have been logged in successfully, Happy Shopping',
@@ -71,8 +71,8 @@ export const Login = () => {
 				});
 				hideToast();
 			}
-			if (!response?.success) {
-				setErrorFromBackend(response.error);
+			if (response.status !== 200) {
+				setErrorFromBackend(response.response.data.error);
 			}
 		}
 		setLoading(false);

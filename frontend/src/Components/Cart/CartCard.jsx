@@ -1,74 +1,33 @@
-import axios from 'axios';
 import { useState } from 'react';
-import { BACKEND } from '../../api';
-import { RestApiCalls } from '../../utils/CallRestApi';
+import {
+	productAddToWishlist,
+	productRemoveFromCart,
+	updateCart,
+} from '../../utils/CallRestApi';
 import { useAuth } from '../../Context/AuthContext';
 import { useProduct } from '../../Context/ProductContext';
 import { calculateOriginalPrice, isInWishlist } from '../CardCommonFunctions';
-import { Modal } from '../Modal/Modal';
+
 import './CartCard.css';
 
-export const CartCard = ({ _id, product, quantity, isInCart }) => {
+export const CartCard = ({ _id, product, quantity }) => {
 	const { image, brandName, description, price, discountByPercentage, seller } =
 		product;
 	const { state, dispatch } = useProduct();
 	const { auth } = useAuth();
-	const hideToast = () => {
-		setTimeout(() => {
-			dispatch({ type: 'TOGGLE_TOAST', payload: '', value: false });
-		}, 1000);
-	};
 	const [qty, setQty] = useState(quantity);
 
 	const addToWishlist = async (e) => {
 		e.preventDefault();
-		dispatch({
-			type: 'TOGGLE_TOAST',
-			payload: 'adding to wishlist...',
-			value: true,
-		});
-		const {
-			data: { response, success },
-		} = await axios.delete(`${BACKEND}/${auth.user._id}/cart/${product._id}`);
-		if (success) {
-			dispatch({ type: 'SET_CART', payload: response.cartItems });
-		}
-		if (!isInWishlist(state.wishlist, _id)) {
-			const { response } = await RestApiCalls(
-				'POST',
-				`${BACKEND}/${auth.user._id}/wishlist/${_id}`,
-			);
-			dispatch({ type: 'SET_WISHLIST', payload: response.wishlistItems });
-		}
+		await productRemoveFromCart(e, dispatch, auth.token, product._id);
+		if (!isInWishlist(state.wishlist, product._id))
+			await productAddToWishlist(dispatch, auth.token, product._id);
+
 		dispatch({
 			type: 'TOGGLE_TOAST',
 			payload: '1 item added to wishlist',
 			value: true,
 		});
-		hideToast();
-	};
-
-	const quantityHandler = async (type, e) => {
-		e.preventDefault();
-		if (type === '+') {
-			setQty((qty) => qty + 1);
-			const { response } = await RestApiCalls(
-				'PUT',
-				`${BACKEND}/${auth.user._id}/cart/${_id}`,
-				{ quantity: qty + 1 },
-			);
-			dispatch({ type: 'SET_CART', payload: response.cartItems });
-		} else {
-			setQty((qty) => qty - 1);
-			const { response, success } = await RestApiCalls(
-				'PUT',
-				`${BACKEND}/${auth.user._id}/cart/${_id}`,
-				{ quantity: qty - 1 },
-			);
-			if (success) {
-				dispatch({ type: 'SET_CART', payload: response.cartItems });
-			}
-		}
 	};
 
 	const removeHandler = (e) => {
@@ -101,14 +60,22 @@ export const CartCard = ({ _id, product, quantity, isInCart }) => {
 								) : (
 									<button
 										className='btn btn-primary'
-										onClick={(e) => quantityHandler('-', e)}>
+										onClick={(e) => {
+											e.preventDefault();
+											setQty((qty) => qty - 1);
+											updateCart(qty, dispatch, auth.token, _id);
+										}}>
 										-
 									</button>
 								)}
 								<span>{qty}</span>
 								<button
 									className='btn btn-primary'
-									onClick={(e) => quantityHandler('+', e)}>
+									onClick={(e) => {
+										e.preventDefault();
+										setQty((qty) => qty + 1);
+										updateCart(qty, dispatch, auth.token, _id);
+									}}>
 									+
 								</button>
 							</div>

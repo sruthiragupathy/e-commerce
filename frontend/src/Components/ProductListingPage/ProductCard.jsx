@@ -8,10 +8,11 @@ import {
 	isInCart,
 	isInWishlist,
 } from '../CardCommonFunctions';
-import { RestApiCalls } from '../../utils/CallRestApi';
+import {
+	productAddToCart,
+	wishlistManipulation,
+} from '../../utils/CallRestApi';
 import { useAuth } from '../../Context/AuthContext';
-import { BACKEND } from '../../api';
-import axios from 'axios';
 
 export const ProductCard = ({ product }) => {
 	const {
@@ -27,70 +28,6 @@ export const ProductCard = ({ product }) => {
 	} = product;
 	const { state, dispatch } = useProduct();
 	const { auth } = useAuth();
-
-	const hideToast = (seconds = 1000) => {
-		setTimeout(() => {
-			dispatch({ type: 'TOGGLE_TOAST', payload: '', value: false });
-		}, seconds);
-	};
-
-	const productAddToCartHandler = async (e) => {
-		e.preventDefault();
-		if (!auth.isLoggedIn) {
-			dispatch({ type: 'TOGGLE_TOAST', payload: 'Login Toast' });
-			hideToast(3000);
-		} else {
-			dispatch({ type: 'TOGGLE_TOAST', payload: 'adding to cart...' });
-			const { response } = await RestApiCalls(
-				'POST',
-				`${BACKEND}/${auth.user._id}/cart/${_id}`,
-			);
-			dispatch({ type: 'SET_CART', payload: response.cartItems });
-			dispatch({ type: 'TOGGLE_TOAST', payload: '1 item added to cart' });
-			hideToast();
-		}
-	};
-
-	const productAddToWishlistHandler = async (e) => {
-		e.preventDefault();
-		if (!auth.isLoggedIn) {
-			dispatch({ type: 'TOGGLE_TOAST', payload: 'Login Toast' });
-			hideToast(3000);
-		} else {
-			if (isInWishlist(state.wishlist, _id)) {
-				dispatch({
-					type: 'TOGGLE_TOAST',
-					payload: 'removing from wishlist...',
-					value: true,
-				});
-				// const {response} = await RestApiCalls("DELETE", `${BACKEND}/${auth.user._id}/wishlist/${_id}`)
-				const {
-					data: { response, success },
-				} = await axios.delete(`${BACKEND}/${auth.user._id}/wishlist/${_id}`);
-				if (success) {
-					dispatch({ type: 'SET_WISHLIST', payload: response.wishlistItems });
-					dispatch({
-						type: 'TOGGLE_TOAST',
-						payload: '1 item removed from wishlist',
-					});
-					hideToast();
-				}
-			} else {
-				dispatch({
-					type: 'TOGGLE_TOAST',
-					payload: 'adding to wishlist...',
-					value: true,
-				});
-				const { response } = await RestApiCalls(
-					'POST',
-					`${BACKEND}/${auth.user._id}/wishlist/${_id}`,
-				);
-				dispatch({ type: 'SET_WISHLIST', payload: response.wishlistItems });
-				dispatch({ type: 'TOGGLE_TOAST', payload: '1 item added to wishlist' });
-				hideToast();
-			}
-		}
-	};
 
 	return (
 		<>
@@ -133,7 +70,7 @@ export const ProductCard = ({ product }) => {
 						) : (
 							<button
 								className='btn btn-primary'
-								onClick={productAddToCartHandler}
+								onClick={(e) => productAddToCart(e, dispatch, auth.token, _id)}
 								disabled={outOfStock}>
 								Add to Cart
 							</button>
@@ -143,8 +80,9 @@ export const ProductCard = ({ product }) => {
 						className={`btn-icon btn-social-engagement wishlist ${
 							!isInWishlist(state.wishlist, _id) ? 'wishlist-purple' : ''
 						}`}
-						// onClick = {() => dispatch({type:"WISHLIST_ADD_OR_REMOVE",payload:isInWishlist(state.wishlist,_id)?getProductFromWishlistDb(state.wishlist,_id):product})}
-						onClick={productAddToWishlistHandler}>
+						onClick={(e) =>
+							wishlistManipulation(e, state, dispatch, auth.token, _id)
+						}>
 						<i className='fa fa-heart'></i>
 					</button>
 				</div>

@@ -25,7 +25,6 @@ export const RightNavbar = () => {
 		dispatch,
 	} = useProduct();
 	const location = useLocation();
-	// console.log(location);
 	const wrapperRef = useRef(null);
 	useOutsideClickDetecter(wrapperRef);
 	const { auth, logoutHandler } = useAuth();
@@ -40,11 +39,11 @@ export const RightNavbar = () => {
 	};
 
 	const logout = () => {
-		// console.log(privateRoutes.includes(location.pathname))
 		logoutHandler(
 			privateRoutes.includes(location.pathname) ? '/' : location.pathname,
 		);
 		dispatch({ type: 'CLEAR_CART_AND_WISHLIST' });
+
 		setHover((prev) => false);
 	};
 
@@ -52,7 +51,7 @@ export const RightNavbar = () => {
 		<>
 			<ul className='right flex-center rm-ul-padding'>
 				<div className='navbar__list pointer greet'>
-					{auth.isLoggedIn ? (
+					{auth.token ? (
 						<div onClick={hoverHandler} className='purple-txt flex-center'>
 							<i className='fa fa-user purple-txt'></i>
 							<span>Hi {auth?.currentUser ? auth.currentUser : ''}!</span>
@@ -70,7 +69,7 @@ export const RightNavbar = () => {
 							<i className='fa fa-heart'></i>
 						</Link>
 
-						{auth.isLoggedIn && (
+						{auth.token && (
 							<div className='notification-badge flex-center'>
 								<span>{wishlist.length}</span>
 							</div>
@@ -84,7 +83,7 @@ export const RightNavbar = () => {
 							<i className='fa fa-shopping-bag'></i>
 						</Link>
 
-						{auth.isLoggedIn && (
+						{auth.token && (
 							<div className='notification-badge flex-center'>
 								<span>{cart.length}</span>
 							</div>

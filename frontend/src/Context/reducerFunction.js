@@ -18,7 +18,7 @@ export const reducerFunction = (state, { type, payload, value }) => {
 		case 'SET_WISHLIST':
 			return {
 				...state,
-				wishlist: payload.map((item) => ({ ...item, inWishlisted: true })),
+				wishlist: payload,
 			};
 		case 'SET_ADDRESS':
 			return {

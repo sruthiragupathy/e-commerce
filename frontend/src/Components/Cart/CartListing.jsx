@@ -48,7 +48,7 @@ export const CartListing = () => {
 					</div>
 				</div>
 			)}
-			{state.toast.value && <Toast message={state.toast.message} />}
+			{state.toast.message && <Toast message={state.toast.message} />}
 		</div>
 	);
 };

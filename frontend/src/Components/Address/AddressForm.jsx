@@ -5,11 +5,11 @@ import {
 	isValidPinCode,
 } from '../../utils/formValidationFunctions';
 import { AddressCard } from './AddressCard';
-import { RestApiCalls } from '../../utils/CallRestApi';
+import { addAddressToDb, updateAddress } from '../../utils/CallRestApi';
 import './AddressForm.css';
-import { BACKEND } from '../../api';
+
 import { useAuth } from '../../Context/AuthContext';
-import { hideToast } from '../../utils/hideToast';
+
 import axios from 'axios';
 
 export const AddressForm = () => {
@@ -36,11 +36,10 @@ export const AddressForm = () => {
 	const [openForm, setOpenForm] = useState(false);
 
 	useEffect(() => {
-		auth.user._id &&
+		auth.token &&
 			(async function () {
 				try {
 					const response = await axios.get('states.json');
-					// console.log(response)
 					setStates(response.data);
 				} catch (error) {
 					setStates(error);
@@ -93,7 +92,6 @@ export const AddressForm = () => {
 		return validationSuccess;
 	};
 	const successHandler = (response) => {
-		dispatch({ type: 'SET_ADDRESS', payload: response.addresses });
 		setAddress({
 			name: '',
 			mobileNumber: '',
@@ -102,52 +100,21 @@ export const AddressForm = () => {
 			town: '',
 			state: 'Tamil Nadu',
 		});
-		setOpenForm((prev) => false);
+		setOpenForm(false);
 	};
 	const addAddress = async () => {
 		if (formValidate()) {
 			if (editAddress) {
-				dispatch({
-					type: 'TOGGLE_TOAST',
-					payload: 'updating an address...',
-					value: true,
-				});
-				let { response, success } = await RestApiCalls(
-					'POST',
-					`${BACKEND}/${auth.user._id}/address/${editAddress}`,
+				await updateAddress(
+					editAddress,
 					address,
+					auth.token,
+					dispatch,
+					successHandler,
 				);
-
-				if (success) {
-					successHandler(response);
-				}
 				setEditAddress((prev) => '');
-				dispatch({
-					type: 'TOGGLE_TOAST',
-					payload: '1 address updated',
-					value: true,
-				});
-				hideToast(dispatch);
 			} else {
-				dispatch({
-					type: 'TOGGLE_TOAST',
-					payload: 'adding an address...',
-					value: true,
-				});
-				let { response, success } = await RestApiCalls(
-					'POST',
-					`${BACKEND}/${auth.user._id}/address`,
-					address,
-				);
-				if (success) {
-					successHandler(response);
-				}
-				dispatch({
-					type: 'TOGGLE_TOAST',
-					payload: 'Address has been added',
-					value: true,
-				});
-				hideToast(dispatch);
+				addAddressToDb(address, auth.token, dispatch, successHandler);
 			}
 		}
 	};
@@ -169,6 +136,7 @@ export const AddressForm = () => {
 			setOpenForm(false);
 		}
 	};
+	console.log('add', state.address);
 	return (
 		<div className='address-container'>
 			{(openForm || state.address.length === 0) && (

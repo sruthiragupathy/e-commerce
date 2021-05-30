@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND } from '../api';
@@ -7,8 +8,8 @@ const AuthContext = createContext();
 
 const authReducer = (auth, { type, payload, value }) => {
 	switch (type) {
-		case 'SET_ISLOGGEDIN':
-			return { ...auth, isLoggedIn: payload };
+		case 'SET_TOKEN':
+			return { ...auth, token: payload };
 		case 'SET_CURRENTUSER':
 			return { ...auth, currentUser: payload };
 		case 'SET_LOADING':
@@ -28,20 +29,18 @@ export const getNameFromEmail = (email) => {
 
 export const AuthProvider = ({ children }) => {
 	const [auth, authDispatch] = useReducer(authReducer, {
-		isLoggedIn: false,
+		token: '',
 		currentUser: '',
 		loading: false,
-		user: {},
 	});
 	useEffect(() => {
 		const userCredentials = JSON.parse(
 			localStorage?.getItem('logincredentials'),
 		);
-		// console.log(userCredentials.userName,userCredentials.isUserLoggedIn);
-		userCredentials?.isUserLoggedIn &&
+		userCredentials?.token &&
 			authDispatch({
-				type: 'SET_ISLOGGEDIN',
-				payload: userCredentials.isUserLoggedIn,
+				type: 'SET_TOKEN',
+				payload: userCredentials.token,
 			});
 		userCredentials?.userName &&
 			authDispatch({
@@ -55,22 +54,20 @@ export const AuthProvider = ({ children }) => {
 
 	const LoginUserWithCredentials = async (user, pathTo) => {
 		try {
-			const response = await RestApiCalls('POST', `${BACKEND}/login`, user);
-			if (response?.success) {
+			const response = await axios.post(`${BACKEND}/login`, user);
+			if (response.status === 200) {
 				localStorage.setItem(
 					'logincredentials',
 					JSON.stringify({
-						isUserLoggedIn: true,
-						userName: getNameFromEmail(user.email),
-						_id: response.response[0]._id,
+						token: response.data.token,
+						userName: response.data.username,
 					}),
 				);
-				authDispatch({ type: 'SET_ISLOGGEDIN', payload: true });
+				authDispatch({ type: 'SET_TOKEN', payload: response.data.token });
 				authDispatch({
 					type: 'SET_CURRENTUSER',
-					payload: getNameFromEmail(user.email),
+					payload: response.data.username,
 				});
-				authDispatch({ type: 'SET_USER', payload: response.response[0]._id });
 
 				navigate(pathTo, { replace: pathTo });
 			}
@@ -84,9 +81,11 @@ export const AuthProvider = ({ children }) => {
 		authDispatch({ type: 'SET_LOADING' });
 		setTimeout(() => {
 			localStorage?.removeItem('logincredentials');
-			authDispatch({ type: 'SET_ISLOGGEDIN', payload: false });
+			authDispatch({
+				type: 'SET_TOKEN',
+				payload: '',
+			});
 			authDispatch({ type: 'SET_LOADING' });
-			authDispatch({ type: 'RESET_USER' });
 			navigate(to);
 		}, 2000);
 	};

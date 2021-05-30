@@ -6,7 +6,11 @@ import {
 	getTrimmedDescription,
 	isInCart,
 } from '../CardCommonFunctions';
-import { RestApiCalls } from '../../utils/CallRestApi';
+import {
+	productAddToCart,
+	RestApiCalls,
+	wishlistManipulation,
+} from '../../utils/CallRestApi';
 import { BACKEND } from '../../api';
 import { useAuth } from '../../Context/AuthContext';
 import axios from 'axios';
@@ -23,51 +27,6 @@ export const WishlistCard = ({ product }) => {
 	} = product;
 	const { state, dispatch } = useProduct();
 	const { auth } = useAuth();
-	const hideToast = () => {
-		setTimeout(() => {
-			dispatch({ type: 'TOGGLE_TOAST', payload: '', value: false });
-		}, 1000);
-	};
-	const removeFromWishlist = async (e) => {
-		e.preventDefault();
-		dispatch({
-			type: 'TOGGLE_TOAST',
-			payload: 'removing from wishlist...',
-			value: true,
-		});
-		const {
-			data: { response, success },
-		} = await axios.delete(`${BACKEND}/${auth.user._id}/wishlist/${_id}`);
-		if (success) {
-			dispatch({ type: 'SET_WISHLIST', payload: response.wishlistItems });
-			dispatch({
-				type: 'TOGGLE_TOAST',
-				payload: '1 item removed from wishlist',
-				value: true,
-			});
-			hideToast();
-		}
-	};
-
-	const productAddToCartHandler = async (e) => {
-		e.preventDefault();
-		dispatch({
-			type: 'TOGGLE_TOAST',
-			payload: 'adding to cart...',
-			value: true,
-		});
-		const { response } = await RestApiCalls(
-			'POST',
-			`${BACKEND}/${auth.user._id}/cart/${_id}`,
-		);
-		dispatch({ type: 'SET_CART', payload: response.cartItems });
-		dispatch({
-			type: 'TOGGLE_TOAST',
-			payload: '1 item added to cart',
-			value: true,
-		});
-		hideToast();
-	};
 
 	return (
 		<div
@@ -104,14 +63,20 @@ export const WishlistCard = ({ product }) => {
 					) : (
 						<button
 							className='btn btn-primary'
-							onClick={productAddToCartHandler}
+							onClick={(e) =>
+								productAddToCart(e, dispatch, auth.token, product._id)
+							}
 							disabled={outOfStock}>
 							Move to Cart
 						</button>
 					)}
 				</div>
 			</div>
-			<button className='btn-icon br trash' onClick={removeFromWishlist}>
+			<button
+				className='btn-icon br trash'
+				onClick={(e) =>
+					wishlistManipulation(e, state, dispatch, auth.token, product._id)
+				}>
 				<i className='fa fa-trash-o fa-2x'></i>
 			</button>
 		</div>
