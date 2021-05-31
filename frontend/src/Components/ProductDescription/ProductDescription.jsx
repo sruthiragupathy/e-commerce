@@ -16,7 +16,6 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { useProduct } from '../../Context/ProductContext';
 import { useAuth } from '../../Context/AuthContext';
-import { hideToast } from '../../utils/hideToast';
 import { Link } from 'react-router-dom';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import axios from 'axios';

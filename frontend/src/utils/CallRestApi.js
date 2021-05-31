@@ -297,7 +297,6 @@ export const updateAddress = async (
 
 		if (status === 200) {
 			successHandler(response);
-			console.log({ response });
 			dispatch({ type: 'SET_ADDRESS', payload: response.addresses });
 			dispatch({
 				type: 'TOGGLE_TOAST',

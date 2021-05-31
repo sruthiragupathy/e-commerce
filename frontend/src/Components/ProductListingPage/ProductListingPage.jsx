@@ -57,11 +57,7 @@ export const ProductListingPage = ({ props, productCategory }) => {
 					transformProducts(state.products).map((product) => {
 						return (
 							<Link to={`/product/${product._id}`}>
-								<ProductCard
-									product={product}
-									key={product._id}
-									onClick={() => console.log('hi')}
-								/>
+								<ProductCard product={product} key={product._id} />
 							</Link>
 						);
 					})

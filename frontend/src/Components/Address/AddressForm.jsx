@@ -136,7 +136,6 @@ export const AddressForm = () => {
 			setOpenForm(false);
 		}
 	};
-	console.log('add', state.address);
 	return (
 		<div className='address-container'>
 			{(openForm || state.address.length === 0) && (

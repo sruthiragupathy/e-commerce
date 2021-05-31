@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { BACKEND } from '../../api';
 import { useAuth } from '../../Context/AuthContext';
 import { useProduct } from '../../Context/ProductContext';
 import { productRemoveFromCart } from '../../utils/CallRestApi';
@@ -11,11 +9,6 @@ export const Modal = ({ product }) => {
 	const { auth } = useAuth();
 	const cancelHandler = () => {
 		dispatch({ type: 'SET_OVERLAY' });
-	};
-	const hideToast = () => {
-		setTimeout(() => {
-			dispatch({ type: 'TOGGLE_TOAST', payload: '', value: false });
-		}, 1000);
 	};
 
 	return (

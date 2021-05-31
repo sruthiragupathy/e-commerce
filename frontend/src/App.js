@@ -25,7 +25,6 @@ function App() {
 		loading: true,
 		error: false,
 	});
-	console.log({ state });
 	const { auth } = useAuth();
 
 	useEffect(() => {

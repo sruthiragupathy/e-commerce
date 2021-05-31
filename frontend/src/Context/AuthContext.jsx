@@ -2,7 +2,6 @@ import axios from 'axios';
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND } from '../api';
-import { RestApiCalls } from '../utils/CallRestApi';
 
 const AuthContext = createContext();
 

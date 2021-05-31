@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { BACKEND } from '../../api';
-import { RestApiCalls } from '../../utils/CallRestApi';
-import { useAuth, getNameFromEmail } from '../../Context/AuthContext';
+import { useAuth } from '../../Context/AuthContext';
 import { useProduct } from '../../Context/ProductContext';
 
 import './Login.css';

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 const activeStar = {

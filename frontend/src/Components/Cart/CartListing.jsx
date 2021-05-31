@@ -28,7 +28,7 @@ export const CartListing = () => {
 							{state.cart.map(({ _id, product, quantity, isInCart }) => {
 								return (
 									<>
-										<Link to={`/product/${product._id}`}>
+										<Link to={`/product/${product._id}`} key={_id}>
 											<CartCard
 												product={product}
 												key={_id}

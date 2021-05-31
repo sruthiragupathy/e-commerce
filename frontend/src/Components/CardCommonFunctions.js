@@ -19,7 +19,6 @@ export const isInCart = (cart, id) => {
 };
 
 export const isInWishlist = (wishlist, id) => {
-	// console.log({ wishlist, id });
 	return wishlist.map((item) => item._id).includes(id);
 };
 

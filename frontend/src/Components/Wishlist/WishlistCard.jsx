@@ -8,12 +8,9 @@ import {
 } from '../CardCommonFunctions';
 import {
 	productAddToCart,
-	RestApiCalls,
 	wishlistManipulation,
 } from '../../utils/CallRestApi';
-import { BACKEND } from '../../api';
 import { useAuth } from '../../Context/AuthContext';
-import axios from 'axios';
 
 export const WishlistCard = ({ product }) => {
 	const {

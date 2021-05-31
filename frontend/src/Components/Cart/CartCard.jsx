@@ -62,8 +62,8 @@ export const CartCard = ({ _id, product, quantity }) => {
 										className='btn btn-primary'
 										onClick={(e) => {
 											e.preventDefault();
+											updateCart(qty - 1, dispatch, auth.token, _id);
 											setQty((qty) => qty - 1);
-											updateCart(qty, dispatch, auth.token, _id);
 										}}>
 										-
 									</button>
@@ -73,8 +73,8 @@ export const CartCard = ({ _id, product, quantity }) => {
 									className='btn btn-primary'
 									onClick={(e) => {
 										e.preventDefault();
+										updateCart(qty + 1, dispatch, auth.token, _id);
 										setQty((qty) => qty + 1);
-										updateCart(qty, dispatch, auth.token, _id);
 									}}>
 									+
 								</button>
