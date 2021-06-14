@@ -26,7 +26,6 @@ function App() {
 		error: false,
 	});
 	const { auth } = useAuth();
-
 	useEffect(() => {
 		//fetching products
 		(async function () {
