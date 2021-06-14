@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Navbar from './Components/Navbar/Navbar';
-import { ProductProvider, useProduct } from './Context/ProductContext';
+import { useProduct } from './Context/ProductContext';
 import { ProductListingPage } from './Components/ProductListingPage/ProductListingPage';
 import { Routes, Route } from 'react-router';
 import { CartListing } from './Components/Cart/CartListing';
