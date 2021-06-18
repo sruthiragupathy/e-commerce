@@ -35,7 +35,6 @@
 .filter-wrapper-height {
 	height: 100vh;
 	overflow-y: scroll;
-	/* margin-bottom: 2rem; */
 }
 
 .sort-by-names-btn {
@@ -49,10 +48,6 @@
 .sort-by-names-btn:hover {
 	background: var(--light-grey);
 }
-
-/* .sort-by-heading {
-  padding: 1rem;
-} */
 
 .current-sort {
 	background: var(--light-grey1);
@@ -73,10 +68,6 @@
 
 .filter-border-bottom {
 	border-bottom: 1px solid var(--light-grey1);
-}
-
-.apply-close {
-	position: sticky;
 }
 
 @media only screen and (min-width: 750px) {
