@@ -1,5 +1,5 @@
-export const hideToast = (dispatch) => {
-    setTimeout(() => {
-        dispatch({type:"TOGGLE_TOAST",payload:"", value: false});
-      }, 1000)
-}
+export const hideToast = (dispatch, seconds = 1000) => {
+	setTimeout(() => {
+		dispatch({ type: 'TOGGLE_TOAST', payload: '', value: false });
+	}, seconds);
+};
